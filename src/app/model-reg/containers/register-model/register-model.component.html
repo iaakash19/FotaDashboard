@@ -1,0 +1,7 @@
+<form [formGroup]="modelRegister" (submit)="onModelRegister()">
+
+    <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
+
+    <input type="text" formControlName="DeviceModel">
+<button type="submit">Save and Generate Token</button>
+</form>

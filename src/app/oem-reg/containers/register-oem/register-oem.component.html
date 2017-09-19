@@ -1,0 +1,31 @@
+<form [formGroup]="oemRegister" (submit)="registerOem()">
+  <div class="form-group">
+    <label>Partner Name</label>
+    <input type="text" formControlName="partnerName">
+  </div>
+
+  <div class="config-block" formGroupName="config">
+    <div class="form-group">
+      <label>Url</label>
+      <input type="text" formControlName="Url">
+    </div>
+
+    <div class="block" *ngFor="let option of optionsPanel">
+      <h4>{{ option.label }}</h4>
+      <div class="form-group" *ngFor="let choice of option.map">
+        <label for=""> {{choice.field}} </label>
+        <input type="radio" [formControlName]="option.control" [value]="choice.value">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Button Name</label>
+      <input type="text" formControlName="btnName">
+    </div>
+
+
+  </div>
+
+  <button type="submit">Save</button>
+</form>
+
+<pre>{{ oemRegister.value | json }}</pre>

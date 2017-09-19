@@ -1,0 +1,4 @@
+<form [formGroup]="generateUpdate" (submit)="OnGenerateUpdate()">
+    <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
+<button type="submit">Save</button>
+</form>
