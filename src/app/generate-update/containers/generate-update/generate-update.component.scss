@@ -1,0 +1,11 @@
+p-datatable {
+  width: 100%;
+  display: block;
+  min-width: 156rem;
+  overflow: scroll;
+  table {
+    width: auto;
+    overflow: scroll;
+    table-layout: fixed;
+  }
+}

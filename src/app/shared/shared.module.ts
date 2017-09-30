@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {DropdownModule} from 'primeng/primeng';
+import { DropdownModule, FileUploadModule, GrowlModule, DataTableModule, PaginatorModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
     CommonModule,
-    DropdownModule
+    DropdownModule,
+    FileUploadModule
   ],
-  exports: [DropdownModule],
+  exports: [DropdownModule, FileUploadModule, DataTableModule],
   declarations: []
 })
 export class SharedModule { }

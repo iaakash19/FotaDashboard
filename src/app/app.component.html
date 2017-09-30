@@ -1,8 +1,17 @@
-<ul>
+<main class="app">
+
+
+<div class="side-nav">
+  <ul>
     <li> <a [routerLink]="['/']">Home</a></li>
   <li> <a [routerLink]="['/regsiter-oem']"> Regsiter Oem</a></li>
   <li> <a [routerLink]="['/regsiter-model']"> Regsiter Model</a></li>
   <li><a [routerLink]="['/generate-update']"> Generate Update </a> </li>
 <li><a [routerLink]="['/push-update']"> Push Update </a> </li>
 </ul>
-<router-outlet></router-outlet>
+</div>
+<div class="content_box">
+  <router-outlet></router-outlet>
+</div>
+
+</main>

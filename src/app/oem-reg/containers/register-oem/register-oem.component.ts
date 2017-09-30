@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AppService } from '../../../app.service';
 
 @Component({
@@ -10,6 +10,8 @@ import { AppService } from '../../../app.service';
 export class RegisterOemComponent implements OnInit {
 
   oemRegister: FormGroup;
+  partners:any;
+
   optionsPanel = [
     {
       control: 'Notif_Frequency',
@@ -75,23 +77,32 @@ export class RegisterOemComponent implements OnInit {
   constructor(private fb: FormBuilder, private AppService: AppService) {}
 
   ngOnInit() {
+
+    this.fetchPartners();
+
     this.oemRegister = this.fb.group({
-      partnerName: [""],
+      partnerName: ["", Validators.required],
       config: this.fb.group({
-        Url: [""],
-        Notif_Frequency: [""],
-        checkForUpdate: [""],
-        btnName: [""],
-        downloadAutoOnWiFi: [""]
+        Url: ["", Validators.required],
+        Notif_Frequency: ["", Validators.required],
+        checkForUpdate: ["", Validators.required],
+        btnName: ["", Validators.required],
+        downloadAutoOnWiFi: ["", Validators.required]
       })
     });
   }
-
+fetchPartners() {
+  this.AppService.getPartners().subscribe((data:any) => {
+    this.partners = data.map(item => {
+      return {
+        partnerName: item.partnerName,
+        id: item.id
+        // config: JSON.parse(item.config)
+      }
+    })
+  })
+}
   registerOem() {
-    // var data = {
-    //   partnerName: this.oemRegister.value.partnerName,
-    //   config: JSON.stringify(this.oemRegister.value.config)
-    // }
     this.AppService.registerOem(this.oemRegister.value);
   }
 }

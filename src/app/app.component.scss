@@ -1,0 +1,19 @@
+main {
+  display: flex;
+}
+.side-nav {
+  flex: 0 0 17.85rem;
+  background: #222034;
+  padding: 1rem;
+  a {
+    min-height: 3.21rem;
+    padding: 0.85rem 3.57rem 0.85rem 1.42rem;
+    display: block;
+    color: #b8beca;
+  }
+}
+.content_box {
+  flex: 1 0 auto;
+  background: #F2F4F8;
+  padding: 1rem;
+}

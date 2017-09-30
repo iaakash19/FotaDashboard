@@ -1,7 +1,29 @@
+<div class="wrapper">
+<h2>Register Model</h2>
+
 <form [formGroup]="modelRegister" (submit)="onModelRegister()">
 
-    <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
+    <div class="form-group">
+      <label for="">Partner Name</label>
+      <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
+    </div>
 
+  <div class="form-group">
+      <label for="">Device Model</label>
     <input type="text" formControlName="DeviceModel">
-<button type="submit">Save and Generate Token</button>
+    </div>
+<div class="row button-row right">
+    <button class="btn btn-success" type="submit" [disabled]="!modelRegister.valid">Save and Generate Token</button>
+
+</div>
 </form>
+</div>
+
+<div class="wrapper">
+  <h2> Available Models </h2>
+    <p-dataTable [value]="models">
+         <p-column field="partnerName" header="Partner Name"></p-column>
+         <p-column field="id" header="Id"></p-column>
+         <p-column field="DeviceModel" header="Device Model"></p-column>
+    </p-dataTable>
+</div>

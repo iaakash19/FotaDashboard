@@ -1,3 +1,7 @@
+<div class="wrapper">
+
+
+<h2>Register OEM</h2>
 <form [formGroup]="oemRegister" (submit)="registerOem()">
   <div class="form-group">
     <label>Partner Name</label>
@@ -10,13 +14,15 @@
       <input type="text" formControlName="Url">
     </div>
 
-    <div class="block" *ngFor="let option of optionsPanel">
+    <div class="block inline-group" *ngFor="let option of optionsPanel">
       <h4>{{ option.label }}</h4>
       <div class="form-group" *ngFor="let choice of option.map">
         <label for=""> {{choice.field}} </label>
         <input type="radio" [formControlName]="option.control" [value]="choice.value">
       </div>
     </div>
+
+
     <div class="form-group">
       <label>Button Name</label>
       <input type="text" formControlName="btnName">
@@ -24,8 +30,22 @@
 
 
   </div>
+  <div class="row button-row right">
+    <button class="btn btn-success" type="submit" [disabled]="!oemRegister.valid">Save</button>
+  </div>
 
-  <button type="submit">Save</button>
 </form>
+</div>
+<!-- <pre>{{ oemRegister.value | json }}</pre> -->
 
-<pre>{{ oemRegister.value | json }}</pre>
+<h2>Available Partners</h2>
+<div class="wrapper">
+
+
+<p-dataTable [value]="partners">
+    <p-column field="partnerName" header="partnerName"></p-column>
+    <p-column field="id" header="id"></p-column>
+    <!-- <p-column field="brand" header="Brand"></p-column>
+    <p-column field="color" header="Color"></p-column> -->
+</p-dataTable>
+</div>

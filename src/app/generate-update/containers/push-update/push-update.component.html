@@ -1,6 +1,30 @@
-<form [formGroup]="pushUpdate" (submit)="onPushUpdate()">
+<div class="wrapper">
+  <h2>Push Update</h2>
+  <form [formGroup]="pushUpdate" (submit)="onPushUpdate()">
 
-    <!-- <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown> -->
+          <div class="form-group">
+              <label for="">Partner Name</label>
+              <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
+            </div>
 
-  <button type="submit">Save</button>
-</form>
+            <div class="form-group" *ngIf="isDeviceModel">
+                <label for="">Device Model</label>
+                <p-dropdown [options]="models" formControlName="DeviceModel"></p-dropdown>
+              </div>
+
+              <div class="form-group" *ngIf="isCurrentBuild">
+                  <label for="">Current Build Versions</label>
+                  <p-dropdown [options]="currentVersions" formControlName="CurrentBuildVersion"></p-dropdown>
+                </div>
+
+                <div class="form-group" *ngIf="isUpdate">
+                    <label for="">Updates Available</label>
+                    <p-dropdown [options]="updates" formControlName="UpdateName"></p-dropdown>
+                  </div>
+        <div class="row button-row right">
+            <button class="btn btn-success" type="submit" [disabled]="!pushUpdate.valid">Save</button>
+
+        </div>
+      </form>
+</div>
+

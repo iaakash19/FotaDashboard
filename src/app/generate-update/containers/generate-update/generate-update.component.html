@@ -1,4 +1,80 @@
-<form [formGroup]="generateUpdate" (submit)="OnGenerateUpdate()">
+<div class="wrapper">
+
+<h2>Generate Update</h2>
+
+
+  <form [formGroup]="generateUpdate" (submit)="OnGenerateUpdate()">
+
+  <div class="form-group">
+    <label for="">Partner Name</label>
     <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
-<button type="submit">Save</button>
+  </div>
+
+  <div class="form-group">
+    <label for="">UpdateName</label>
+    <input type="text" formControlName="UpdateName">
+  </div>
+
+  <div class="form-group">
+    <label for="">Available Version</label>
+    <input type="text" formControlName="AvailVersion">
+  </div>
+
+  <div class="form-group">
+    <label for="">File</label>
+    <p-fileUpload auto="auto" customUpload="true" name="demo[]" (uploadHandler)="onBasicUpload($event)" #logo></p-fileUpload>
+  </div>
+
+  <div class="form-group">
+    <label for="">Base Version</label>
+    <input type="text" formControlName="BaseVersion">
+  </div>
+
+  <div class="form-group">
+    <label for="">ChangeLog</label>
+    <textarea formControlName="ChangeLog"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="">Device Type</label>
+    <p-dropdown [options]="devices" formControlName="DeviceType"></p-dropdown>
+  </div>
+
+  <div class="form-group" *ngIf="isDeviceModel">
+    <label for="">Device Model</label>
+    <p-dropdown [options]="models" formControlName="DeviceModel"></p-dropdown>
+
+  </div>
+
+  <div class="form-group">
+    <label for="">KeyHighLights</label>
+    <input type="text" formControlName="KeyHighLights">
+  </div>
+  <div class="row button-row right">
+      <button class="btn btn-success" type="submit" [disabled]="!generateUpdate.valid">Save</button>
+
+  </div>
 </form>
+</div>
+
+<div class="wrapper">
+  <h2>Available Updates</h2>
+  <p-dataTable [value]="updates">
+      <p-column field="partnerName" header="Partner Name"></p-column>
+      <p-column field="ActivationDate" header="Activation Date"></p-column>
+      <p-column field="AvailVersion" header="Available Version"></p-column>
+      <p-column field="BaseVersion" header="BaseVersion"></p-column>
+
+      <p-column field="ChangeLog" header="Change Log"></p-column>
+      <p-column field="DeviceModel" header="Device Model"></p-column>
+      <p-column field="DeviceType" header="Device Type"></p-column>
+
+      <p-column field="DownloadSize" header="Download Size"></p-column>
+      <p-column field="DownloadUrl" header="Download Url"></p-column>
+      <p-column field="KeyHighLights" header="Key HighLights"></p-column>
+
+      <p-column field="Md5" header="Md5"></p-column>
+      <p-column field="UpdateName" header="UpdateName"></p-column>
+ </p-dataTable>
+</div>
+<pre> {{ generateUpdate.value | json }} </pre>

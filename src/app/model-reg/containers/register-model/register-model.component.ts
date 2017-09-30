@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
 import { AppService } from '../../../app.service';
 
 @Component({
@@ -11,15 +11,19 @@ export class RegisterModelComponent implements OnInit {
 
   modelRegister: FormGroup;
   partners:any;
+  token:any;
+  models:any;
 
   constructor(private fb: FormBuilder, private AppService: AppService) { }
 
   ngOnInit() {
 
+
     this.fetchPartners();
+    this.fetchModels();
     this.modelRegister = this.fb.group({
-      partnerName: [''],
-      DeviceModel: ['']
+      partnerName: ['', Validators.required],
+      DeviceModel: ['', Validators.required]
     });
   }
 
@@ -33,8 +37,17 @@ export class RegisterModelComponent implements OnInit {
      })
     })
   }
+
+  fetchModels() {
+    this.AppService.getDeviceModels().subscribe(data => {
+      this.models = data;
+    })
+  }
   onModelRegister() {
-    this.AppService.registerModel(this.modelRegister.value)
+    this.AppService.registerModel(this.modelRegister.value).subscribe((data:any) => {
+      this.token = data.Token;
+      this.fetchModels();
+    })
   }
 
 
