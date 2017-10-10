@@ -1,13 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AppService } from '../../../app.service';
+import {Message} from 'primeng/primeng';
+import {MessageService} from 'primeng/components/common/messageservice';
 
 @Component({
   selector: "register-oem",
   templateUrl: "./register-oem.component.html",
-  styleUrls: ["./register-oem.component.scss"]
+  styleUrls: ["./register-oem.component.scss"],
+  providers: [MessageService]
 })
 export class RegisterOemComponent implements OnInit {
+
 
   oemRegister: FormGroup;
   partners:any;
@@ -74,7 +78,7 @@ export class RegisterOemComponent implements OnInit {
 
   ]
 
-  constructor(private fb: FormBuilder, private AppService: AppService) {}
+  constructor(private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
 
   ngOnInit() {
 
@@ -103,6 +107,8 @@ fetchPartners() {
   })
 }
   registerOem() {
-    this.AppService.registerOem(this.oemRegister.value);
+    this.AppService.registerOem(this.oemRegister.value).subscribe(data => {
+      this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully regstered'});
+    })
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
 import { AppService } from '../../../app.service';
-
+import {Message} from 'primeng/primeng';
+import {MessageService} from 'primeng/components/common/messageservice';
 @Component({
   selector: 'app-register-model',
   templateUrl: './register-model.component.html',
@@ -13,8 +14,10 @@ export class RegisterModelComponent implements OnInit {
   partners:any;
   token:any;
   models:any;
+  isMaskOn: boolean = false;
+  msgs: Message[] = [];
 
-  constructor(private fb: FormBuilder, private AppService: AppService) { }
+  constructor(private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) { }
 
   ngOnInit() {
 
@@ -43,12 +46,44 @@ export class RegisterModelComponent implements OnInit {
       this.models = data;
     })
   }
+
   onModelRegister() {
     this.AppService.registerModel(this.modelRegister.value).subscribe((data:any) => {
+      this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully regstered'});
       this.token = data.Token;
       this.fetchModels();
     })
   }
+
+  onFocus(event) {
+debugger;
+   if(!this.isMaskOn) {
+      this.isMaskOn = true;
+      this.AppService.setBodyClass('on');
+   }
+    else {
+      this.isMaskOn = false;
+      this.AppService.setBodyClass('off');
+    }
+
+
+  }
+
+  onChange(event) {
+    debugger;
+    if(!this.isMaskOn) {
+      this.isMaskOn = true;
+      this.AppService.setBodyClass('on');
+   }
+    else {
+      this.isMaskOn = false;
+      this.AppService.setBodyClass('off');
+    }
+  }
+
+  // removeMask(event) {
+  //   this.AppService.setBodyClass('off');
+  // }
 
 
 }

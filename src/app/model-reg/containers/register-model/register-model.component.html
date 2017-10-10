@@ -1,20 +1,24 @@
+<p-growl [(value)]="msgs"></p-growl>
 <div class="wrapper">
 <h2>Register Model</h2>
 
 <form [formGroup]="modelRegister" (submit)="onModelRegister()">
 
-    <div class="form-group">
-      <label for="">Partner Name</label>
-      <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
-    </div>
+  <div class="row">
+      <div class="form-group">
+          <label for="">Partner Name</label>
+          <p-dropdown [options]="partners" formControlName="partnerName" (onFocus)="onFocus($event)"  (onChange)="onChange($event)"></p-dropdown>
+        </div>
 
-  <div class="form-group">
-      <label for="">Device Model</label>
-    <input type="text" formControlName="DeviceModel">
-    </div>
+      <div class="form-group">
+          <label for="">Device Model</label>
+        <input type="text" formControlName="DeviceModel">
+        </div>
+  </div>
+
+
 <div class="row button-row right">
     <button class="btn btn-success" type="submit" [disabled]="!modelRegister.valid">Save and Generate Token</button>
-
 </div>
 </form>
 </div>

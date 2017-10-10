@@ -8,7 +8,7 @@ import { DropdownModule, FileUploadModule, GrowlModule, DataTableModule, Paginat
     DropdownModule,
     FileUploadModule
   ],
-  exports: [DropdownModule, FileUploadModule, DataTableModule],
+  exports: [DropdownModule, FileUploadModule, DataTableModule, GrowlModule],
   declarations: []
 })
 export class SharedModule { }

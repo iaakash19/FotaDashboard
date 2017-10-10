@@ -5,51 +5,60 @@
 
   <form [formGroup]="generateUpdate" (submit)="OnGenerateUpdate()">
 
-  <div class="form-group">
-    <label for="">Partner Name</label>
-    <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
-  </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="">Partner Name</label>
+            <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
+          </div>
 
-  <div class="form-group">
-    <label for="">UpdateName</label>
-    <input type="text" formControlName="UpdateName">
-  </div>
+          <div class="form-group">
+            <label for="">UpdateName</label>
+            <input type="text" formControlName="UpdateName">
+          </div>
 
-  <div class="form-group">
-    <label for="">Available Version</label>
-    <input type="text" formControlName="AvailVersion">
-  </div>
+          <div class="form-group">
+            <label for="">Available Version</label>
+            <input type="text" formControlName="AvailVersion">
+          </div>
+    </div>
 
-  <div class="form-group">
-    <label for="">File</label>
-    <p-fileUpload auto="auto" customUpload="true" name="demo[]" (uploadHandler)="onBasicUpload($event)" #logo></p-fileUpload>
-  </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="">File</label>
+            <p-fileUpload auto="auto" customUpload="true" name="demo[]" (uploadHandler)="onBasicUpload($event)" #logo></p-fileUpload>
+          </div>
 
-  <div class="form-group">
-    <label for="">Base Version</label>
-    <input type="text" formControlName="BaseVersion">
-  </div>
+          <div class="form-group">
+            <label for="">Base Version</label>
+            <input type="text" formControlName="BaseVersion">
+          </div>
 
-  <div class="form-group">
-    <label for="">ChangeLog</label>
-    <textarea formControlName="ChangeLog"></textarea>
-  </div>
+          <div class="form-group">
+            <label for="">ChangeLog</label>
+            <textarea formControlName="ChangeLog"></textarea>
+          </div>
+    </div>
 
-  <div class="form-group">
-    <label for="">Device Type</label>
-    <p-dropdown [options]="devices" formControlName="DeviceType"></p-dropdown>
-  </div>
 
-  <div class="form-group" *ngIf="isDeviceModel">
-    <label for="">Device Model</label>
-    <p-dropdown [options]="models" formControlName="DeviceModel"></p-dropdown>
+<div class="row">
+    <div class="form-group">
+        <label for="">Device Type</label>
+        <p-dropdown [options]="devices" formControlName="DeviceType"></p-dropdown>
+      </div>
 
-  </div>
+      <div class="form-group" *ngIf="isDeviceModel">
+        <label for="">Device Model</label>
+        <p-dropdown [options]="models" formControlName="DeviceModel"></p-dropdown>
 
-  <div class="form-group">
-    <label for="">KeyHighLights</label>
-    <input type="text" formControlName="KeyHighLights">
-  </div>
+      </div>
+
+      <div class="form-group">
+        <label for="">KeyHighLights</label>
+        <input type="text" formControlName="KeyHighLights">
+      </div>
+</div>
+
+
   <div class="row button-row right">
       <button class="btn btn-success" type="submit" [disabled]="!generateUpdate.valid">Save</button>
 

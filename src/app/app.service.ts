@@ -1,33 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class AppService {
 
   BASE_URL = `http://devfota.gammo.me/notify/fotav/`;
 
+  private toggleBodyClass$ = new ReplaySubject<any>();
+  public toggleBody$ = this.toggleBodyClass$.asObservable();
+
   constructor(
     private Http: HttpClient
   ) { }
 
-  // createPartner(partner) {
-  //   let input = new FormData();
-  //   Object.keys(partner).map(key => {
-  //       input.append(key, partner[key]);
-  //   });
-  //   return this.http.post(`${this.BASE_URL}partner/`, input);
-  // }
 
-
+  setBodyClass(key) {
+    this.toggleBodyClass$.next(key);
+  }
   registerOem(data) {
     let input = new FormData();
     Object.keys(data).map(key => {
       input.append(key, data[key]);
   });
-    this.Http.post(`${this.BASE_URL}deviceConfig/`, input).subscribe(data => {
-      debugger;
-    })
+   return this.Http.post(`${this.BASE_URL}deviceConfig/`, input);
   }
 
   getPartners() {
@@ -52,7 +48,6 @@ export class AppService {
     Object.keys(data).map(key => {
       input.append(key, data[key]);
   });
-  debugger;
     return this.Http.post(`${this.BASE_URL}updateGen/`, input);
   }
 
@@ -86,6 +81,14 @@ export class AppService {
 
   getDeviceModels() {
     return this.Http.get(`${this.BASE_URL}oemRegister/`);
+  }
+
+  pushUpdate(config) {
+    let input = new FormData();
+    Object.keys(config).map(key => {
+      input.append(key, config[key]);
+  });
+    return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
   }
 
 }

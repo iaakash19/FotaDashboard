@@ -9,3 +9,30 @@ p-datatable {
     table-layout: fixed;
   }
 }
+
+
+.row {
+  display: flex;
+  margin: 2rem 0;
+  flex-flow: row wrap;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  flex: 1 0 32%;
+  margin-right: 20px;
+}
+
+.form-group > label {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 auto;
+  max-width: auto;
+  margin-right: 15px;
+}

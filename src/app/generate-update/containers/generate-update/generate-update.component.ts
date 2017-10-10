@@ -35,7 +35,6 @@ export class GenerateUpdateComponent implements OnInit {
     });
 
     this.generateUpdate.get("partnerName").valueChanges.subscribe(data => {
-      debugger;
       this.fetchDeviceModel(data);
       this.isDeviceModel = true;
     });
@@ -96,17 +95,14 @@ export class GenerateUpdateComponent implements OnInit {
   fetchAllUpdates() {
     this.AppService.fetchUpdates().subscribe(data => {
       this.updates = data;
-      debugger;
     })
   }
 
   OnGenerateUpdate() {
     this.generateUpdate.value;
-    debugger;
     this.AppService
       .generateUpdate(this.generateUpdate.value)
       .subscribe(data => {
-        debugger;
       });
   }
 }

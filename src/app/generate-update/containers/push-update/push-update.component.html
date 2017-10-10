@@ -2,6 +2,7 @@
   <h2>Push Update</h2>
   <form [formGroup]="pushUpdate" (submit)="onPushUpdate()">
 
+    <div class="row">
           <div class="form-group">
               <label for="">Partner Name</label>
               <p-dropdown [options]="partners" formControlName="partnerName"></p-dropdown>
@@ -11,7 +12,9 @@
                 <label for="">Device Model</label>
                 <p-dropdown [options]="models" formControlName="DeviceModel"></p-dropdown>
               </div>
+</div>
 
+<div class="row" *ngIf="isCurrentBuild">
               <div class="form-group" *ngIf="isCurrentBuild">
                   <label for="">Current Build Versions</label>
                   <p-dropdown [options]="currentVersions" formControlName="CurrentBuildVersion"></p-dropdown>
@@ -21,6 +24,31 @@
                     <label for="">Updates Available</label>
                     <p-dropdown [options]="updates" formControlName="UpdateName"></p-dropdown>
                   </div>
+</div>
+
+    <div class="block inline-group">
+      <div class="form-group with-radio">
+          <input id="push_prod" name="push_mode" (change)="onOptionSelected($event)" type="radio" value="push_prod">
+        <label for="push_prod"> Push on Production </label>
+
+      </div>
+      <div class="form-group with-radio">
+          <input id="push_imei" name="push_mode" (change)="onOptionSelected($event)" type="radio" value="push_imei">
+        <label for="push_imei"> Push on IMEI </label>
+
+      </div>
+
+    <div class="form-group" *ngIf="isIMEISelected">
+        <label for="">IMEI1</label>
+        <input type="text" formControlName="IMEI1">
+      </div>
+
+
+    </div>
+
+
+
+
         <div class="row button-row right">
             <button class="btn btn-success" type="submit" [disabled]="!pushUpdate.valid">Save</button>
 

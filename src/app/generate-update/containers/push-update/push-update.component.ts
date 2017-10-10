@@ -17,6 +17,8 @@ export class PushUpdateComponent implements OnInit {
   isDeviceModel: boolean = false;
   isCurrentBuild: boolean = false;
   isUpdate: boolean = false;
+  optionsPanel:any;
+  isIMEISelected:boolean = false;
 
   constructor(private fb: FormBuilder, private AppService: AppService) {}
 
@@ -29,8 +31,19 @@ export class PushUpdateComponent implements OnInit {
       DeviceModel: ['', Validators.required],
       CurrentBuildVersion: ['', Validators.required],
       UpdateName: ['', Validators.required],
-      // IMEI1: ['', Validators.required]
+      IMEI1: ['']
     });
+
+    // this.optionsPanel = [
+    //   {
+    //     label : 'Push on Production',
+    //     value: 'push_prod'
+    //   },
+    //   {
+    //     label: 'Push on IMEI',
+    //     value: 'push_imei'
+    //   }
+    // ];
 
     this.pushUpdate.get("partnerName").valueChanges.subscribe(partner => {
       this.fetchDeviceModel(partner);
@@ -125,7 +138,21 @@ export class PushUpdateComponent implements OnInit {
   }
 
 
-  onPushUpdate() {
+  onOptionSelected(event) {
+    if(event.target.value == 'push_imei') {
+      this.isIMEISelected = true;
+    }else {
+      this.isIMEISelected = false;
+    }
 
+
+    // this.pushUpdate.controlget('IMEI1').value(event.target.value);
+  }
+
+
+  onPushUpdate() {
+      this.pushUpdate.value;
+      this.AppService.pushUpdate(this.pushUpdate.value).subscribe(data => {
+      })
   }
 }
