@@ -1,12 +1,12 @@
+import { HomeComponent } from './home/home.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { RegisterModelComponent } from './containers/register-model/register-model.component';
 
 const ROUTES: Routes = [
     {
-        path: 'regsiter-model',
-        component: RegisterModelComponent,
-        data: { state: 'regsiter-model'} 
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full'
     }
 ]
 
@@ -16,6 +16,6 @@ const ROUTES: Routes = [
         ],
         exports: [RouterModule]
       })
-export class ModelRoutingModule {
+export class HomeRoutingModule {
 
 }

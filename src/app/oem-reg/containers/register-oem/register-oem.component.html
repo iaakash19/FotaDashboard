@@ -1,4 +1,5 @@
 <p-growl [(value)]="msgs"></p-growl>
+<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
 
 <div class="wrapper">
 
@@ -25,8 +26,8 @@
     <div class="block inline-group" *ngFor="let option of optionsPanel">
       <h4>{{ option.label }}</h4>
       <div class="form-group with-radio" *ngFor="let choice of option.map">
-          <input [id]="option.control" type="radio" [formControlName]="option.control" [value]="choice.value">
-        <label [for]="option.control"> {{choice.field}} </label>
+          <input id="{{choice.field}}-{{option.control}}" type="radio" [formControlName]="option.control" [value]="choice.value">
+        <label for="{{choice.field}}-{{option.control}}"> {{choice.field}} </label>
       </div>
     </div>
   </div>
@@ -45,16 +46,14 @@
 
 </form>
 </div>
-<!-- <pre>{{ oemRegister.value | json }}</pre> -->
 
 <h2>Available Partners</h2>
 <div class="wrapper">
 
 
 <p-dataTable [value]="partners">
-    <p-column field="partnerName" header="partnerName"></p-column>
-    <p-column field="id" header="id"></p-column>
-    <!-- <p-column field="brand" header="Brand"></p-column>
-    <p-column field="color" header="Color"></p-column> -->
+    <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search"></p-column>
+    <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search"></p-column>
+    
 </p-dataTable>
 </div>

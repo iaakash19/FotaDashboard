@@ -15,7 +15,48 @@ a {
   cursor: pointer;
 }
 
-main {
+app-dashboard {
+  display: flex;
+}
+.side-nav {
+  flex: 0 0 17.85rem;
+  background: #222034;
+  li{
+    transition: background 0.3s ease, color 0.4s ease-in;
+    &:hover {
+      background: rgba(255, 99, 71, 0.5);
+      & a {
+        color: rgba(255, 255, 255, 0.65);
+      }      
+    }
+    &.active {
+      background: tomato;
+      a {
+        color: white;
+      }
+    }
+  }
+
+  a {
+    min-height: 3.21rem;
+    padding: 0.85rem 3.57rem 0.85rem 1.42rem;
+    display: block;
+    color: #b8beca;
+  }
+}
+.content_box {
+  flex: 1 1 auto;
+  background: #F2F4F8;
+  padding: 1rem;
+  max-width: calc(100% - 17.85rem);
+}
+
+form.login {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+main, app-dashboard {
   min-height: 100vh;
 }
 body {
@@ -54,7 +95,7 @@ input {
   display: flex;
   align-items: center;
   & > label {
-    margin-right: 20px;
+    margin-right: 10px;
     flex: 0 0 auto;
   }
   input, textarea {
@@ -88,11 +129,12 @@ input {
     flex: 0 0 auto;
     color: rgb(169, 174, 184);
     max-width: 100%;
-    font-size: 1.5rem;
+    font-size: 1rem;
     border: 1px solid rgba(0, 0, 0, 0.15);
     padding: 0.5rem 1rem;
     transition: border-color 0.3s ease, color 0.4s ease;
     border-radius: 2px;
+    margin-right: 0;
     &:hover {
       color: #514d6a;
       border-color: #514d6a;
@@ -203,7 +245,7 @@ button {
 
 .form-group {
   &:not(:nth-last-child(1)) {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 }
 
@@ -252,4 +294,150 @@ button {
 
 .wrapper {
   border-top: 2px solid #222034;
+}
+
+td {
+  text-transform: capitalize;
+}
+
+.loader {
+  background: rgba(0,0,0,0.75);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+}
+
+.content_box {
+  position: relative;
+}
+
+.ui-growl-item {
+  color: white;
+}
+
+app-generate-update {
+.ui-widget-content {
+  top:0;
+}
+}
+
+@keyframes pulse {	
+  50% { 
+    background: white;
+  } 
+}
+
+
+.loading-pulse {
+margin-top: 50vh;
+position: relative;
+width: 6px;
+height: 24px;
+background: rgba(255, 255, 255, 0.2);
+-webkit-animation: pulse 750ms infinite;
+animation: pulse 750ms infinite;
+-webkit-animation-delay: 250ms;
+animation-delay: 250ms;
+}
+
+.loading-pulse:before, .loading-pulse:after {
+  content: '';
+  position: absolute;
+  display: block;
+  height: 16px;
+  width: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-animation: pulse 750ms infinite;
+  animation: pulse 750ms infinite;
+}
+
+.loading-pulse:before {
+  left: -12px;
+}
+
+.loading-pulse:after {
+  left: 12px;
+  -webkit-animation-delay: 500ms;
+  animation-delay: 500ms;
+}
+
+
+.form-group {
+  position: relative;
+  &.has-error {
+     & > label {
+          color: #a94442;
+      }
+      .input_block > input {
+          border-color: #ebccd1;
+          background: #f2dede;
+          &:focus {
+              border-color: #ebccd1;
+          }
+      }
+      & > input {
+          border-color: #ebccd1;
+          background: #f2dede;
+          &:focus {
+              border-color: #ebccd1;
+          }
+      }
+      .ui-dropdown label.ui-dropdown-label, .ui-dropdown .ui-dropdown-trigger {
+          border-color: #ebccd1;
+          background: #f2dede;
+      }
+  }
+}
+
+.err_msg {
+  color: #a94442;
+  font-size: 0.65rem;
+  text-align: right;
+  display: block;
+  position: absolute;
+  bottom: -15px;
+  right: 0;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+  margin: 0 auto 1rem auto;
+}
+
+
+login {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  form {
+    padding: 0;
+    box-shadow: 0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.logoWrap {
+  background: #2B303B;
+  margin-bottom: 2rem;
+  color: white;
+  padding: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
 }

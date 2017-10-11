@@ -1,0 +1,37 @@
+.logo {
+    
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+form {
+        border-radius: 6px;
+    background-color: #FFFFFF;
+    color: #252422;
+    margin-bottom: 20px;
+    position: relative;
+    border-radius: 3px 3px 0 0;
+    min-width: 400px;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+    padding: 0 15px;
+    margin-right: 0;
+}
+
+.row{
+    display: flex;
+    &.right {
+        padding: 0 15px 15px 0; 
+justify-content: flex-end;
+margin: 2rem 0 0rem 0;
+    }
+}
+
+label {
+    flex: 0 0 5rem;
+}
+

@@ -10,6 +10,10 @@ p-datatable {
   }
 }
 
+.wrapper {
+  overflow-x: scroll;
+}
+
 
 .row {
   display: flex;
@@ -25,7 +29,7 @@ p-datatable {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  flex: 1 0 32%;
+  flex: 0 0 auto;
   margin-right: 20px;
 }
 

@@ -1,11 +1,13 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { AppService } from "./../../../app.service";
-
+import {Message} from 'primeng/primeng';
+import {MessageService} from 'primeng/components/common/messageservice';
 @Component({
   selector: "app-generate-update",
   templateUrl: "./generate-update.component.html",
-  styleUrls: ["./generate-update.component.scss"]
+  styleUrls: ["./generate-update.component.scss"],
+  providers: [MessageService]
 })
 export class GenerateUpdateComponent implements OnInit {
   partners: any;
@@ -14,8 +16,10 @@ export class GenerateUpdateComponent implements OnInit {
   isDeviceModel:boolean = false;
   generateUpdate: FormGroup;
   updates:any;
+  msgs: Message[] = [];
+  isLoading: boolean = false;
 
-  constructor(private fb: FormBuilder, private AppService: AppService) {}
+  constructor(private fb: FormBuilder, private AppService: AppService,  private messageService: MessageService) {}
 
   ngOnInit() {
     this.fetchPartners();
@@ -99,10 +103,20 @@ export class GenerateUpdateComponent implements OnInit {
   }
 
   OnGenerateUpdate() {
-    this.generateUpdate.value;
+    this.isLoading = true;
     this.AppService
       .generateUpdate(this.generateUpdate.value)
-      .subscribe(data => {
-      });
+      .subscribe(
+        data => {
+          this.fetchAllUpdates();
+          this.isLoading = false;
+          this.generateUpdate.reset();
+          this.messageService.add({severity:'success', summary:'Message', detail:'Update Succesfully generated'});
+        },
+        err => {
+          this.isLoading = false;
+          this.messageService.add({severity:'error', summary:'Message', detail:'Error generating update'});
+        }
+      );
   }
 }

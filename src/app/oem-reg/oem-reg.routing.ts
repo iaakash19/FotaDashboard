@@ -5,7 +5,11 @@ import { RegisterOemComponent } from './containers/register-oem/register-oem.com
 const ROUTES: Routes = [
     {
         path: 'regsiter-oem',
-        component: RegisterOemComponent
+        component: RegisterOemComponent,
+        pathMatch: 'full',
+        data: { state: 'regsiter-oem'}
+        
+        
     }
 ]
 

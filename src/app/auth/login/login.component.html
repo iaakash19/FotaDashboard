@@ -1,0 +1,32 @@
+<p-growl [(value)]="msgs"></p-growl>
+
+<form  class="login" [formGroup]="loginForm" (submit)="onLogin()">
+  <div class="logoWrap">
+      <div class="logo">
+          <img src="assets/logo.png" alt="">
+        </div>
+    <h2>Welcome to FOTA</h2>
+    <p class="tagline">Please signin</p>
+      
+  </div>
+  
+  <div class="form-group" [ngClass]="{'has-error': username_errorMsg}">
+    <input type="text" formControlName="username" #username placeholder="Username">
+    <span class="err_msg" *ngIf="username_errorMsg">
+      {{ username_errorMsg }}
+    </span>
+  </div>
+
+  <div class="form-group" [ngClass]="{'has-error': password_errorMsg}">
+    <input type="password" formControlName="password" #password placeholder="Password">
+    <span class="err_msg" *ngIf="password_errorMsg">
+      {{ password_errorMsg }}
+    </span>
+  </div>
+  <div class="row buttons right">
+    <button class="btn" [ngClass]="{'btn-success': loginForm.valid }" [disabled]="!loginForm.valid" type="submit">Login</button>
+  </div>
+  
+</form>
+
+

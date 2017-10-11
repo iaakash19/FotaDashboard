@@ -19,15 +19,15 @@ export class AppService {
     this.toggleBodyClass$.next(key);
   }
   registerOem(data) {
-    let input = new FormData();
-    Object.keys(data).map(key => {
-      input.append(key, data[key]);
-  });
-   return this.Http.post(`${this.BASE_URL}deviceConfig/`, input);
+  //   let input = new FormData();
+  //   Object.keys(data).map(key => {
+  //     input.append(key, data[key]);
+  // });
+   return this.Http.post(`${this.BASE_URL}partnerRegister/`, data);
   }
 
   getPartners() {
-    return this.Http.get(`${this.BASE_URL}deviceConfig/`);
+    return this.Http.get(`${this.BASE_URL}partnerRegister/`);
   }
 
   getDeviceType() {

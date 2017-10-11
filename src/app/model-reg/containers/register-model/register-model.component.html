@@ -1,4 +1,6 @@
 <p-growl [(value)]="msgs"></p-growl>
+<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
+
 <div class="wrapper">
 <h2>Register Model</h2>
 
@@ -26,8 +28,8 @@
 <div class="wrapper">
   <h2> Available Models </h2>
     <p-dataTable [value]="models">
-         <p-column field="partnerName" header="Partner Name"></p-column>
-         <p-column field="id" header="Id"></p-column>
-         <p-column field="DeviceModel" header="Device Model"></p-column>
+         <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search"></p-column>
+         <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search"></p-column>
+         <p-column field="DeviceModel" header="Device Model" [filter]="true" filterPlaceholder="Search"></p-column>
     </p-dataTable>
 </div>

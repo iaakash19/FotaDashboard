@@ -6,11 +6,13 @@ import { GenerateUpdateComponent } from './containers/generate-update/generate-u
 const ROUTES: Routes = [
     {
         path: 'push-update',
-        component: PushUpdateComponent
+        component: PushUpdateComponent,
+        data: { state: 'push-update'}
     },
     {
       path: 'generate-update',
-      component: GenerateUpdateComponent
+      component: GenerateUpdateComponent, 
+      data: { state: 'generate-update'}
   }
 ]
 

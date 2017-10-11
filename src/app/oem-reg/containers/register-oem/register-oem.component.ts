@@ -15,7 +15,9 @@ export class RegisterOemComponent implements OnInit {
 
   oemRegister: FormGroup;
   partners:any;
-
+  isLoading:boolean = false;
+  msgs: Message[] = [];
+  
   optionsPanel = [
     {
       control: 'Notif_Frequency',
@@ -107,8 +109,16 @@ fetchPartners() {
   })
 }
   registerOem() {
-    this.AppService.registerOem(this.oemRegister.value).subscribe(data => {
-      this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully regstered'});
-    })
+    this.isLoading = true;
+    this.AppService.registerOem(this.oemRegister.value).subscribe(
+      data => {
+        this.isLoading = false;
+        this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully regstered'});
+      },
+      err => {
+        this.isLoading = false;
+        this.messageService.add({severity:'error', summary:'Message', detail:'OEM Registration Failed!!'});
+      }
+    )
   }
 }

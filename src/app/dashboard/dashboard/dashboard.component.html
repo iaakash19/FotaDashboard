@@ -1,0 +1,26 @@
+
+  <div class="side-nav">
+    <ul>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="['/dashboard/home']">Home</a> 
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="['/dashboard/register-oem']"> Regsiter Oem</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="['/dashboard/regsiter-model']"> Regsiter Model</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="['/dashboard/generate-update']"> Generate Update </a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="['/dashboard/push-update']"> Push Update </a>
+      </li>
+      <li>
+        <a href="" (click)="logOutUser()">Logout</a>
+      </li>
+    </ul> 
+  </div>
+  <div class="content_box">
+    <router-outlet #o="outlet"></router-outlet>
+  </div>

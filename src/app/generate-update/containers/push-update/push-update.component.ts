@@ -1,11 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AppService } from "../../../app.service";
-
+import {Message} from 'primeng/primeng';
+import {MessageService} from 'primeng/components/common/messageservice';
 @Component({
   selector: "app-push-update",
   templateUrl: "./push-update.component.html",
-  styleUrls: ["./push-update.component.scss"]
+  styleUrls: ["./push-update.component.scss"],
+  providers: [MessageService]
 })
 export class PushUpdateComponent implements OnInit {
   pushUpdate: FormGroup;
@@ -13,14 +15,15 @@ export class PushUpdateComponent implements OnInit {
   models:any;
   currentVersions:any;
   updates:any;
-
+  isLoading: boolean = false;
   isDeviceModel: boolean = false;
   isCurrentBuild: boolean = false;
   isUpdate: boolean = false;
   optionsPanel:any;
   isIMEISelected:boolean = false;
-
-  constructor(private fb: FormBuilder, private AppService: AppService) {}
+  msgs: Message[] = [];
+  
+  constructor(private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.fetchPartners();
@@ -31,19 +34,9 @@ export class PushUpdateComponent implements OnInit {
       DeviceModel: ['', Validators.required],
       CurrentBuildVersion: ['', Validators.required],
       UpdateName: ['', Validators.required],
-      IMEI1: ['']
+      IMEI: ['']
     });
 
-    // this.optionsPanel = [
-    //   {
-    //     label : 'Push on Production',
-    //     value: 'push_prod'
-    //   },
-    //   {
-    //     label: 'Push on IMEI',
-    //     value: 'push_imei'
-    //   }
-    // ];
 
     this.pushUpdate.get("partnerName").valueChanges.subscribe(partner => {
       this.fetchDeviceModel(partner);
@@ -141,8 +134,11 @@ export class PushUpdateComponent implements OnInit {
   onOptionSelected(event) {
     if(event.target.value == 'push_imei') {
       this.isIMEISelected = true;
+      this.pushUpdate.get('IMEI').enable();
+      
     }else {
       this.isIMEISelected = false;
+this.pushUpdate.get('IMEI').disable();
     }
 
 
@@ -151,8 +147,18 @@ export class PushUpdateComponent implements OnInit {
 
 
   onPushUpdate() {
+    this.isLoading = true;
       this.pushUpdate.value;
       this.AppService.pushUpdate(this.pushUpdate.value).subscribe(data => {
-      })
+        this.isLoading = false;
+        this.messageService.add({severity:'success', summary:'Message', detail:'Update Pushed to Production'});
+      },
+    err => {
+      this.isLoading = false;
+      this.messageService.add({severity:'error', summary:'Message', detail:'Update Push Failed!!'});
+
+    }
+    )
   }
 }
+
