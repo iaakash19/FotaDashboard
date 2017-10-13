@@ -72,20 +72,20 @@
 <div class="wrapper">
   <h2>Available Updates</h2>
   <p-dataTable [value]="updates">
-      <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="ActivationDate" header="Activation Date" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="AvailVersion" header="Available Version" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="BaseVersion" header="BaseVersion" [filter]="true" filterPlaceholder="Search"></p-column>
+      <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="ActivationDate" header="Activation Date" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="AvailVersion" header="Available Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="BaseVersion" header="BaseVersion" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
-      <p-column field="ChangeLog" header="Change Log" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="DeviceModel" header="Device Model" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="DeviceType" header="Device Type" [filter]="true" filterPlaceholder="Search"></p-column>
+      <p-column field="ChangeLog" header="Change Log" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="DeviceModel" header="Device Model" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="DeviceType" header="Device Type" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
-      <p-column field="DownloadSize" header="Download Size" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="DownloadUrl" header="Download Url" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="KeyHighLights" header="Key HighLights" [filter]="true" filterPlaceholder="Search"></p-column>
+      <p-column field="DownloadSize" header="Download Size" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="DownloadUrl" header="Download Url" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="KeyHighLights" header="Key HighLights" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
-      <p-column field="Md5" header="Md5" [filter]="true" filterPlaceholder="Search"></p-column>
-      <p-column field="UpdateName" header="UpdateName" [filter]="true" filterPlaceholder="Search"></p-column>
+      <p-column field="Md5" header="Md5" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="UpdateName" header="UpdateName" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
  </p-dataTable>
 </div>

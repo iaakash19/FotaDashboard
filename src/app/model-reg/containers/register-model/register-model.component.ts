@@ -86,7 +86,6 @@ export class RegisterModelComponent implements OnInit {
   }
 
   onFocus(event) {
-    debugger;
     if (!this.isMaskOn) {
       this.isMaskOn = true;
       this.AppService.setBodyClass("on");
@@ -97,7 +96,6 @@ export class RegisterModelComponent implements OnInit {
   }
 
   onChange(event) {
-    debugger;
     if (!this.isMaskOn) {
       this.isMaskOn = true;
       this.AppService.setBodyClass("on");

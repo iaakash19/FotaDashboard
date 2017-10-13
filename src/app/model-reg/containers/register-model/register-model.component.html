@@ -27,9 +27,12 @@
 
 <div class="wrapper">
   <h2> Available Models </h2>
+  <!-- <div class="ui-widget-header global-search" style="padding:4px 10px;border-bottom: 0 none">
+    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
+</div> -->
     <p-dataTable [value]="models">
-         <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search"></p-column>
-         <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search"></p-column>
-         <p-column field="DeviceModel" header="Device Model" [filter]="true" filterPlaceholder="Search"></p-column>
+         <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+         <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+         <p-column field="DeviceModel" header="Device Model" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
     </p-dataTable>
 </div>

@@ -98,7 +98,6 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.AuthService.login(this.loginForm.value).subscribe(
       (data:any) => {
-        debugger;
         this.AuthService.setToken(data.token);
         this.Router.navigate(['dashboard/home']);
       },

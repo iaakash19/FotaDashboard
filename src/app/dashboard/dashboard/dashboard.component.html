@@ -1,14 +1,17 @@
 
   <div class="side-nav">
+    <div class="logo">
+      <img src="assets/logo.png" alt="">
+    </div>
     <ul>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a [routerLink]="['/dashboard/home']">Home</a> 
       </li>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a [routerLink]="['/dashboard/register-oem']"> Regsiter Oem</a>
+        <a [routerLink]="['/dashboard/register-oem']"> Register Oem</a>
       </li>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a [routerLink]="['/dashboard/regsiter-model']"> Regsiter Model</a>
+        <a [routerLink]="['/dashboard/register-model']"> Register Model</a>
       </li>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a [routerLink]="['/dashboard/generate-update']"> Generate Update </a>

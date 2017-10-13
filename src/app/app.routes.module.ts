@@ -11,7 +11,7 @@ export const routes: Routes = [
 
     //   { path: 'client/home', component: HomeComponent},
     //   { path: 'testing', component: TestingComponent  },
-      { path: '**', redirectTo: ''},
+      { path: '**', redirectTo: 'dashboard/home'},
 
     ];
 

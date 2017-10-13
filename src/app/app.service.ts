@@ -91,4 +91,21 @@ export class AppService {
     return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
   }
 
+
+  getPartnersData() {
+    return this.Http.get(`${this.BASE_URL}partnerRegister/`);
+  }
+
+  getDeviceModelsData() {
+    return this.Http.get(`${this.BASE_URL}oemRegister/`);
+  }
+
+  getDevicesActivated() {
+    return this.Http.get(`${this.BASE_URL}register/`);
+  }
+
+  getUpdatesPushed() {
+    return this.Http.get(`${this.BASE_URL}pushUpdates/`);
+  }
+
 }

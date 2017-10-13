@@ -24,7 +24,6 @@ export class HttpInterceptorService implements HttpInterceptor {
       return next.handle(request);
     } else {
       const token: any = authService.getToken();
-      debugger;
       const custom_request = request.clone({
         headers: request.headers.set("Authorization", `Token ${token}`)
       });

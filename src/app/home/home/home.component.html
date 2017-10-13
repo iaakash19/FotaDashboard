@@ -1,3 +1,11 @@
-<p>
-  home works!
-</p>
+<div class="wrapper">
+  <h2>Partners Active: <span>{{partnerStats[0].value}}</span></h2>
+  <div class="statsWrap">
+    <ng-container *ngFor="let stat of partnerStats"> 
+      <div class="statsBox" *ngIf="stat.value && stat.label !== 'Partners Active:'">
+          <div class="value">{{ stat.value }}</div>
+          <label for="">{{ stat.label }}</label>
+      </div>
+    </ng-container> 
+  </div>
+</div>  

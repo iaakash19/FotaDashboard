@@ -38,7 +38,7 @@ const ROUTES: Routes = [
                 component: RegisterOemComponent
             },
             {
-                path: 'regsiter-model',
+                path: 'register-model',
                 component: RegisterModelComponent
             }
         ]

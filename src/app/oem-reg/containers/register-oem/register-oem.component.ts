@@ -112,8 +112,10 @@ fetchPartners() {
     this.isLoading = true;
     this.AppService.registerOem(this.oemRegister.value).subscribe(
       data => {
+        this.fetchPartners();
+        this.oemRegister.reset();
         this.isLoading = false;
-        this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully regstered'});
+        this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully registered'});
       },
       err => {
         this.isLoading = false;

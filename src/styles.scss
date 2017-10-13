@@ -404,7 +404,7 @@ animation-delay: 250ms;
   display: block;
   position: absolute;
   bottom: -15px;
-  right: 0;
+  right: 15px;
 }
 
 .logo {
@@ -439,5 +439,12 @@ login {
   }
   p {
     margin: 0;
+  }
+}
+
+.global-search {
+  text-align: right;
+  input {
+    padding: 0.5rem;
   }
 }

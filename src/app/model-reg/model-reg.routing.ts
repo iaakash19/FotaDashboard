@@ -4,9 +4,9 @@ import { RegisterModelComponent } from './containers/register-model/register-mod
 
 const ROUTES: Routes = [
     {
-        path: 'regsiter-model',
+        path: 'register-model',
         component: RegisterModelComponent,
-        data: { state: 'regsiter-model'} 
+        data: { state: 'register-model'} 
     }
 ]
 
