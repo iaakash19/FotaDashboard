@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-  
+
     this.fetchData();
   }
 
@@ -71,28 +71,28 @@ export class HomeComponent implements OnInit {
         chart: { type: 'column', width: 800 },
         title: {
           text: 'Total Number of Devices Activated'
-        }, 
-      //   legend: {
-      //     align: 'right',
-      //     x: -30,
-      //     verticalAlign: 'top',
-      //     y: 25,
-      //     floating: true,
-      //     borderColor: '#CCC',
-      //     borderWidth: 1,
-      //     shadow: false
-      // },
+        },
+        //   legend: {
+        //     align: 'right',
+        //     x: -30,
+        //     verticalAlign: 'top',
+        //     y: 25,
+        //     floating: true,
+        //     borderColor: '#CCC',
+        //     borderWidth: 1,
+        //     shadow: false
+        // },
         plotOptions: {
           series: {
-              pointWidth: 30
+            pointWidth: 30
           },
           column: {
             stacking: 'normal',
             pointPadding: 0.2,
             borderWidth: 0
-        }
+          }
 
-      },
+        },
         xAxis: {
           categories: [
             'Jan',
@@ -115,23 +115,23 @@ export class HomeComponent implements OnInit {
           min: 1,
           stackLabels: {
             enabled: true
-        },
+          },
           title: {
             text: 'Total Number'
           }
         },
-        series:dataToMap
+        series: dataToMap
       };
     });
 
-   
+
   }
 
   collectionCurator(dataStack) {
-    
+
     let res = Array(12).fill(0);
     dataStack.forEach(item => {
-      res[item.month-1] = item.total;
+      res[item.month - 1] = item.total;
     });
     return res;
   }

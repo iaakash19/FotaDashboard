@@ -20,7 +20,7 @@ export class GenerateUpdateComponent implements OnInit {
   msgs: Message[] = [];
   isLoading: boolean = false;
   isCurrentBuild: boolean = false;
-  currentVersions: any = [];
+  baseVersions: any = [];
 
   constructor(private fb: FormBuilder, private AppService: AppService,  private messageService: MessageService) {}
 
@@ -34,6 +34,7 @@ export class GenerateUpdateComponent implements OnInit {
     
     this.generateUpdate = this.fb.group({
       partnerName: ["", Validators.required],
+      BaseVersion: ["", Validators.required],
       UpdateName: ["", Validators.required],
       AvailVersion: ["", Validators.required],
       ChangeLog: ["", Validators.required],
@@ -54,17 +55,17 @@ export class GenerateUpdateComponent implements OnInit {
   }
 
   fetchCurrentBuild(model) {
-    this.currentVersions = [];
-    this.AppService.getCurrentBuild(this.generateUpdate.value.partnerName, model).subscribe((currentBuild:any) => {
-
-      this.currentVersions = currentBuild.map(item => {
+    this.baseVersions = [];
+    this.AppService.getCurrentBuild(this.generateUpdate.value.partnerName, model).subscribe((data:any) => {
+      debugger;
+      this.baseVersions = data.results.map(item => {
         return {
-          label: item.AvailVersion,
-          value: item.AvailVersion
+          label: item.CurrentBuildVersion,
+          value: item.CurrentBuildVersion
         }
       });
-      this.currentVersions.unshift({
-        label: 'Select Available Versions',
+      this.baseVersions.unshift({
+        label: 'Select Base Versions',
         value: null
        });
 

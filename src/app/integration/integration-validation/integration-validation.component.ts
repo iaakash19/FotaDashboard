@@ -39,7 +39,7 @@ export class IntegrationValidationComponent implements OnInit {
     });
     
     this.testUpdate.get('IMEI').valueChanges.subscribe(data => {
-      data.length == 15 ? this.showIMEIcheck = true : this.showIMEIcheck = false;
+      data.length == 15 ? this.fetchIMEIDetails() : this.IMEI_details = null;
     })
   
     this.testUpdate.get("partnerName").valueChanges.subscribe(partner => {

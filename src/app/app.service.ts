@@ -56,12 +56,13 @@ export class AppService {
   }
 
   getCurrentBuild(partner, model) {
-    return this.Http.get(`${this.BASE_URL}updateGen/`,{
+    return this.Http.get(`${this.BASE_URL}register/`,{
       params: new HttpParams()
         .set("partnerName", partner)
         .set("DeviceModel", model)
     });
   }
+
 
   getUpdatesAvailable(partner, model, currentVersion) {
     return this.Http.get(`${this.BASE_URL}updateGen/`,{
