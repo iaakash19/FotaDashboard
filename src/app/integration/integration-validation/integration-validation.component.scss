@@ -1,0 +1,32 @@
+.IMEI_wrap {
+    background: #F2F4F8;
+    padding: 1rem;
+    border: 1px solid #e3e3e3;
+    display: flex;
+    max-width: 550px;
+    flex-flow: row wrap;
+}
+
+.row {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    margin-bottom: 10px;
+    flex: 0 0 50%;
+    label {
+        font-weight: bold;
+        text-transform: capitalize;
+        margin-right: 10px;
+    }
+    span.value {
+        text-transform: capitalize;
+    }
+}
+
+.check-imei {
+    margin-left: 15px;
+}
+
+.row.button-row {
+    flex: 0 0 100%;
+}

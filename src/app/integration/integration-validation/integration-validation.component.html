@@ -2,8 +2,8 @@
 <div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
 
 <div class="wrapper">
-  <h2>Push Update</h2>
-  <form [formGroup]="pushUpdate" (submit)="onPushUpdate()">
+  <h2>Set up Test Updates</h2>
+  <form [formGroup]="testUpdate" (submit)="testUpdates()">
 
     <div class="row">
       <div class="form-group">
@@ -29,8 +29,28 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label for="">IMEI1</label>
+      <input type="text" formControlName="IMEI">
+      <button *ngIf="showIMEIcheck" type="button" class="check-imei btn btn-success btn-small" (click)="fetchIMEIDetails()">Get IMEI Details</button>
+    </div>
+    867400020316612
+    <div class="IMEI_box" *ngIf="IMEI_details">
+      <h4>Details</h4>
+      <div class="IMEI_wrap">
+      <ng-container *ngFor="let detail of IMEI_details | repover_obj">
+          <div class="row">
+            <label for="">{{ detail.key }}</label>
+            <span class="value"> {{ detail.value }} </span>
+          </div>
+      </ng-container>
+        <div class="row button-row right">
+          <button class="btn btn-small btn-warning" type="button">Delete</button>
+        </div>
+      </div>
+    </div>
     <div class="row button-row right">
-      <button class="btn btn-success" type="submit" [disabled]="!pushUpdate.valid">Push</button>
+      <button class="btn btn-success" type="submit" [disabled]="!testUpdate.valid">Test</button>
     </div>
   </form>
 </div>

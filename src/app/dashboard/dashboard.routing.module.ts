@@ -6,8 +6,8 @@ import { HomeComponent } from './../home/home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-
 import { AuthGuardService } from '../auth/auth.guard';
+import { IntegrationValidationComponent } from '../integration/integration-validation/integration-validation.component';
 
 const ROUTES: Routes = [
     {
@@ -40,7 +40,12 @@ const ROUTES: Routes = [
             {
                 path: 'register-model',
                 component: RegisterModelComponent
-            }
+            },
+            {
+                path: 'integration-validation',
+                component: IntegrationValidationComponent
+            },
+
         ]
     }
 ]

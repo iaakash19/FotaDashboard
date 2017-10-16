@@ -1,8 +1,9 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { AppService } from "./../../../app.service";
 import {Message} from 'primeng/primeng';
 import {MessageService} from 'primeng/components/common/messageservice';
+
 @Component({
   selector: "app-generate-update",
   templateUrl: "./generate-update.component.html",
@@ -18,19 +19,23 @@ export class GenerateUpdateComponent implements OnInit {
   updates:any;
   msgs: Message[] = [];
   isLoading: boolean = false;
+  isCurrentBuild: boolean = false;
+  currentVersions: any = [];
 
   constructor(private fb: FormBuilder, private AppService: AppService,  private messageService: MessageService) {}
 
+  @ViewChild('logo') logo;
+  
   ngOnInit() {
     this.fetchPartners();
     this.fetchDeviceType();
     this.fetchAllUpdates();
 
+    
     this.generateUpdate = this.fb.group({
       partnerName: ["", Validators.required],
       UpdateName: ["", Validators.required],
       AvailVersion: ["", Validators.required],
-      BaseVersion: ["", Validators.required],
       ChangeLog: ["", Validators.required],
       DeviceType: ["", Validators.required],
       DeviceModel: ["", Validators.required],
@@ -42,6 +47,30 @@ export class GenerateUpdateComponent implements OnInit {
       this.fetchDeviceModel(data);
       this.isDeviceModel = true;
     });
+    this.generateUpdate.get("DeviceModel").valueChanges.subscribe(data => {
+      this.fetchCurrentBuild(data);
+    });
+    
+  }
+
+  fetchCurrentBuild(model) {
+    this.currentVersions = [];
+    this.AppService.getCurrentBuild(this.generateUpdate.value.partnerName, model).subscribe((currentBuild:any) => {
+
+      this.currentVersions = currentBuild.map(item => {
+        return {
+          label: item.AvailVersion,
+          value: item.AvailVersion
+        }
+      });
+      this.currentVersions.unshift({
+        label: 'Select Available Versions',
+        value: null
+       });
+
+       this.isCurrentBuild = true;
+
+    })
   }
 
   fetchPartners() {
@@ -109,8 +138,13 @@ export class GenerateUpdateComponent implements OnInit {
       .subscribe(
         data => {
           this.fetchAllUpdates();
+          
           this.isLoading = false;
           this.generateUpdate.reset();
+          this.logo.clear();
+          this.isDeviceModel = false;
+          this.isCurrentBuild = false;
+          
           this.messageService.add({severity:'success', summary:'Message', detail:'Update Succesfully generated'});
         },
         err => {

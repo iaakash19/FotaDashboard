@@ -32,3 +32,10 @@ h2{
         margin-left: 15px;
     }
 }
+
+chart {
+    width:800px;
+    & > div{
+        width: 100% !important;
+    }
+}

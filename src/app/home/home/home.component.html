@@ -1,4 +1,4 @@
-<div class="wrapper">
+<!-- <div class="wrapper">
   <h2>Partners Active: <span>{{partnerStats[0].value}}</span></h2>
   <div class="statsWrap">
     <ng-container *ngFor="let stat of partnerStats"> 
@@ -8,4 +8,9 @@
       </div>
     </ng-container> 
   </div>
-</div>  
+</div>   -->
+
+<div class="container" style="min-width: 310px; height: 400px; margin: 0 auto">
+  <chart [options]="deviceActivatedConf"></chart>
+  
+</div>

@@ -101,11 +101,15 @@ export class AppService {
   }
 
   getDevicesActivated() {
-    return this.Http.get(`${this.BASE_URL}register/`);
+    return this.Http.get(`${this.BASE_URL}tCount/`);
   }
 
   getUpdatesPushed() {
     return this.Http.get(`${this.BASE_URL}pushUpdates/`);
+  }
+
+  getdetailsByIMEI1(IMEI1) {
+    return this.Http.get(`${this.BASE_URL}register/?IMEI1=${IMEI1}`);    
   }
 
 }

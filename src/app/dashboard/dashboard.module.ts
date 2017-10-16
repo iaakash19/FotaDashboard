@@ -6,6 +6,8 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { IntegrationModule } from '../integration/integration.module';
+
 
 @NgModule({
   imports: [
@@ -13,8 +15,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HomeModule,
     OemRegModule,
     ModelRegModule,
+    IntegrationModule,
     GenerateUpdateModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
   ],
   declarations: [DashboardComponent]
 })

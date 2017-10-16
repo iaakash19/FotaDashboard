@@ -448,3 +448,18 @@ login {
     padding: 0.5rem;
   }
 }
+
+.ui-fileupload-content {
+  .ui-messages {
+    display: none !important;
+  }
+}
+
+.btn-small {
+padding: 0.37rem 0.9rem;
+font-size: 0.75rem;
+}
+
+.btn-warning {
+background: #d9534f;
+}

@@ -1,17 +1,19 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AppService } from "../../../app.service";
 import {Message} from 'primeng/primeng';
 import {MessageService} from 'primeng/components/common/messageservice';
+import { AppService } from '../../app.service';
+
 @Component({
-  selector: "app-push-update",
-  templateUrl: "./push-update.component.html",
-  styleUrls: ["./push-update.component.scss"],
+  selector: 'app-integration-validation',
+  templateUrl: './integration-validation.component.html',
+  styleUrls: ['./integration-validation.component.scss'],
   providers: [MessageService]
 })
-export class PushUpdateComponent implements OnInit {
-
-  pushUpdate: FormGroup;
+export class IntegrationValidationComponent implements OnInit {
+  IMEI_details = null;
+  showIMEIcheck: boolean = false;
+  testUpdate: FormGroup;
   partners:any;
   models:any;
   currentVersions:any;
@@ -28,25 +30,29 @@ export class PushUpdateComponent implements OnInit {
   ngOnInit() {
     this.fetchPartners();
 
-
-    this.pushUpdate = this.fb.group({
+    this.testUpdate = this.fb.group({
       partnerName: ['', Validators.required],
       DeviceModel: ['', Validators.required],
       CurrentBuildVersion: ['', Validators.required],
-      UpdateName: ['', Validators.required]
+      UpdateName: ['', Validators.required],
+      IMEI: ['', Validators.required]
     });
-
-
-    this.pushUpdate.get("partnerName").valueChanges.subscribe(partner => {
+    
+    this.testUpdate.get('IMEI').valueChanges.subscribe(data => {
+      data.length == 15 ? this.showIMEIcheck = true : this.showIMEIcheck = false;
+    })
+  
+    this.testUpdate.get("partnerName").valueChanges.subscribe(partner => {
       this.fetchDeviceModel(partner);
 
     });
 
-    this.pushUpdate.get("DeviceModel").valueChanges.subscribe(model => {
+    this.testUpdate.get("DeviceModel").valueChanges.subscribe(model => {
       this.fetchCurrentBuild(model);
+
     });
 
-    this.pushUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
+    this.testUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
       this.fetchUpdateAvailable(currentVersion);
 
     });
@@ -54,7 +60,7 @@ export class PushUpdateComponent implements OnInit {
   }
 
   fetchCurrentBuild(model) {
-    this.AppService.getCurrentBuild(this.pushUpdate.value.partnerName, model).subscribe((currentBuild:any) => {
+    this.AppService.getCurrentBuild(this.testUpdate.value.partnerName, model).subscribe((currentBuild:any) => {
 
       this.currentVersions = currentBuild.map(item => {
         return {
@@ -73,7 +79,7 @@ export class PushUpdateComponent implements OnInit {
   }
 
   fetchUpdateAvailable(currentVersion) {
-    this.AppService.getUpdatesAvailable(this.pushUpdate.value.partnerName, this.pushUpdate.value.DeviceModel, currentVersion).subscribe((updates:any) => {
+    this.AppService.getUpdatesAvailable(this.testUpdate.value.partnerName, this.testUpdate.value.DeviceModel, currentVersion).subscribe((updates:any) => {
 
             this.updates = updates.map(item => {
               return {
@@ -127,22 +133,28 @@ export class PushUpdateComponent implements OnInit {
 
     })
   }
-
-
-
-  onPushUpdate() {
+  fetchIMEIDetails() {
+    this.AppService.getdetailsByIMEI1(this.testUpdate.get('IMEI').value)
+      .subscribe((data:any) => {
+        this.IMEI_details = data.results[0];
+      })
+  }
+  testUpdates() {
     this.isLoading = true;
-      this.pushUpdate.value;
-      this.AppService.pushUpdate(this.pushUpdate.value).subscribe(data => {
+      this.testUpdate.value;
+      debugger;
+      this.AppService.pushUpdate(this.testUpdate.value).subscribe(data => {
+        this.testUpdate.reset();
         this.isLoading = false;
-        this.messageService.add({severity:'success', summary:'Message', detail:'Update Pushed to Production'});
+
+        this.messageService.add({severity:'success', summary:'Message', detail:'Success'});
       },
     err => {
       this.isLoading = false;
-      this.messageService.add({severity:'error', summary:'Message', detail:'Update Push Failed!!'});
+      this.messageService.add({severity:'error', summary:'Message', detail:'Failed!!'});
 
     }
     )
   }
-}
 
+}
