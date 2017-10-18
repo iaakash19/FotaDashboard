@@ -58,8 +58,8 @@ export class PushUpdateComponent implements OnInit {
 
       this.currentVersions = currentBuild.map(item => {
         return {
-          label: item.BaseVersion,
-          value: item.BaseVersion
+          label: item,
+          value: item
         }
       });
       this.currentVersions.unshift({

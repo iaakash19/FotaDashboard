@@ -1,5 +1,8 @@
 import { AppService } from "./../../app.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { SelectItem } from 'primeng/primeng';
+
+declare var $: any;
 
 @Component({
   selector: "app-home",
@@ -8,7 +11,26 @@ import { Component, OnInit } from "@angular/core";
 })
 export class HomeComponent implements OnInit {
 
+  @ViewChild('container') container: ElementRef;
+
   deviceActivatedConf: any;
+  updatesPushedConf: any;
+  updatesCompletedConf: any;
+  APKConf: any;
+  deviceModelsConf:any;
+
+  activatedDevices: SelectItem[];
+  devices_forupdatesPushed: SelectItem[];
+  devices_forupdatesCompleted: SelectItem[];
+  devices_forAPK: SelectItem[];
+  deviceModels:  SelectItem[];
+
+  selectedActivatedDevices: string[] = [];
+  selected_devices_forupdatesPushed: string[] = [];
+  selected_devices_forupdatesCompleted: string[] = [];
+  selected_devices_forAPK: string[] = [];
+  selected_deviceModels: string[] = [];
+
   monthSlab: [
     'Jan',
     'Feb',
@@ -32,15 +54,13 @@ export class HomeComponent implements OnInit {
     { key: 'updatesPushed', label: 'Total updates pushed', value: null },
     { key: 'updatesCompleted', label: 'Total updates completed', value: null }
   ];
+  chart1: any;
+  chart2: any;
+  chart3: any;
+  chart4: any;
+  chart5:any;
 
   constructor(private AppService: AppService) {
-    //   this.options = {
-    //     title : { text : 'simple chart' },
-    //     series: [{
-    //         data: [29.9, 71.5, 106.4, 129.2],
-    //     }]
-    // };
-
   }
 
 
@@ -49,83 +69,219 @@ export class HomeComponent implements OnInit {
     this.fetchData();
   }
 
+  saveInstance1(chartInstance) {
+    this.chart1 = chartInstance;
+  }
+  handleLegendChange1(event) {
+    event.value; //array of index
+    var series = this.chart1.series;
+
+    for (var i = 0; i < series.length; i++) {
+      series[i].hide();
+    }
+    event.value.map(i => {
+      series[i].show();
+    })
+  }
+
+  saveInstance2(chartInstance) {
+    this.chart2 = chartInstance;
+  }
+
+  handleLegendChange2(event) {
+    event.value; //array of index
+    var series = this.chart2.series;
+
+    for (var i = 0; i < series.length; i++) {
+      series[i].hide();
+    }
+    event.value.map(i => {
+      series[i].show();
+    })
+  }
+
+  saveInstance3(chartInstance) {
+    this.chart3 = chartInstance;
+  }
+
+  handleLegendChange3(event) {
+    event.value; //array of index
+    var series = this.chart3.series;
+
+    for (var i = 0; i < series.length; i++) {
+      series[i].hide();
+    }
+    event.value.map(i => {
+      series[i].show();
+    })
+  }
+
+  saveInstance4(chartInstance) {
+    this.chart4 = chartInstance;
+  }
+
+  handleLegendChange4(event) {
+    event.value; //array of index
+    var series = this.chart4.series;
+
+    for (var i = 0; i < series.length; i++) {
+      series[i].hide();
+    }
+    event.value.map(i => {
+      series[i].show();
+    })
+  }
+
+  saveInstance5(chartInstance) {
+    this.chart5 = chartInstance;
+  }
+
+  handleLegendChange5(event) {
+    event.value; //array of index
+    var series = this.chart5.series;
+
+    for (var i = 0; i < series.length; i++) {
+      series[i].hide();
+    }
+    event.value.map(i => {
+      series[i].show();
+    })
+  }
+
+  graphGenerator(graph_title, data, xAxis, stacked = true) {
+    var config = {
+      chart: { type: 'column', width: 800 },
+      legend: {
+        enabled: false
+      },
+      title: {
+        text: graph_title
+      },
+      plotOptions: {
+        series: {
+          pointWidth: 30
+        },
+        column: {
+          stacking: 'normal',
+          pointPadding: 0.2,
+          borderWidth: 0
+        }
+      },
+      xAxis: {
+        categories: xAxis,
+        crosshair: true
+      },
+      yAxis: {
+        // tickInterval: 1,
+        min: 0,
+        stackLabels: {
+          enabled: true
+        },
+        title: {
+          text: 'Total Number'
+        }
+      },
+      series: data
+    };
+
+    return config;
+  }
+
+  dataMapper(data) {
+    return data.map(item => {
+      return {
+        name: item.model,
+        data: this.collectionCurator(item.count)
+      }
+    });
+  }
+
+  optionMaker(data) {
+    return data.map((data, index) => {
+      this.selectedActivatedDevices.push(index);
+      this.selected_devices_forupdatesPushed.push(index);
+      this.selected_devices_forupdatesCompleted.push(index);
+      this.selected_devices_forAPK.push(index);
+      return {
+        label: data.name,
+        value: index
+      }
+    });
+
+  }
   fetchData() {
-    // this.AppService.getPartnersData().subscribe((data: any) => {
-    //   this.partnerStats[0]['value'] = data.length;
-    // });
 
-    // this.AppService.getDeviceModelsData().subscribe((data: any) => {
-    //   this.partnerStats[1]['value'] = data.length;
-    // });
-
+    // 1. Devices Activated
     this.AppService.getDevicesActivated().subscribe((data: any) => {
+
+      let dataToMap = this.dataMapper(data);
+      this.activatedDevices = this.optionMaker(dataToMap);
+      this.deviceActivatedConf = this.graphGenerator('Total Number of Device Activated', dataToMap, this.monthSlab);
+    });
+
+
+    //2. Updates Pushed
+    this.AppService.getUpdatesPushed().subscribe((data: any) => {
+      let dataToMap = this.dataMapper(data);
+      // this.devices_forupdatesPushed = this.optionMaker(dataToMap);      
+      this.updatesPushedConf = this.graphGenerator('Total Number of Updates Pushed', dataToMap, this.monthSlab);
+    });
+
+    //3. Updates Completed
+    this.AppService.getUpdatesCompleted().subscribe((data: any) => {
 
       let dataToMap = data.map(item => {
         return {
           name: item.model,
-          data: this.collectionCurator(item.count)
+          data: this.collectionCurator1(item.update_count)
+        }
+      });
+      // this.devices_forupdatesCompleted = this.optionMaker(dataToMap);      
+
+      this.updatesCompletedConf = this.graphGenerator('Total Number of Updates Completed', dataToMap, this.monthSlab);
+    });
+
+    // 4. APK
+    this.AppService.getTotalOnAPK().subscribe((data: any) => {
+
+      let dataToMap = data.map(item => {
+        return {
+          name: item.model,
+          data: this.collectionCuratorForApk(item.apk_version_count)
+        }
+      });
+      // this.devices_forAPK = this.optionMaker(dataToMap);      
+
+      this.APKConf = this.graphGenerator('Total Devices on APK version', dataToMap, ['2.0.2', '2.0.3']);
+    });
+    
+    //5. Device Models
+    this.AppService.getDeviceModelsData().subscribe((data: any) => {
+      
+      this.deviceModels = data.map((item, index) => {
+        this.selected_deviceModels.push(index);
+        return {
+          label: item.partner,
+          value: index
         }
       });
 
-      this.deviceActivatedConf = {
-        chart: { type: 'column', width: 800 },
-        title: {
-          text: 'Total Number of Devices Activated'
-        },
-        //   legend: {
-        //     align: 'right',
-        //     x: -30,
-        //     verticalAlign: 'top',
-        //     y: 25,
-        //     floating: true,
-        //     borderColor: '#CCC',
-        //     borderWidth: 1,
-        //     shadow: false
-        // },
-        plotOptions: {
-          series: {
-            pointWidth: 30
-          },
-          column: {
-            stacking: 'normal',
-            pointPadding: 0.2,
-            borderWidth: 0
-          }
+      let dataToMap = data.map(item => {
+        return {
+          name: item.partner,
+          data: [item.count]
+        }
+      });
 
-        },
-        xAxis: {
-          categories: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
-          ],
-          crosshair: true
-        },
-        yAxis: {
-          // tickInterval: 1,
-          min: 1,
-          stackLabels: {
-            enabled: true
-          },
-          title: {
-            text: 'Total Number'
-          }
-        },
-        series: dataToMap
-      };
-    });
+      let xAxis = data.map(item => {
+        return item.partner
+      })
 
-
+      this.deviceModelsConf = this.graphGenerator('Total Device Models', dataToMap, xAxis, false);
+      
+    })
   }
+
 
   collectionCurator(dataStack) {
 
@@ -135,4 +291,24 @@ export class HomeComponent implements OnInit {
     });
     return res;
   }
+
+  collectionCurator1(dataStack) {
+
+    let res = Array(12).fill(0);
+    dataStack.forEach(item => {
+      res[item.month - 1] = item.count;
+    });
+
+    return res;
+  }
+
+  collectionCuratorForApk(dataStack) {
+    let res = [];
+    Object.keys(dataStack).map(key => {
+      res.push(dataStack[key]);
+    });
+    return res;
+  }
+
+
 }

@@ -35,7 +35,13 @@ h2{
 
 chart {
     width:800px;
+    margin-bottom: 3rem;
     & > div{
         width: 100% !important;
     }
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: column nowrap;
 }

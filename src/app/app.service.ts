@@ -56,7 +56,7 @@ export class AppService {
   }
 
   getCurrentBuild(partner, model) {
-    return this.Http.get(`${this.BASE_URL}register/`,{
+    return this.Http.get(`${this.BASE_URL}getBaseVersion/`,{
       params: new HttpParams()
         .set("partnerName", partner)
         .set("DeviceModel", model)
@@ -98,7 +98,7 @@ export class AppService {
   }
 
   getDeviceModelsData() {
-    return this.Http.get(`${this.BASE_URL}oemRegister/`);
+    return this.Http.get(`${this.BASE_URL}mCount/`);
   }
 
   getDevicesActivated() {
@@ -106,11 +106,39 @@ export class AppService {
   }
 
   getUpdatesPushed() {
-    return this.Http.get(`${this.BASE_URL}pushUpdates/`);
+    return this.Http.get(`${this.BASE_URL}pCount/`);
+  }
+
+  getUpdatesCompleted() {
+    return this.Http.get(`${this.BASE_URL}cCount/`);
+  }
+
+  getTotalOnAPK() {
+    return this.Http.get(`${this.BASE_URL}aCount/`);
   }
 
   getdetailsByIMEI1(IMEI1) {
     return this.Http.get(`${this.BASE_URL}register/?IMEI1=${IMEI1}`);    
+  }
+
+  // Display - http://devfota.gammo.me/notify/fotav/display/
+  // Update Report - http://devfota.gammo.me/notify/fotav/updateReport/
+  // Activation report- http://devfota.gammo.me/notify/fotav/activationReport/
+  // Failed Report - http://devfota.gammo.me/notify/fotav/failedReport/
+
+  getDisplayReport() {
+    return this.Http.get(`${this.BASE_URL}display/`);
+  }
+  getUpdateReport() {
+    return this.Http.get(`${this.BASE_URL}updateReport/`);
+  }
+
+  getActivationReport() {
+    return this.Http.get(`${this.BASE_URL}activationReport/`);
+  }
+
+  getFailedReport() {
+    return this.Http.get(`${this.BASE_URL}failedReport/`);
   }
 
 }

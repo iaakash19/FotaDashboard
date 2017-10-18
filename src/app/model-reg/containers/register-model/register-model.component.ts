@@ -17,7 +17,7 @@ import { MessageService } from "primeng/components/common/messageservice";
 export class RegisterModelComponent implements OnInit {
   modelRegister: FormGroup;
   partners: any;
-  token: any;
+  token: any = null;
   models: any;
   isMaskOn: boolean = false;
   msgs: Message[] = [];
@@ -35,6 +35,30 @@ export class RegisterModelComponent implements OnInit {
     this.modelRegister = this.fb.group({
       partnerName: ["", Validators.required],
       DeviceModel: ["", Validators.required]
+    });
+  }
+
+  showToken() {
+    const prop = `# begin fota properties
+    ro.build.date.utc=<Build UTC Time Stamp>
+    ro.fota.platform=<chipset>_<OS>
+    ro.fota.type=phone
+    ro.fota.app=2.0.0
+    ro.fota.oem=<oemname>_<chipset>_<os>
+    ro.fota.device=<ModelMarketName>
+    ro.fota.version=<OEM>_<Modelname>_<buildversioncode>_<ro.build.date.utc>
+    ro.fota.token=<${this.token}>
+    # end fota properties`;
+
+    return prop;
+  }
+
+
+  showToast() {
+    this.messageService.add({
+      severity: "success",
+      summary: "Message",
+      detail: "Build.Prop Copied"
     });
   }
 
@@ -72,6 +96,7 @@ export class RegisterModelComponent implements OnInit {
           detail: "Model Succesfully regstered"
         });
         this.token = data.Token;
+        // this.showToken(this.token);
         this.fetchModels();
       },
       err => {

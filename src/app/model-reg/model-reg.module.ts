@@ -5,14 +5,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ModelRoutingModule } from './model-reg.routing';
 import { SharedModule } from '../shared/shared.module';
 
-
+import { ClipboardModule } from 'ngx-clipboard';
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    ModelRoutingModule
+    ModelRoutingModule,
+    ClipboardModule
   ],
   declarations: [RegisterModelComponent]
 })

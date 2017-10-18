@@ -57,11 +57,10 @@ export class GenerateUpdateComponent implements OnInit {
   fetchCurrentBuild(model) {
     this.baseVersions = [];
     this.AppService.getCurrentBuild(this.generateUpdate.value.partnerName, model).subscribe((data:any) => {
-      debugger;
-      this.baseVersions = data.results.map(item => {
+      this.baseVersions = data.map(item => {
         return {
-          label: item.CurrentBuildVersion,
-          value: item.CurrentBuildVersion
+          label: item,
+          value: item
         }
       });
       this.baseVersions.unshift({

@@ -1,0 +1,44 @@
+<p-dataTable [value]="failed_report">
+    <p-column field="IMEI1" header="IMEI1" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+    <p-column field="IMEI2" header="IMEI2" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+    <p-column field="currentVersion" header="Current Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+    <p-column field="activatinVersion" header="Activation Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+    <p-column field="partner" header="Partner" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+    <p-column field="model" header="Model" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+    <p-column field="newVersion" header="New Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+    
+    <p-column header="Failure Date">
+            <ng-template let-data="rowData" pTemplate="body">
+            {{data.failureDate | date:'medium'}}
+            </ng-template>
+        </p-column>
+
+        <p-column header="Failure Reason">
+                <ng-template let-data="rowData" pTemplate="body">
+                <ul>
+                    <li *ngFor="let reason of data.failureReason">{{reason}}</li>
+                </ul>
+                </ng-template>
+            </p-column>
+
+
+      </p-dataTable>
+
+  <!-- {
+    "IMEI1": "1",
+    "IMEI2": "2",
+    "failureDate": "2017-08-30T12:35:24.788000",
+    "currentVersion": "BuildVersion01",
+    "activatinVersion": "BuildVersion01",
+    "partner": "intex",
+    "model": "INTEX AQUA CRYSTAL+",
+    "newVersion": "v03",
+    "failureReason": [
+        "install_fail"
+    ]
+}, -->
+
+<!-- "failureReason": [
+"install_fail"
+]
+"failureDate": "2017-08-30T12:35:24.788000", -->

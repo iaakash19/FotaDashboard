@@ -9,8 +9,39 @@
     </ng-container> 
   </div>
 </div>   -->
+<div class="wrapper">
+<div id="container">
+  <chart [options]="deviceActivatedConf" (load)="saveInstance1($event.context)"></chart>
+  <p-multiSelect [options]="activatedDevices" [(ngModel)]="selectedActivatedDevices" (onChange)="handleLegendChange1($event)"></p-multiSelect>
+</div>
 
-<div class="container" style="min-width: 310px; height: 400px; margin: 0 auto">
-  <chart [options]="deviceActivatedConf"></chart>
+<div id="container">
+  <chart [options]="updatesPushedConf" (load)="saveInstance2($event.context)"></chart> 
+  <p-multiSelect [options]="activatedDevices" [(ngModel)]="selected_devices_forupdatesPushed" (onChange)="handleLegendChange2($event)"></p-multiSelect>  
+</div>
+ 
+<div id="container">
+  <chart [options]="updatesCompletedConf" (load)="saveInstance3($event.context)"></chart> 
+  <p-multiSelect [options]="activatedDevices" [(ngModel)]="selected_devices_forupdatesCompleted" (onChange)="handleLegendChange3($event)"></p-multiSelect>    
+</div>
   
+<div id="container">
+  
+  <chart [options]="APKConf" (load)="saveInstance4($event.context)"></chart> 
+  <p-multiSelect [options]="activatedDevices" [(ngModel)]="selected_devices_forAPK" (onChange)="handleLegendChange4($event)"></p-multiSelect>    
+  
+  </div>
+  
+  <div id="container">
+    
+    <chart [options]="deviceModelsConf" (load)="saveInstance5($event.context)"></chart> 
+    <p-multiSelect [options]="deviceModels" [(ngModel)]="selected_deviceModels" (onChange)="handleLegendChange5($event)"></p-multiSelect>    
+    
+    </div>
+
+  
+  <!-- 
+   -->
+  <!-- {{ activatedDevices | json }} -->
+  <!-- <pre>{{ selectedActivatedDevices }}</pre> -->
 </div>

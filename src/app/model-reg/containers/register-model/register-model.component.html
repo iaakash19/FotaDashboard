@@ -18,6 +18,14 @@
         </div>
   </div>
 
+  <div class="tokenWrap" *ngIf="token" #build>
+      <h2>Build.Prop</h2>
+      {{showToken()}}
+      <!-- <input type="text" class="propDisplay" name="" id="" cols="30" rows="10" #build [value]="showToken()">
+ 
+    <button class="btn btn-small" type="button" ngxClipboard="build" (cbOnSuccess)="showToast()">Copy</button> -->
+  </div>
+
 
 <div class="row button-row right">
     <button class="btn btn-success" type="submit" [disabled]="!modelRegister.valid">Save and Generate Token</button>

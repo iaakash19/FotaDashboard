@@ -64,8 +64,8 @@ export class IntegrationValidationComponent implements OnInit {
 
       this.currentVersions = currentBuild.map(item => {
         return {
-          label: item.BaseVersion,
-          value: item.BaseVersion
+          label: item,
+          value: item
         }
       });
       this.currentVersions.unshift({
@@ -142,7 +142,6 @@ export class IntegrationValidationComponent implements OnInit {
   testUpdates() {
     this.isLoading = true;
       this.testUpdate.value;
-      debugger;
       this.AppService.pushUpdate(this.testUpdate.value).subscribe(data => {
         this.testUpdate.reset();
         this.isLoading = false;

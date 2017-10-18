@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DropdownModule, FileUploadModule, GrowlModule, DataTableModule, PaginatorModule } from 'primeng/primeng';
+import { TabViewModule, DropdownModule, FileUploadModule, GrowlModule, DataTableModule, PaginatorModule, MultiSelectModule } from 'primeng/primeng';
 import { RepOverObjPipe } from './repOver_obj.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     DropdownModule,
-    FileUploadModule
+    FileUploadModule,
+    TabViewModule
   ],
-  exports: [DropdownModule, FileUploadModule, DataTableModule, GrowlModule,RepOverObjPipe],
+  exports: [DropdownModule, FileUploadModule, DataTableModule, GrowlModule,RepOverObjPipe, MultiSelectModule, TabViewModule],
   declarations: [RepOverObjPipe]
 })
 export class SharedModule { }
