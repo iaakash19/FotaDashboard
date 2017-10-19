@@ -22,6 +22,8 @@ export class RegisterModelComponent implements OnInit {
   isMaskOn: boolean = false;
   msgs: Message[] = [];
   isLoading: boolean = false;
+  display: boolean = false;
+  prop:any;
 
   constructor(
     private fb: FormBuilder,
@@ -62,6 +64,38 @@ export class RegisterModelComponent implements OnInit {
     });
   }
 
+  
+  showDialog(data) {
+    this.display = true;
+    this.prop = `# begin fota properties
+    ro.build.date.utc=<Build UTC Time Stamp>
+    ro.fota.platform=<chipset>_<OS>
+    ro.fota.type=phone
+    ro.fota.app=2.0.0
+    ro.fota.oem=<oemname>_<chipset>_<os>
+    ro.fota.device=<ModelMarketName>
+    ro.fota.version=<OEM>_<Modelname>_<buildversioncode>_<ro.build.date.utc>
+    ro.fota.token=<${data.Token}>
+    # end fota properties`;
+  }
+
+ 
+
+  showBuild(token) {
+    debugger;
+    const prop = `# begin fota properties
+    ro.build.date.utc=<Build UTC Time Stamp>
+    ro.fota.platform=<chipset>_<OS>
+    ro.fota.type=phone
+    ro.fota.app=2.0.0
+    ro.fota.oem=<oemname>_<chipset>_<os>
+    ro.fota.device=<ModelMarketName>
+    ro.fota.version=<OEM>_<Modelname>_<buildversioncode>_<ro.build.date.utc>
+    ro.fota.token=<${token}>
+    # end fota properties`;
+
+    return prop;
+  }
   fetchPartners() {
     this.AppService.getPartners().subscribe((data: any) => {
       this.partners = data.map(obj => {

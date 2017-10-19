@@ -21,17 +21,17 @@ p-datatable {
   flex-flow: row wrap;
 }
 
-.form-group {
-  margin-bottom: 1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  flex: 0 0 auto;
-  margin-right: 20px;
-}
+// .form-group {
+//   margin-bottom: 1rem;
+//   display: -webkit-box;
+//   display: -ms-flexbox;
+//   display: flex;
+//   -webkit-box-align: center;
+//   -ms-flex-align: center;
+//   align-items: center;
+//   flex: 0 0 auto;
+//   margin-right: 20px;
+// }
 
 .form-group > label {
   -webkit-box-flex: 0;
@@ -40,3 +40,5 @@ p-datatable {
   max-width: auto;
   margin-right: 15px;
 }
+
+

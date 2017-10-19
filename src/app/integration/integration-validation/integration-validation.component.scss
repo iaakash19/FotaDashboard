@@ -6,22 +6,27 @@
     max-width: 550px;
     flex-flow: row wrap;
 }
+.form-group {
+    max-width: 900px;
+}
 
 .row {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    margin-bottom: 10px;
-    flex: 0 0 50%;
-    label {
-        font-weight: bold;
-        text-transform: capitalize;
-        margin-right: 10px;
-    }
+    // margin: 0;
+    // padding: 0;
+    // border: 0;
+    // margin-bottom: 10px;
+    // flex: 0 0 50%;
+    // label {
+    //     font-weight: bold;
+    //     text-transform: capitalize;
+    //     margin-right: 10px;
+    // }
     span.value {
         text-transform: capitalize;
     }
 }
+
+
 
 .check-imei {
     margin-left: 15px;
@@ -29,4 +34,8 @@
 
 .row.button-row {
     flex: 0 0 100%;
+}
+
+.form-group.mx300 {
+    max-width: 300px;
 }
