@@ -1,6 +1,6 @@
-<p-dialog header="Build.Prop" *ngIf="display" [(visible)]="display" [height]="320"  [width]="500" modal="true" [contentStyle]="{'overflow':'scroll'}">
+<p-dialog header="Build.Prop" *ngIf="display" [(visible)]="display" [height]="420"  [width]="700" modal="true" [contentStyle]="{'overflow':'scroll'}">
         <!-- {{ showBuild() }} -->
-        {{prop}}
+        <div class="propWrapper" [innerHTML]="prop"></div>
     </p-dialog>
 
 <p-growl [(value)]="msgs"></p-growl>
@@ -24,12 +24,7 @@
         </div>
   </div>
 
-  <div class="tokenWrap" *ngIf="token" #build>
-      <h2>Build.Prop</h2>
-      {{showToken()}}
-      <!-- <input type="text" class="propDisplay" name="" id="" cols="30" rows="10" #build [value]="showToken()">
- 
-    <button class="btn btn-small" type="button" ngxClipboard="build" (cbOnSuccess)="showToast()">Copy</button> -->
+  <div class="tokenWrap" [innerHTML]="showToken()" *ngIf="token" #build>
   </div>
 
 
@@ -46,7 +41,7 @@
 </div> -->
     <p-dataTable [value]="models">
          <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-         <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+         <!-- <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column> -->
          <p-column field="DeviceModel" header="Device Model" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>
          <p-column header="Token">
                <ng-template let-data="rowData" pTemplate="body">

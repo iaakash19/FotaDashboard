@@ -1,0 +1,60 @@
+:host {
+    position: relative;
+    display: block;
+}
+.configBlock {
+    display: flex;
+    flex-flow: row wrap;
+    li{
+        margin-right: 20px;
+        display: flex;
+        flex-flow: row nowrap;
+        label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        span {
+            color: #9a9a9a;
+        }
+    }
+}
+
+.configWrap {
+    display: flex;
+    .configBlock{
+        margin-right: 10px;
+    }
+}
+
+.editModal {
+    position: absolute;
+    left: 0;
+    background: white;
+    z-index: 999;
+    // top: 0;
+    padding: 2rem;
+    margin: 0 auto;
+    width: 100%;
+    transform: translate3d(0, 25vh , 0);   
+}
+
+
+@keyframes slideDown {
+    from {
+        transform: translate3d(0,145vh, 0);    
+    }
+    to {
+        transform: translate3d(0, 25vh , 0);    
+    }
+}
+
+/* The element to apply the animation to */
+.editModal {
+    
+    animation-name: slideDown;
+    animation-duration: 0.5s;
+}
+
+.cancel_button {
+    float:right;
+}

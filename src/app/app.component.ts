@@ -11,11 +11,17 @@ import { Router } from '@angular/router';
   animations: [ routerTransition ]
 })
 export class AppComponent implements OnInit {
+  isMaskOn: boolean = false;
+
 constructor(private AppService: AppService, private AuthService: AuthService, private Router: Router) {
 
 }
 
 ngOnInit() {
+  this.AppService.toggleBodyShadow$.subscribe(value => {
+    this.isMaskOn = value;
+  });
+  
   this.AuthService.currentToken$.subscribe(data => {
     if(!data){
       this.Router.navigate(['/login']);

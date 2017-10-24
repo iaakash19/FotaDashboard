@@ -35,7 +35,7 @@ h2{
 
 chart {
     width:800px;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     & > div{
         width: 100% !important;
     }
@@ -44,4 +44,21 @@ chart {
 .wrapper {
     display: flex;
     flex-flow: column nowrap;
+    padding: 0;
+}
+
+.selection {
+
+
+label {
+    font-weight: bold;
+}
+
+}
+
+#container {
+    padding: 1rem;
+    &:nth-child(odd) {
+        background: rgba(0,0,0,0.1);
+    }
 }

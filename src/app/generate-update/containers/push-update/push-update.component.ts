@@ -133,7 +133,7 @@ export class PushUpdateComponent implements OnInit {
   onPushUpdate() {
     this.isLoading = true;
       this.pushUpdate.value;
-      this.AppService.pushUpdate(this.pushUpdate.value).subscribe(data => {
+      this.AppService.pushUpdate(this.pushUpdate.value, 'Production').subscribe(data => {
         this.isLoading = false;
         this.messageService.add({severity:'success', summary:'Message', detail:'Update Pushed to Production'});
       },

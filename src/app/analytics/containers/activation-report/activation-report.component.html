@@ -1,13 +1,19 @@
-<p-dataTable [value]="activation_report">
-      <p-column field="IMEI1" header="IMEI1" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-      <p-column field="partner" header="Partner" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-      <p-column field="model" header="Model" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-      <p-column field="IMEI2" header="IMEI2" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-      <p-column header="Activation Date">
-          <ng-template let-data="rowData" pTemplate="body">
-          {{data.activationDate | date:'medium' }}
-          </ng-template>
-      </p-column>
-  </p-dataTable>
+<p-dataTable [value]="activation_report" exportFilename="activation_report" #dt [rows]="10" [paginator]="true">
+  <p-header>
+    <div class="ui-helper-clearfix">
+      <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export to CSV" (click)="dt.exportCSV()" style="float:left"></button>
+    </div>
+  </p-header>
+  <p-column field="partner" header="Partner" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+  <p-column field="model" header="Model" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
- 
+  <p-column field="IMEI1" header="IMEI1" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+  <p-column field="IMEI2" header="IMEI2" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+  <p-column header="Activation Date">
+    <ng-template let-data="rowData" pTemplate="body">
+      {{data.activationDate | date:'medium' }}
+    </ng-template>
+  </p-column>
+  <p-footer>There are
+    <strong>{{total_count}}</strong> records</p-footer>
+</p-dataTable>

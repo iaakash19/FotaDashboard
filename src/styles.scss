@@ -465,20 +465,38 @@ background: #d9534f;
 }
 
 chart {
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
   display: block;
-  box-shadow: 1px 2px 3px rgba(0,0,0,0.15);
+  box-shadow: 
+  0px 7px 8px -4px rgba(0, 0, 0, 0.2), 0px 12px 17px 2px rgba(0, 0, 0, 0.14), 0px 5px 22px 4px rgba(0, 0, 0, 0.12)
 }
 
 #container {
   display: block;
-  chart {
-    display:block;
-    float:left;
+  // chart {
+  //   display:block;
+  //   float:left;
+  // }
+
+  .selection {
+    display: flex;
+    align-items: center;
   }
-  p-multiselect {
-    float: left;
-    margin-left: 20px;
+  .partner {
+    display: flex;
+    flex-flow: column wrap;
+    margin-right: 20px;
+    label {
+      min-height: 24px;
+    }
+  }
+  .model {
+    display: flex;
+    flex-flow: column wrap;
+    p-multiselect{
+      display: flex;
+    }
   }
 }
 
@@ -639,6 +657,49 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #f9f9f9;
 }
 
+.ui-datatable .ui-datatable-data > tr > td {
+  min-width: 11rem;
+}
 //  table > tbody>tr:nth-of-type(odd) {
 //   background-color: #f9f9f9 !important;
 // }
+
+.logoWrap {
+  background: linear-gradient(180deg, #1dc7ea 0, #4091ff);
+  .logo {
+    margin: 0;
+  }
+}
+
+.ui-datatable-tablewrapper {
+
+overflow-x: scroll;
+border: 1px solid #d9d9d9;
+border-bottom: 0;
+}
+
+p-fileupload {
+  width: 100%;
+}
+
+.ui-fileupload {
+  width: 100%;
+}
+
+app-integration-validation, app-generate-update {
+  .ui-widget-content {
+    top:0;
+  }
+  .ui-widget-content {
+    border: none;
+  }
+}
+
+
+.ui-multiselect .ui-multiselect-label {
+  min-width: 200px;
+}
+
+chart {
+  margin-bottom: 5rem;
+}

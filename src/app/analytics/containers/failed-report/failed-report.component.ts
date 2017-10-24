@@ -9,11 +9,13 @@ import { AppService } from '../../../app.service';
 export class FailedReportComponent implements OnInit {
 
   failed_report:any;
+  total_count;
   constructor(private AppService:AppService) { }
 
   ngOnInit() {
     this.AppService.getFailedReport().subscribe(data => {
       this.failed_report = data;
+      this.total_count = this.failed_report.length;
     })
   }
 

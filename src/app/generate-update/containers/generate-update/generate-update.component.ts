@@ -1,44 +1,59 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { AppService } from "./../../../app.service";
-import {Message} from 'primeng/primeng';
-import {MessageService} from 'primeng/components/common/messageservice';
-
+import { Message } from 'primeng/primeng';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { ConfirmationService } from 'primeng/primeng';
 @Component({
   selector: "app-generate-update",
   templateUrl: "./generate-update.component.html",
   styleUrls: ["./generate-update.component.scss"],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
+
 export class GenerateUpdateComponent implements OnInit {
   partners: any;
   devices: any;
   models: any;
-  isDeviceModel:boolean = false;
+  isDeviceModel: boolean = false;
   generateUpdate: FormGroup;
-  updates:any;
+  updates: any;
   msgs: Message[] = [];
   isLoading: boolean = false;
   isCurrentBuild: boolean = false;
   baseVersions: any = [];
-
-  constructor(private fb: FormBuilder, private AppService: AppService,  private messageService: MessageService) {}
+  modes = [
+    {
+      label: 'Select Mode',
+      value: null
+    },
+    {
+      label: 'Test',
+      value: 'Test'
+    },
+    {
+      label: 'Production',
+      value: 'Production'
+    }
+  ]
+  constructor(private confirmationService: ConfirmationService, private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) { }
 
   @ViewChild('logo') logo;
-  
+
   ngOnInit() {
     this.fetchPartners();
     this.fetchDeviceType();
     this.fetchAllUpdates();
 
-    
+
     this.generateUpdate = this.fb.group({
       partnerName: ["", Validators.required],
       BaseVersion: ["", Validators.required],
       UpdateName: ["", Validators.required],
       AvailVersion: ["", Validators.required],
-      ChangeLog: ["", Validators.required],
+      // ChangeLog: ["", Validators.required],
       DeviceType: ["", Validators.required],
+      updateFor: ["", Validators.required],
       DeviceModel: ["", Validators.required],
       KeyHighLights: ["", Validators.required],
       File: this.fb.control("", Validators.required)
@@ -51,12 +66,12 @@ export class GenerateUpdateComponent implements OnInit {
     this.generateUpdate.get("DeviceModel").valueChanges.subscribe(data => {
       this.fetchCurrentBuild(data);
     });
-    
+
   }
 
   fetchCurrentBuild(model) {
     this.baseVersions = [];
-    this.AppService.getCurrentBuild(this.generateUpdate.value.partnerName, model).subscribe((data:any) => {
+    this.AppService.getCurrentBuild(this.generateUpdate.value.partnerName, model).subscribe((data: any) => {
       this.baseVersions = data.map(item => {
         return {
           label: item,
@@ -66,9 +81,9 @@ export class GenerateUpdateComponent implements OnInit {
       this.baseVersions.unshift({
         label: 'Select Base Versions',
         value: null
-       });
+      });
 
-       this.isCurrentBuild = true;
+      this.isCurrentBuild = true;
 
     })
   }
@@ -130,27 +145,51 @@ export class GenerateUpdateComponent implements OnInit {
       this.updates = data;
     })
   }
+  deleteUpdate(id) {
+    
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'fa fa-question-circle',
+      accept: () => {
+        this.isLoading = true;
+        this.AppService.deleteUpdate(id).subscribe(data => {
+          this.fetchAllUpdates();
+          this.isLoading = false;
+          this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Update Succesfully Deleted' });
+        },
+          err => {
+            this.isLoading = false;
+            this.messageService.add({ severity: 'error', summary: 'Message', detail: 'Error deleting update' });
+          })
+      },
+      reject: () => {
+        this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
+      }
+    });
 
+   
+  }
   OnGenerateUpdate() {
     this.isLoading = true;
     this.AppService
-      .generateUpdate(this.generateUpdate.value)
+      .generateUpdate(this.generateUpdate.value, this.generateUpdate.get('updateFor').value)
       .subscribe(
-        data => {
-          this.fetchAllUpdates();
-          
-          this.isLoading = false;
-          this.generateUpdate.reset();
-          this.logo.clear();
-          this.isDeviceModel = false;
-          this.isCurrentBuild = false;
-          
-          this.messageService.add({severity:'success', summary:'Message', detail:'Update Succesfully generated'});
-        },
-        err => {
-          this.isLoading = false;
-          this.messageService.add({severity:'error', summary:'Message', detail:'Error generating update'});
-        }
+      data => {
+        this.fetchAllUpdates();
+
+        this.isLoading = false;
+        this.generateUpdate.reset();
+        this.logo.clear();
+        this.isDeviceModel = false;
+        this.isCurrentBuild = false;
+
+        this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Update Succesfully generated' });
+      },
+      err => {
+        this.isLoading = false;
+        this.messageService.add({ severity: 'error', summary: 'Message', detail: 'Error generating update' });
+      }
       );
   }
 }

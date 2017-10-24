@@ -3,12 +3,12 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import {Message} from 'primeng/primeng';
 import {MessageService} from 'primeng/components/common/messageservice';
 import { AppService } from '../../app.service';
-
+import { ConfirmationService } from 'primeng/primeng';
 @Component({
   selector: 'app-integration-validation',
   templateUrl: './integration-validation.component.html',
   styleUrls: ['./integration-validation.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class IntegrationValidationComponent implements OnInit {
   IMEI_details = null;
@@ -25,7 +25,7 @@ export class IntegrationValidationComponent implements OnInit {
   optionsPanel:any;
   msgs: Message[] = [];
   
-  constructor(private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
+  constructor(private confirmationService: ConfirmationService, private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.fetchPartners();
@@ -142,7 +142,7 @@ export class IntegrationValidationComponent implements OnInit {
   testUpdates() {
     this.isLoading = true;
       this.testUpdate.value;
-      this.AppService.pushUpdate(this.testUpdate.value).subscribe(data => {
+      this.AppService.pushUpdate(this.testUpdate.value, 'Test').subscribe(data => {
         this.testUpdate.reset();
         this.isLoading = false;
 
@@ -154,6 +154,33 @@ export class IntegrationValidationComponent implements OnInit {
 
     }
     )
+  }
+
+  deleteIMEI(id) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'fa fa-question-circle',
+      accept: () => {
+        this.isLoading = true;
+        this.AppService.deleteIMEI(id).subscribe(data => {
+          
+          this.isLoading = false;
+          this.IMEI_details = false;
+          this.testUpdate.get('IMEI').setValue('');
+          this.messageService.add({severity:'success', summary:'Message', detail:'Success!!'});
+        },
+      err => {
+        this.isLoading = false;
+        this.messageService.add({severity:'error', summary:'Message', detail:'Failed!!'});
+      }
+      )
+      },
+      reject: () => {
+          this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+      }
+  });
+   
   }
 
 }

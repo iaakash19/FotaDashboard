@@ -1,13 +1,19 @@
-<p-dataTable [value]="update_report">
-
-      <p-column field="partner" header="Partner Name" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+<p-dataTable [value]="update_report" exportFilename="update_report" #dt>
+        <p-header>
+                <div class="ui-helper-clearfix">
+                    <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export to CSV" (click)="dt.exportCSV()" style="float:left"></button>
+                </div>
+            </p-header>
+      <p-column field="partner" header="Partner" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
       <p-column field="model" header="Model" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
       <p-column field="currentVersion" header="Current Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-      <p-column field="newVersion" header="New Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+      <p-column field="newVersion" header="Available Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
       <p-column header="First Push Date">
           <ng-template let-data="rowData" pTemplate="body">
           {{data.firstPushDate | date:'medium'}}
           </ng-template>
               
       </p-column>
+      <p-footer>There are <strong>{{total_count}}</strong> records</p-footer>
+      
   </p-dataTable>

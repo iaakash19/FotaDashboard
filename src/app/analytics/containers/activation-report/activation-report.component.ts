@@ -8,6 +8,7 @@ import { AppService } from '../../../app.service';
 })
 export class ActivationReportComponent implements OnInit {
   activation_report:any;
+  total_count: number;
 
   constructor(
     private AppService:AppService
@@ -16,6 +17,7 @@ export class ActivationReportComponent implements OnInit {
   ngOnInit() {
     this.AppService.getActivationReport().subscribe(data => {
       this.activation_report = data;
+      this.total_count = this.activation_report.length;
     })
   }
 

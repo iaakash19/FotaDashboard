@@ -8,7 +8,8 @@ import { AppService } from '../../../app.service';
 })
 export class UpdateReportComponent implements OnInit {
   update_report:any;
-  
+  total_count: any;
+
   constructor(
     private AppService:AppService
   ) { }
@@ -16,6 +17,7 @@ export class UpdateReportComponent implements OnInit {
   ngOnInit() {
     this.AppService.getUpdateReport().subscribe(data => {
       this.update_report = data;
+      this.total_count = this.update_report.length;
     })
   }
 

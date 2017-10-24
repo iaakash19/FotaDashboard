@@ -14,8 +14,11 @@ export class RegisterOemComponent implements OnInit {
 
 
   oemRegister: FormGroup;
+  editConfigForm: FormGroup;
   partners:any;
+  idOfEditedConfig:number;
   isLoading:boolean = false;
+  iseditConfig: boolean = false;
   msgs: Message[] = [];
   
   optionsPanel = [
@@ -96,16 +99,21 @@ export class RegisterOemComponent implements OnInit {
         downloadAutoOnWiFi: ["", Validators.required]
       })
     });
+
+    this.editConfigForm = this.fb.group({
+      partnerName: ["", Validators.required],
+      config: this.fb.group({
+        Url: ["", Validators.required],
+        Notif_Frequency: ["", Validators.required],
+        checkForUpdate: ["", Validators.required],
+        btnName: ["", Validators.required],
+        downloadAutoOnWiFi: ["", Validators.required]
+      })
+    });
   }
 fetchPartners() {
   this.AppService.getPartners().subscribe((data:any) => {
-    this.partners = data.map(item => {
-      return {
-        partnerName: item.partnerName,
-        id: item.id
-        // config: JSON.parse(item.config)
-      }
-    })
+    this.partners = data;
   })
 }
   registerOem() {
@@ -122,5 +130,44 @@ fetchPartners() {
         this.messageService.add({severity:'error', summary:'Message', detail:'OEM Registration Failed!!'});
       }
     )
+  }
+
+  editConfig(data) {
+    this.idOfEditedConfig = data.id;
+    
+    this.iseditConfig = true;
+    this.AppService.setBodyMask(true);
+    this.populateForm(data);
+  }
+
+  populateForm(data) {
+    this.editConfigForm.patchValue({
+      partnerName: data.partnerName,
+      config: {
+        Url: data.config.Url,
+        Notif_Frequency: data.config.Notif_Frequency,
+        checkForUpdate: data.config.checkForUpdate,
+        btnName: data.config.btnName,
+        downloadAutoOnWiFi: data.config.downloadAutoOnWiFi
+      }
+    })
+  }
+
+  saveConfig() {
+    
+    this.AppService.editOem(this.idOfEditedConfig, this.editConfigForm.value).subscribe(data => {
+      this.dismissModal();
+      this.fetchPartners();
+      this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully Edited'});
+    },
+    err => {
+      this.messageService.add({severity:'error', summary:'Message', detail:'OEM Edit Failed!!'});
+    })
+  }
+
+  dismissModal() {
+    this.iseditConfig = false;
+    this.AppService.setBodyMask(false);
+    
   }
 }

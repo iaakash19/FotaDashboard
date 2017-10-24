@@ -39,3 +39,23 @@
 .form-group.mx300 {
     max-width: 300px;
 }
+
+.IMEI_wrap {
+.row {
+
+margin: 0;
+padding: 0;
+border: 0;
+margin-bottom: 10px;
+flex: 0 0 100%;
+display: flex;
+align-items: center;
+label {
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-right: 10px;
+    flex: 0 0 10rem;
+}
+}
+
+}

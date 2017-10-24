@@ -1,4 +1,7 @@
 <p-growl [(value)]="msgs"></p-growl>
+
+<p-confirmDialog></p-confirmDialog> 
+
 <div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
 
 <div class="wrapper">
@@ -44,7 +47,7 @@
           </div>
       </ng-container>
         <div class="row button-row right">
-          <button class="btn btn-small btn-warning" type="button">Delete</button>
+          <button class="btn btn-small btn-warning" type="button" (click)="deleteIMEI(IMEI_details.id)">Delete</button>
         </div>
       </div>
     </div>

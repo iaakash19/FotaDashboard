@@ -9,21 +9,36 @@ export class AppService {
 
   private toggleBodyClass$ = new ReplaySubject<any>();
   public toggleBody$ = this.toggleBodyClass$.asObservable();
+  
+  private toggleBodyMask$ = new ReplaySubject<any>();
+  public toggleBodyShadow$ = this.toggleBodyMask$.asObservable();
 
   constructor(
     private Http: HttpClient
   ) { }
 
+setBodyMask(value) {
+  this.toggleBodyMask$.next(value);
+}
 
   setBodyClass(key) {
     this.toggleBodyClass$.next(key);
   }
   registerOem(data) {
-  //   let input = new FormData();
-  //   Object.keys(data).map(key => {
-  //     input.append(key, data[key]);
-  // });
-   return this.Http.post(`${this.BASE_URL}partnerRegister/`, data);
+    //   let input = new FormData();
+    //   Object.keys(data).map(key => {
+    //     input.append(key, data[key]);
+    // });
+    return this.Http.post(`${this.BASE_URL}partnerRegister/`, data);
+  }
+
+  editOem(id, data) {
+    debugger;
+    //   let input = new FormData();
+    //   Object.keys(data).map(key => {
+    //     input.append(key, data[key]);
+    // });
+    return this.Http.put(`${this.BASE_URL}partnerRegister/${id}/`, data);
   }
 
   getPartners() {
@@ -38,17 +53,19 @@ export class AppService {
     let input = new FormData();
     Object.keys(data).map(key => {
       input.append(key, data[key]);
-  });
+    });
     return this.Http.post(`${this.BASE_URL}oemRegister/`, input);
 
   }
 
-  generateUpdate(data) {
+  generateUpdate(data, param) {
     let input = new FormData();
     Object.keys(data).map(key => {
-      input.append(key, data[key]);
-  });
-    return this.Http.post(`${this.BASE_URL}updateGen/`, input);
+      if (key !== 'updateFor') {
+        input.append(key, data[key]);
+      }
+    });
+    return this.Http.post(`${this.BASE_URL}updateGen/?UpdateFor=${param}`, input);
   }
 
   fetchUpdates() {
@@ -56,7 +73,7 @@ export class AppService {
   }
 
   getCurrentBuild(partner, model) {
-    return this.Http.get(`${this.BASE_URL}getBaseVersion/`,{
+    return this.Http.get(`${this.BASE_URL}getBaseVersion/`, {
       params: new HttpParams()
         .set("partnerName", partner)
         .set("DeviceModel", model)
@@ -65,7 +82,7 @@ export class AppService {
 
 
   getUpdatesAvailable(partner, model, currentVersion) {
-    return this.Http.get(`${this.BASE_URL}updateGen/`,{
+    return this.Http.get(`${this.BASE_URL}updateGen/`, {
       params: new HttpParams()
         .set("partnerName", partner)
         .set("DeviceModel", model)
@@ -73,8 +90,8 @@ export class AppService {
     });
   }
 
-  getDeviceModel(partner='intex') {
-    return this.Http.get(`${this.BASE_URL}oemRegister/`,{
+  getDeviceModel(partner = 'intex') {
+    return this.Http.get(`${this.BASE_URL}oemRegister/`, {
       params: new HttpParams()
         .set("partnerName", partner)
     });
@@ -84,12 +101,12 @@ export class AppService {
     return this.Http.get(`${this.BASE_URL}oemRegister/`);
   }
 
-  pushUpdate(config) {
+  pushUpdate(config, param) {
     let input = new FormData();
     Object.keys(config).map(key => {
       input.append(key, config[key]);
-  });
-    return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
+    });
+    return this.Http.post(`${this.BASE_URL}UpdateGen/?UpdateFor=${param}`, input);
   }
 
 
@@ -118,7 +135,7 @@ export class AppService {
   }
 
   getdetailsByIMEI1(IMEI1) {
-    return this.Http.get(`${this.BASE_URL}register/?IMEI1=${IMEI1}`);    
+    return this.Http.get(`${this.BASE_URL}register/?IMEI1=${IMEI1}`);
   }
 
   // Display - http://devfota.gammo.me/notify/fotav/display/
@@ -139,6 +156,15 @@ export class AppService {
 
   getFailedReport() {
     return this.Http.get(`${this.BASE_URL}failedReport/`);
+  }
+
+  deleteIMEI(id) {
+    return this.Http.delete(`${this.BASE_URL}register/${id}/`);
+  }
+
+  deleteUpdate(id) {
+    return this.Http.delete(`${this.BASE_URL}updateGen/${id}/`);
+    
   }
 
 }
