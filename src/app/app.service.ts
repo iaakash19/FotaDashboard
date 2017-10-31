@@ -33,7 +33,6 @@ setBodyMask(value) {
   }
 
   editOem(id, data) {
-    debugger;
     //   let input = new FormData();
     //   Object.keys(data).map(key => {
     //     input.append(key, data[key]);
@@ -61,32 +60,43 @@ setBodyMask(value) {
   generateUpdate(data, param) {
     let input = new FormData();
     Object.keys(data).map(key => {
-      if (key !== 'updateFor') {
         input.append(key, data[key]);
-      }
     });
-    return this.Http.post(`${this.BASE_URL}updateGen/?UpdateFor=${param}`, input);
+    return this.Http.post(`${this.BASE_URL}updateGen/`, input);
   }
 
   fetchUpdates() {
     return this.Http.get(`${this.BASE_URL}updateGen/`);
   }
 
+  filtergeUpdateByDate(date){
+    const month_from = parseInt(date.split('-')[1]);
+    
+    const newFrom = `${date.split('-')[0]}-${month_from+1}-${date.split('-')[2]}`;
+
+    return this.Http.get(`${this.BASE_URL}updateGen/`,{
+      params: new HttpParams()
+      .set("Date", newFrom)
+    });    
+  }
+
   getCurrentBuild(partner, model) {
+
     return this.Http.get(`${this.BASE_URL}getBaseVersion/`, {
       params: new HttpParams()
         .set("partnerName", partner)
-        .set("DeviceModel", model)
+        .set("DeviceModel", model.replace("+", "%2B"))
     });
   }
 
 
-  getUpdatesAvailable(partner, model, currentVersion) {
+  getUpdatesAvailable(partner, model, currentVersion, UpdateFor=null) {
     return this.Http.get(`${this.BASE_URL}updateGen/`, {
       params: new HttpParams()
         .set("partnerName", partner)
-        .set("DeviceModel", model)
+        .set("DeviceModel", model.replace(" +", "%2B"))
         .set("BaseVersion", currentVersion)
+        .set("UpdateFor", UpdateFor)
     });
   }
 
@@ -106,7 +116,7 @@ setBodyMask(value) {
     Object.keys(config).map(key => {
       input.append(key, config[key]);
     });
-    return this.Http.post(`${this.BASE_URL}UpdateGen/?UpdateFor=${param}`, input);
+    return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
   }
 
 
@@ -138,10 +148,10 @@ setBodyMask(value) {
     return this.Http.get(`${this.BASE_URL}register/?IMEI1=${IMEI1}`);
   }
 
-  // Display - http://devfota.gammo.me/notify/fotav/display/
-  // Update Report - http://devfota.gammo.me/notify/fotav/updateReport/
-  // Activation report- http://devfota.gammo.me/notify/fotav/activationReport/
-  // Failed Report - http://devfota.gammo.me/notify/fotav/failedReport/
+  // Display - http://devfota.gammo.me/display/
+  // Update Report - http://devfota.gammo.me/updateReport/
+  // Activation report- http://devfota.gammo.me/activationReport/
+  // Failed Report - http://devfota.gammo.me/failedReport/
 
   getDisplayReport() {
     return this.Http.get(`${this.BASE_URL}display/`);
@@ -163,8 +173,18 @@ setBodyMask(value) {
   }
 
   deleteUpdate(id) {
-    return this.Http.delete(`${this.BASE_URL}updateGen/${id}/`);
+    return this.Http.delete(`${this.BASE_URL}updateGen/${id}/`); 
+  }
+
+  filterRowsByDate(from, to, type) {
+    const month_from = parseInt(from.split('-')[1]);
+    const month_to = parseInt(to.split('-')[1]);
     
+    const newFrom = `${from.split('-')[0]}-${month_from+1}-${from.split('-')[2]}`;
+    const newTo = `${to.split('-')[0]}-${month_to+1}-${to.split('-')[2]}`;
+    
+
+    return this.Http.get(`${this.BASE_URL}${type}/?Date__gte=${newFrom}&Date__lte=${newTo}`);
   }
 
 }

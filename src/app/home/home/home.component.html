@@ -69,10 +69,10 @@
   <div id="container">
 
     <div class="selection">
-        <div class="partner">
+        <!-- <div class="partner">
       <label for="">Select Partner</label>
       <p-multiSelect [options]="deviceModels" [(ngModel)]="selected_deviceModels" (onChange)="handleLegendChange5($event)"></p-multiSelect>
-    </div>
+    </div> -->
     </div>
     <chart [options]="deviceModelsConf" (load)="saveInstance5($event.context)"></chart>
     

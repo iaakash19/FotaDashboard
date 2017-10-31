@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit {
 
   handleLegendChange5(event) {
     event.value; //array of index
-    var series = this.chart5.series;
+    var series = this.chart5.series[0].data;
 
     for (var i = 0; i < series.length; i++) {
       series[i].hide();
@@ -172,6 +172,7 @@ export class HomeComponent implements OnInit {
   }
 
   graphGenerator(graph_title, xTitle = "Months", data, x_Axis, stacked = true) {
+    
     var config = {
       chart: { type: 'column', width: 800 },
       legend: {
@@ -185,9 +186,9 @@ export class HomeComponent implements OnInit {
           pointWidth: 30
         },
         column: {
-          stacking: 'normal',
+          stacking: stacked ? 'normal' : null,
           pointPadding: 0.2,
-          borderWidth: 0
+          borderWidth: 0,
         }
       },
       xAxis: {
@@ -383,7 +384,7 @@ export class HomeComponent implements OnInit {
 
     //5. Device Models
     this.AppService.getDeviceModelsData().subscribe((data: any) => {
-      
+
             this.deviceModels = data.map((item, index) => {
               this.selected_deviceModels.push(index);
               return {
@@ -393,21 +394,89 @@ export class HomeComponent implements OnInit {
             });
       
             let dataToMap = data.map(item => {
-              return {
-                name: item.partner,
-                data: [item.count]
-              }
+              return [item.partner,item.count]
             });
       
             let xAxis = data.map(item => {
               return item.partner
-            })
+            });
+            
+            this.deviceModelsConf = this.createChart5(dataToMap);
       
-            this.deviceModelsConf = this.graphGenerator('Total Device Models', 'Device Models', dataToMap, xAxis, false);
+            // this.deviceModelsConf = this.graphGenerator('Total Device Models', 'Oems', dataToMap, xAxis, false);
       
           })
 
 
+  }
+
+  createChart5(data) {
+    var config = {
+      chart: { type: 'column', width: 800 },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        series: {
+          pointWidth: 30
+        },
+        column: {
+          colorByPoint: true
+      }
+        // column: {
+        //   stacking: stacked ? 'normal' : null,
+        //   pointPadding: 0.2,
+        //   borderWidth: 0,
+        // }
+      },
+      title: {
+        text: 'Total Device Models'
+      },
+      xAxis: {
+        type: 'category',
+        // labels: {
+        //     rotation: -45,
+        //     style: {
+        //         fontSize: '13px',
+        //         fontFamily: 'Verdana, sans-serif'
+        //     }
+        // }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total Number'
+        }
+    },
+    series: [{
+      name: 'Population',
+      data: data
+      // data: [
+      //     ['Shanghai', 23.7],
+      //     ['Lagos', 16.1],
+      //     ['Istanbul', 14.2],
+      //     ['Karachi', 14.0],
+      //     ['Mumbai', 12.5],
+      //     ['Moscow', 12.1],
+      //     ['São Paulo', 11.8],
+      //     ['Beijing', 11.7],
+      //     ['Guangzhou', 11.1],
+      //     ['Delhi', 11.1],
+      //     ['Shenzhen', 10.5],
+      //     ['Seoul', 10.4],
+      //     ['Jakarta', 10.0],
+      //     ['Kinshasa', 9.3],
+      //     ['Tianjin', 9.3],
+      //     ['Tokyo', 9.0],
+      //     ['Cairo', 8.9],
+      //     ['Dhaka', 8.9],
+      //     ['Mexico City', 8.9],
+      //     ['Lima', 8.9]
+      // ],
+    }]
+    };
+
+    return config;
   }
 
   onPartnerChange1(event) {

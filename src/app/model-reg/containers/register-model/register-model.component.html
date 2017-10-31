@@ -3,6 +3,13 @@
         <div class="propWrapper" [innerHTML]="prop"></div>
     </p-dialog>
 
+    <preview 
+    *ngIf="isPreview"
+    [dataWrap]="previewConf"
+    (onClose)="handleClose($event)"
+    (onSave)="handleSave($event)"> 
+    </preview> 
+
 <p-growl [(value)]="msgs"></p-growl>
 
 <div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
@@ -24,8 +31,7 @@
         </div>
   </div>
 
-  <div class="tokenWrap" [innerHTML]="showToken()" *ngIf="token" #build>
-  </div>
+  <div class="tokenWrap" [innerHTML]="showToken()" *ngIf="isToken" #build></div>
 
 
 <div class="row button-row right">
@@ -39,7 +45,7 @@
   <!-- <div class="ui-widget-header global-search" style="padding:4px 10px;border-bottom: 0 none">
     <input #gb type="text" pInputText size="50" placeholder="Global Filter">
 </div> -->
-    <p-dataTable [value]="models">
+    <p-dataTable [value]="models" [rows]="10" [paginator]="true">
          <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
          <!-- <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column> -->
          <p-column field="DeviceModel" header="Device Model" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search"></p-column>

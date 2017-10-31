@@ -1,4 +1,6 @@
-<p-dataTable #dt [value]="display_report" exportFilename="devicestate_report">
+<p-growl [(value)]="msgs"></p-growl> 
+
+<p-dataTable #dt [value]="display_report" exportFilename="devicestate_report" [rows]="10" [paginator]="true">
   <p-header>
     <div class="ui-helper-clearfix">
       <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export to CSV" (click)="dt.exportCSV()" style="float:left"></button>
@@ -10,6 +12,11 @@
   <p-column field="availableVersion" header="Available Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
   <p-column field="count" header="Count" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+  <p-column header="Date">
+      <ng-template pTemplate="filter" let-col>
+          <p-calendar placeholder="Start and End Date" [(ngModel)]="rangeDates" selectionMode="range" readonlyInput="true" (onSelect)="onDateSelect($event)" showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar>  
+      </ng-template>
+  </p-column>
   <p-footer>There are
     <strong>{{total_count}}</strong> records</p-footer>
 

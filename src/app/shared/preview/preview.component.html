@@ -1,0 +1,34 @@
+<div class="panel">
+    <header>
+      <h2>Preview</h2>
+    </header>
+    <div class="content">
+      <ul class="details">
+        <li *ngFor="let item of dataWrap | repover_obj">
+
+          <ng-container *ngIf="item.key == 'conf'">
+            <h4>Config</h4>
+              <ul class="subrow">
+                  <li *ngFor="let config of item.value | repover_obj">
+                      <label for="">{{ config.key }}</label>
+                      <span>{{ config.value }}</span>
+                  </li>
+              </ul>
+          </ng-container>
+          
+          <ng-container *ngIf="item.key != 'conf'">
+              <label for="">{{ item.key }}</label>
+              <span>{{ item.value }}</span>
+            </ng-container>
+        </li>
+      </ul>
+
+      
+    </div>
+    <footer>
+      <div class="row">
+        <button class="btn btn-small btn-warning" (click)="actionTriggered('close')">Cancel</button>
+        <button class="btn btn-small btn-success" (click)="actionTriggered('save')">Save</button>
+      </div>
+    </footer>
+  </div>

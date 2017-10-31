@@ -102,7 +102,8 @@ export class LoginComponent implements OnInit {
         this.Router.navigate(['dashboard/home']);
       },
       err =>  {
-        this.msgs.push({severity:'error', summary:'Error', detail:err.error.ErrMsg})
+        const errMsg = JSON.parse(err.error).err_msg;
+        this.msgs.push({severity:'error', summary:'Error', detail:errMsg})
         setTimeout(() => {
           this.msgs = [];
         }, 1500);

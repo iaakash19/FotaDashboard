@@ -6,10 +6,11 @@ import { UpdateReportComponent } from './containers/update-report/update-report.
 import { ActivationReportComponent } from './containers/activation-report/activation-report.component';
 import { FailedReportComponent } from './containers/failed-report/failed-report.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     SharedModule
   ],
   declarations: [ReportsComponent, DisplayReportComponent, UpdateReportComponent, ActivationReportComponent, FailedReportComponent]

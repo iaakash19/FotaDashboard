@@ -20,7 +20,19 @@ export class RegisterOemComponent implements OnInit {
   isLoading:boolean = false;
   iseditConfig: boolean = false;
   msgs: Message[] = [];
-  
+  showPartnerFilter: boolean = false;
+  isPreview: boolean = false;
+
+  previewConf:Object = {
+    'Partner Name': null,
+    'conf': {
+      'Url': null,
+      'Button Name': null,
+      'Notification Frequency': null,
+      'Check For Update': null,
+      'Download on WIFI': null
+    }
+  }
   optionsPanel = [
     {
       control: 'Notif_Frequency',
@@ -101,7 +113,6 @@ export class RegisterOemComponent implements OnInit {
     });
 
     this.editConfigForm = this.fb.group({
-      partnerName: ["", Validators.required],
       config: this.fb.group({
         Url: ["", Validators.required],
         Notif_Frequency: ["", Validators.required],
@@ -114,10 +125,43 @@ export class RegisterOemComponent implements OnInit {
 fetchPartners() {
   this.AppService.getPartners().subscribe((data:any) => {
     this.partners = data;
+    let res = Array.from(new Set(this.partners.map(JSON.stringify)));
+    
+    res.length > 1 ? this.showPartnerFilter = true: this.showPartnerFilter = false;
+
+    // partnerName
   })
 }
+
+
   registerOem() {
+    this.curatePreviewConf();
+  }
+
+  curatePreviewConf() {
+    this.previewConf = {
+      'Partner Name': this.oemRegister.get('partnerName').value,
+      'conf': {
+        'Url': this.oemRegister.get('config').value.Url,
+        'Button Name': this.oemRegister.get('config').value.btnName,
+        'Notification Frequency': `${this.oemRegister.get('config').value.Notif_Frequency} ${this.oemRegister.get('config').value.Notif_Frequency == 1 ? 'Day' : 'Days'} `,
+        'Check For Update': `${this.oemRegister.get('config').value.checkForUpdate} ${this.oemRegister.get('config').value.checkForUpdate == 1 ? 'Day' : 'Days'}`,
+        'Download on WIFI': this.oemRegister.get('config').value.downloadAutoOnWiFi == 'n' ? 'No' : 'Yes'
+      }
+    }
+    this.isPreview = true;
+    this.AppService.setBodyMask(true);
+  }
+
+  // Notif_Frequency: ["", Validators.required],
+  // checkForUpdate: ["", Validators.required],
+  // btnName: ["", Validators.required],
+  // downloadAutoOnWiFi: ["", Validators.required]
+  
+
+  handleSave() {
     this.isLoading = true;
+    this.isPreview = false;
     this.AppService.registerOem(this.oemRegister.value).subscribe(
       data => {
         this.fetchPartners();
@@ -127,9 +171,14 @@ fetchPartners() {
       },
       err => {
         this.isLoading = false;
-        this.messageService.add({severity:'error', summary:'Message', detail:'OEM Registration Failed!!'});
+        const errMsg = JSON.parse(err.error).err_msg;
+        this.messageService.add({severity:'error', summary:'Message', detail:errMsg});
       }
     )
+  }
+
+  handleClose() {
+    this.isPreview = false;
   }
 
   editConfig(data) {

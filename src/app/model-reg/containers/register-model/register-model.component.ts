@@ -24,7 +24,15 @@ export class RegisterModelComponent implements OnInit {
   isLoading: boolean = false;
   display: boolean = false;
   prop:any;
+  isToken: boolean = false;
 
+  isPreview: boolean = false;
+  previewConf:any = {
+    'Partner Name': null,
+    'Device Model': null
+  }
+
+ 
   constructor(
     private fb: FormBuilder,
     private AppService: AppService,
@@ -118,7 +126,17 @@ export class RegisterModelComponent implements OnInit {
   }
 
   onModelRegister() {
+    this.curatePreviewConf();
+
+  }
+  handleClose() {
+    this.isPreview = false;
+    
+  }
+  handleSave() {
     this.isLoading = true;
+    this.isPreview = false;
+    this.token = false;
     this.AppService.registerModel(this.modelRegister.value).subscribe(
       (data: any) => {
         this.isLoading = false;
@@ -128,19 +146,30 @@ export class RegisterModelComponent implements OnInit {
           summary: "Message",
           detail: "Model Succesfully regstered"
         });
+        this.isToken = true;
         this.token = data.Token;
-        // this.showToken(this.token);
         this.fetchModels();
       },
       err => {
+        
+        const errMsg = JSON.parse(err.error).err_msg;
         this.isLoading = false;
         this.messageService.add({
           severity: "error",
           summary: "Message",
-          detail: "Error Registering Model"
+          detail: errMsg
         });
       }
     );
+  }
+
+  curatePreviewConf() {
+    this.token = true;
+    this.previewConf['Partner Name'] = this.modelRegister.get('partnerName').value;
+    this.previewConf['Device Model'] = this.modelRegister.get('DeviceModel').value;
+
+    this.isPreview = true;
+    this.AppService.setBodyMask(true);
   }
 
   onFocus(event) {

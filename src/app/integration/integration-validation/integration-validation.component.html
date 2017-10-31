@@ -31,6 +31,12 @@
         <p-dropdown [options]="updates" formControlName="UpdateName"></p-dropdown>
       </div>
     </div>
+    <!-- "AvailableUpdates": [{"Date": "","UpdateId": ""}]
+    "DeviceStatus": [{'Date':"", 'UpdateId': "", 'Status': ""}]
+    "OngoingUpdates": [{"Date": "","UpdateId": ""}]
+    "CompletedUpdates": [{"Date": "","UpdateId": ""}] 
+  || !detail.key.DeviceStatus || !detail.key.OngoingUpdates || !detail.key.CompletedUpdates
+  -->
 
     <div class="form-group mx300">
       <label for="">IMEI1</label>
@@ -38,13 +44,44 @@
       <button *ngIf="showIMEIcheck" type="button" class="check-imei btn btn-success btn-small" (click)="fetchIMEIDetails()">Get IMEI Details</button>
     </div>
     <div class="IMEI_box" *ngIf="IMEI_details">
-      <h4>Details</h4>
+      <h2>Details</h2>
       <div class="IMEI_wrap">
-      <ng-container *ngFor="let detail of IMEI_details | repover_obj">
-          <div class="row">
-            <label for="">{{ detail.key }}</label>
-            <span class="value"> {{ detail.value }} </span>
-          </div>
+        <!-- {{IMEI_details | json}} -->
+      <!-- <ng-container *ngFor="let detail of IMEI_details | repover_obj"> -->
+          <ng-container *ngFor="let detail of IMEI_details | repover_obj">
+              <ng-container *ngIf="detail.key === 'CompletedUpdates' || detail.key === 'DeviceStatus' || detail.key === 'AvailableUpdates' || detail.key === 'OngoingUpdates'">
+                 <div class="row" *ngIf="detail.value.length > 0">
+                   <label>{{detail.key}}</label>
+                   <div class="collection">
+                      <ul *ngFor="let item of detail.value">
+                          <li>
+                            <label for="">Date</label>
+                            <span>{{ item.Date | date:'medium' }}</span>
+                          </li>
+                          <li>
+                              <label for="">UpdateId</label>
+                              <span>{{ item.UpdateId }}</span>
+                          </li>
+                       </ul>
+                   </div>
+                   
+                 </div>
+              </ng-container>
+              <ng-container *ngIf="detail.key !== 'AvailableUpdates'">
+                    <ng-container *ngIf="detail.key !== 'CompletedUpdates'">
+                        <ng-container *ngIf="detail.key !== 'OngoingUpdates'">
+                            <ng-container *ngIf="detail.key !== 'DeviceStatus'">
+                                <div class="row">
+                                    <label for="">{{ detail.key }}</label>
+                                    <span class="value"> {{ detail.value }} </span>
+                                  </div>
+                                </ng-container>
+                        </ng-container>
+                    </ng-container>
+            
+               </ng-container>
+         
+          
       </ng-container>
         <div class="row button-row right">
           <button class="btn btn-small btn-warning" type="button" (click)="deleteIMEI(IMEI_details.id)">Delete</button>

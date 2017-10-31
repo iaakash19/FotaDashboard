@@ -1,4 +1,6 @@
-<p-dataTable [value]="failed_report" exportFilename="failed_report" #dt >
+<p-growl [(value)]="msgs"></p-growl> 
+
+<p-dataTable [value]="failed_report" exportFilename="failed_report" #dt [rows]="10" [paginator]="true">
         <p-header>
                 <div class="ui-helper-clearfix">
                     <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export to CSV" (click)="dt.exportCSV()" style="float:left"></button>
@@ -9,6 +11,9 @@
             <p-column field="currentVersion" header="Current Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
             <p-column field="newVersion" header="Available Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
             <p-column header="Failure Date">
+                    <ng-template pTemplate="filter" let-col>
+                            <p-calendar showButtonBar="true" (onClearClick)="ClearDates()" placeholder="Start and End Date" [(ngModel)]="rangeDates" selectionMode="range" readonlyInput="true" (onSelect)="onDateSelect($event)"></p-calendar> 
+                        </ng-template>
                     <ng-template let-data="rowData" pTemplate="body">
                     {{data.failureDate | date:'medium'}}
                     </ng-template>

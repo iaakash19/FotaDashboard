@@ -3,15 +3,20 @@
   <div class="loading-pulse"></div>
 </div>
 
-<!-- <div class="editModal" *ngIf="iseditConfig"> -->
+<preview 
+*ngIf="isPreview"
+[dataWrap]="previewConf"
+(onClose)="handleClose($event)"
+(onSave)="handleSave($event)">
+</preview>  
   
 <div class="editModal" *ngIf="iseditConfig">
   <button type="button" class="cancel_button btn btn-warning btn-small" (click)="dismissModal()">Close</button>
   <form [formGroup]="editConfigForm" (submit)="saveConfig()">
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>Partner Name</label>
       <input type="text" formControlName="partnerName">
-    </div>
+    </div> -->
     <div class="config-block" formGroupName="config">
       <div class="form-group">
         <label>Url</label>
@@ -50,7 +55,7 @@
     </div>
     <h3>Config</h3>
 
-    <div class="config-block" formGroupName="config">
+    <div class="config-block main" formGroupName="config">
 
       <div class="row">
         <div class="form-group">
@@ -85,8 +90,8 @@
 <div class="wrapper">
 
 
-  <p-dataTable [value]="partners">
-    <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
+  <p-dataTable [value]="partners" [rows]="10" [paginator]="true">
+    <p-column field="partnerName" header="Partner Name" [filter]="showPartnerFilter" filterPlaceholder="Search" filterMatchMode="contains" ></p-column>
     <!-- <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column> -->
     <p-column header="Config">
       <ng-template let-data="rowData" pTemplate="body">

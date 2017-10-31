@@ -238,9 +238,11 @@ button {
 }
 
 .config-block {
-  border: 1px solid #e3e3e3;
   padding: 1rem;
-  border-radius: 2px;
+  &.main {
+    border: 1px solid #e3e3e3;
+    border-radius: 2px;
+  }
 }
 
 // .form-group {
@@ -703,3 +705,68 @@ app-integration-validation, app-generate-update {
 chart {
   margin-bottom: 5rem;
 }
+
+.ui-calendar {
+  input {
+    display: block;
+    width: 100%;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #464a4c;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    margin-top: 3px;
+  }
+}
+
+
+
+preview {
+  position: absolute;
+  left: 0;
+  background: white;
+  z-index: 999;
+  // top: 0;
+  padding: 2rem;
+  margin: 0 auto;
+  width: 100%;
+  transform: translate3d(0, 25vh , 0);   
+}
+
+
+@keyframes slideDown {
+  from {
+      transform: translate3d(0,145vh, 0);    
+  }
+  to {
+      transform: translate3d(0, 25vh , 0);    
+  }
+}
+
+/* The element to apply the animation to */
+preview {
+  animation-name: slideDown;
+  animation-duration: 0.5s;
+}
+
+.cancel_button {
+  float:right;
+}
+app-generate-update {
+  .ui-paginator {
+    text-align: left;
+    }
+    .ui-calendar {
+      display: block;
+    }
+    .ui-datepicker.ui-widget {
+      top:0!important;
+    }
+}
+
+

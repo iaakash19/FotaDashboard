@@ -39,21 +39,31 @@ export class IntegrationValidationComponent implements OnInit {
     });
     
     this.testUpdate.get('IMEI').valueChanges.subscribe(data => {
-      data.length == 15 ? this.fetchIMEIDetails() : this.IMEI_details = null;
+      if(data) {
+        data.length == 15 ? this.fetchIMEIDetails() : this.IMEI_details = null;        
+      }else {
+        this.IMEI_details = null;
+      }
     })
   
     this.testUpdate.get("partnerName").valueChanges.subscribe(partner => {
-      this.fetchDeviceModel(partner);
+      if(partner) {
+        this.fetchDeviceModel(partner);        
+      }
 
     });
 
     this.testUpdate.get("DeviceModel").valueChanges.subscribe(model => {
-      this.fetchCurrentBuild(model);
+      if(model) {
+        this.fetchCurrentBuild(model);        
+      }
 
     });
 
     this.testUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
-      this.fetchUpdateAvailable(currentVersion);
+      if(currentVersion) {
+        this.fetchUpdateAvailable(currentVersion);        
+      }
 
     });
 
@@ -79,7 +89,7 @@ export class IntegrationValidationComponent implements OnInit {
   }
 
   fetchUpdateAvailable(currentVersion) {
-    this.AppService.getUpdatesAvailable(this.testUpdate.value.partnerName, this.testUpdate.value.DeviceModel, currentVersion).subscribe((updates:any) => {
+    this.AppService.getUpdatesAvailable(this.testUpdate.value.partnerName, this.testUpdate.value.DeviceModel, currentVersion, 'Test').subscribe((updates:any) => {
 
             this.updates = updates.map(item => {
               return {
@@ -140,20 +150,33 @@ export class IntegrationValidationComponent implements OnInit {
       })
   }
   testUpdates() {
-    this.isLoading = true;
-      this.testUpdate.value;
-      this.AppService.pushUpdate(this.testUpdate.value, 'Test').subscribe(data => {
-        this.testUpdate.reset();
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'fa fa-question-circle',
+      accept: () => {
+        this.isLoading = true;
+        this.testUpdate.value;
+        this.AppService.pushUpdate(this.testUpdate.value, 'Test').subscribe(data => {
+          this.testUpdate.reset();
+          this.isLoading = false;
+          this.IMEI_details = null;
+          this.messageService.add({severity:'success', summary:'Message', detail:'Success'});
+        },
+      err => {
+        const errMsg = JSON.parse(err.error).err_msg;
         this.isLoading = false;
-
-        this.messageService.add({severity:'success', summary:'Message', detail:'Success'});
+        this.messageService.add({severity:'error', summary:'Message', detail:errMsg});
+  
+      }
+      )
       },
-    err => {
-      this.isLoading = false;
-      this.messageService.add({severity:'error', summary:'Message', detail:'Failed!!'});
+      reject: () => {
+        this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
+      }
+    });
 
-    }
-    )
+   
   }
 
   deleteIMEI(id) {
@@ -166,7 +189,7 @@ export class IntegrationValidationComponent implements OnInit {
         this.AppService.deleteIMEI(id).subscribe(data => {
           
           this.isLoading = false;
-          this.IMEI_details = false;
+          this.IMEI_details = null;
           this.testUpdate.get('IMEI').setValue('');
           this.messageService.add({severity:'success', summary:'Message', detail:'Success!!'});
         },

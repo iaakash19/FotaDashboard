@@ -22,6 +22,10 @@ export class GenerateUpdateComponent implements OnInit {
   isLoading: boolean = false;
   isCurrentBuild: boolean = false;
   baseVersions: any = [];
+  isPreview: boolean = false;
+  file:any = null;
+  u_date:Date;
+
   modes = [
     {
       label: 'Select Mode',
@@ -35,7 +39,21 @@ export class GenerateUpdateComponent implements OnInit {
       label: 'Production',
       value: 'Production'
     }
-  ]
+  ];
+
+
+  previewConf:any = {
+    'Partner Name': null,
+    'Device Type': null,
+    'Device Model': null,
+    'Base Version': null,
+    'File': this.file,
+    'Available Version': null,
+    'Update Name': null,
+    'Key HighLights': null,
+    'Update For': null,
+  }
+
   constructor(private confirmationService: ConfirmationService, private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) { }
 
   @ViewChild('logo') logo;
@@ -53,18 +71,23 @@ export class GenerateUpdateComponent implements OnInit {
       AvailVersion: ["", Validators.required],
       // ChangeLog: ["", Validators.required],
       DeviceType: ["", Validators.required],
-      updateFor: ["", Validators.required],
+      UpdateFor: ["", Validators.required],
       DeviceModel: ["", Validators.required],
       KeyHighLights: ["", Validators.required],
       File: this.fb.control("", Validators.required)
     });
 
     this.generateUpdate.get("partnerName").valueChanges.subscribe(data => {
-      this.fetchDeviceModel(data);
-      this.isDeviceModel = true;
+      if(data) {
+        this.fetchDeviceModel(data);
+        this.isDeviceModel = true;
+      }
+    
     });
     this.generateUpdate.get("DeviceModel").valueChanges.subscribe(data => {
-      this.fetchCurrentBuild(data);
+      if(data) {
+        this.fetchCurrentBuild(data);        
+      }
     });
 
   }
@@ -105,6 +128,7 @@ export class GenerateUpdateComponent implements OnInit {
 
   onBasicUpload(event) {
     this.generateUpdate.get("File").setValue(event.files[0]);
+    this.file = event.files[0];
   }
 
   fetchDeviceModel(partner) {
@@ -159,8 +183,9 @@ export class GenerateUpdateComponent implements OnInit {
           this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Update Succesfully Deleted' });
         },
           err => {
+            const errMsg = JSON.parse(err.error).err_msg;
             this.isLoading = false;
-            this.messageService.add({ severity: 'error', summary: 'Message', detail: 'Error deleting update' });
+            this.messageService.add({ severity: 'error', summary: 'Message', detail: errMsg });
           })
       },
       reject: () => {
@@ -170,10 +195,32 @@ export class GenerateUpdateComponent implements OnInit {
 
    
   }
-  OnGenerateUpdate() {
+
+  curatePreviewConf() {
+    this.previewConf = {
+      'Partner Name': this.generateUpdate.get('partnerName').value,
+      'Device Type': this.generateUpdate.get('DeviceType').value,
+      'Device Model': this.generateUpdate.get('DeviceModel').value,
+      'Base Version': this.generateUpdate.get('BaseVersion').value,
+      'File' : this.file.name,
+      'Available Version': this.generateUpdate.get('AvailVersion').value,
+      'Update Name': this.generateUpdate.get('UpdateName').value,
+      'Key HighLights': this.generateUpdate.get('KeyHighLights').value,
+      'Update For': this.generateUpdate.get('UpdateFor').value,
+      }
+      debugger;
+    
+    this.isPreview = true;
+    this.AppService.setBodyMask(true);
+  }
+  handleClose() {
+    this.isPreview = false;
+  }
+  handleSave() {
     this.isLoading = true;
-    this.AppService
-      .generateUpdate(this.generateUpdate.value, this.generateUpdate.get('updateFor').value)
+    this.isPreview = false;
+
+    this.AppService.generateUpdate(this.generateUpdate.value, this.generateUpdate.get('UpdateFor').value)
       .subscribe(
       data => {
         this.fetchAllUpdates();
@@ -192,4 +239,31 @@ export class GenerateUpdateComponent implements OnInit {
       }
       );
   }
+
+  OnGenerateUpdate() {
+   this.curatePreviewConf(); 
+  }
+
+  onDateSelect(event) {
+      var date = new Date(this.u_date);
+      
+      var year1 = date.getFullYear();
+      var month1 = date.getMonth();
+      var date1 = date.getDate();
+
+    
+      
+      const dateFilter = `${year1}-${month1}-${date1}`;
+
+      this.AppService.filtergeUpdateByDate(dateFilter).subscribe(data => {
+        this.updates = data;        
+      })
+    
+  }
+
+  ClearDates() {
+    this.fetchAllUpdates();
+  }
+
+
 }
