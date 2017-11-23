@@ -1,3 +1,4 @@
+import { WikiModule } from './../wiki/wiki.module';
 import { GenerateUpdateModule } from './../generate-update/generate-update.module';
 import { ModelRegModule } from './../model-reg/model-reg.module';
 import { OemRegModule } from './../oem-reg/oem-reg.module';
@@ -18,7 +19,8 @@ import { AnalyticsModule } from '../analytics/analytics.module';
     IntegrationModule,
     GenerateUpdateModule,
     DashboardRoutingModule,
-    AnalyticsModule
+    AnalyticsModule,
+    WikiModule
   ],
   declarations: [DashboardComponent]
 })

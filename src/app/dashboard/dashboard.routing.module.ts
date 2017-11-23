@@ -1,3 +1,4 @@
+import { CreateWikiComponent } from './../wiki/create-wiki/create-wiki.component';
 import { PushUpdateComponent } from './../generate-update/containers/push-update/push-update.component';
 import { GenerateUpdateComponent } from './../generate-update/containers/generate-update/generate-update.component';
 import { RegisterOemComponent } from './../oem-reg/containers/register-oem/register-oem.component';
@@ -11,6 +12,7 @@ import { AuthGuardService } from '../auth/auth.guard';
 import { IntegrationValidationComponent } from '../integration/integration-validation/integration-validation.component';
 
 import { ReportsComponent } from '../analytics/components/reports/reports.component';
+import { ReadWikiComponent } from '../wiki/read-wiki/read-wiki.component';
 
 const ROUTES: Routes = [
     {
@@ -52,7 +54,14 @@ const ROUTES: Routes = [
                 path: 'analytics',
                 component: ReportsComponent
             },
-
+          {
+            path: 'create-wiki',
+            component: CreateWikiComponent
+          },
+          {
+            path: 'wiki',
+            component: ReadWikiComponent
+          }
         ]
     }
 ]

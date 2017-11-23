@@ -5,7 +5,7 @@
     </div>
     <ul>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <a [routerLink]="['/dashboard/home']">Home</a> 
+        <a [routerLink]="['/dashboard/home']">Home</a>
       </li>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a [routerLink]="['/dashboard/register-oem']"> Register Oem</a>
@@ -25,10 +25,20 @@
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a [routerLink]="['/dashboard/analytics']">Analytics</a>
         </li>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+<a [routerLink]="['/dashboard/create-wiki']">Create Wiki</a>
+
+</li>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+<a [routerLink]="['/dashboard/wiki']">Wiki</a>
+
+</li>
+
+
       <li>
         <a href="" (click)="logOutUser()">Logout</a>
       </li>
-    </ul> 
+    </ul>
   </div>
   <div class="content_box">
     <router-outlet #o="outlet"></router-outlet>
