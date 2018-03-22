@@ -6,7 +6,8 @@ import { LocalStorageService } from "angular-2-local-storage";
 
 @Injectable()
 export class AuthService {
-  BASE_URL = `http://devfota.gammo.me/notify/fotav/login/`;
+  BASE_URL = `http://fota.dynamyn.mobi/notify/fotav/login/`;
+
 
   private currentToken = null;
   private currentTokenSubject = new ReplaySubject<Object>(1);
@@ -24,9 +25,10 @@ export class AuthService {
     return this.http.post(this.BASE_URL, user);
   }
 
-  setToken(token) {
+  setToken(token, user) {
     this.currentTokenSubject.next(token);
     this.LocalStorage.set("token", token);
+    this.LocalStorage.set("superuser", user.superuser);
   }
 
   logOutUser() {
@@ -41,5 +43,9 @@ export class AuthService {
 
   getToken() {
     return this.LocalStorage.get("token");
+  }
+
+  getUserType() {
+    return this.LocalStorage.get("superuser");
   }
 }

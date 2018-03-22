@@ -12,8 +12,7 @@ declare var $: any;
   styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-
-  @ViewChild('container') container: ElementRef;
+  @ViewChild("container") container: ElementRef;
 
   deviceActivatedConf: any;
   updatesPushedConf: any;
@@ -42,7 +41,6 @@ export class HomeComponent implements OnInit {
   partners3: any;
   selectedPartner3: string;
 
-
   partners4: any;
   selectedPartner4: string;
 
@@ -53,43 +51,54 @@ export class HomeComponent implements OnInit {
   raw_updatesPushed: any;
   raw_updatesCompleted: any;
   raw_apkData: any;
+  selectedYear1;
+  selectedYear2;
+  selectedYear3;
 
   monthSlab: [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
   ];
   partnerStats = [
     {
-      count: null, value: null, label: 'Partners Active:'
+      count: null,
+      value: null,
+      label: "Partners Active:"
     },
-    { key: 'deviceModels', label: 'total device models', value: null },
-    { key: 'devicesActivated', label: 'total devices activated', value: null },
-    { key: 'updatesPushed', label: 'Total updates pushed', value: null },
-    { key: 'updatesCompleted', label: 'Total updates completed', value: null }
+    { key: "deviceModels", label: "total device models", value: null },
+    { key: "devicesActivated", label: "total devices activated", value: null },
+    { key: "updatesPushed", label: "Total updates pushed", value: null },
+    { key: "updatesCompleted", label: "Total updates completed", value: null }
   ];
   chart1: any;
   chart2: any;
   chart3: any;
   chart4: any;
   chart5: any;
-
-  constructor(private AppService: AppService) {
-  }
-
+  years: any;
+  years2: any;
+  years3: any;
+  selectedYears3;
+  selectedYears2;
+  selectedYears1;
+  currentYear1;
+  currentYear2;
+  currentYear3;
+  constructor(private AppService: AppService) {}
 
   ngOnInit() {
 
-    this.fetchData();
+    this.yearMaker();
   }
 
   saveInstance1(chartInstance) {
@@ -104,7 +113,7 @@ export class HomeComponent implements OnInit {
     }
     event.value.map(i => {
       series[i].show();
-    })
+    });
   }
 
   saveInstance2(chartInstance) {
@@ -120,7 +129,7 @@ export class HomeComponent implements OnInit {
     }
     event.value.map(i => {
       series[i].show();
-    })
+    });
   }
 
   saveInstance3(chartInstance) {
@@ -136,7 +145,7 @@ export class HomeComponent implements OnInit {
     }
     event.value.map(i => {
       series[i].show();
-    })
+    });
   }
 
   saveInstance4(chartInstance) {
@@ -152,7 +161,7 @@ export class HomeComponent implements OnInit {
     }
     event.value.map(i => {
       series[i].show();
-    })
+    });
   }
 
   saveInstance5(chartInstance) {
@@ -168,13 +177,12 @@ export class HomeComponent implements OnInit {
     }
     event.value.map(i => {
       series[i].show();
-    })
+    });
   }
 
   graphGenerator(graph_title, xTitle = "Months", data, x_Axis, stacked = true) {
-    
     var config = {
-      chart: { type: 'column', width: 800 },
+      chart: { type: "column", width: 800 },
       legend: {
         enabled: false
       },
@@ -186,9 +194,9 @@ export class HomeComponent implements OnInit {
           pointWidth: 30
         },
         column: {
-          stacking: stacked ? 'normal' : null,
+          stacking: stacked ? "normal" : null,
           pointPadding: 0.2,
-          borderWidth: 0,
+          borderWidth: 0
         }
       },
       xAxis: {
@@ -205,7 +213,7 @@ export class HomeComponent implements OnInit {
           enabled: true
         },
         title: {
-          text: 'Total Number'
+          text: "Total Number"
         }
       },
       series: data
@@ -215,204 +223,279 @@ export class HomeComponent implements OnInit {
   }
 
   dataMapper(data, selectedPartner) {
-
-    return data.filter(item => item.partner == selectedPartner)
-      .map(item => {
-        return {
-          name: item.model,
-          data: this.collectionCurator(item.count)
-        }
-      });
+    return data.filter(item => item.partner == selectedPartner).map(item => {
+      return {
+        name: item.model,
+        data: this.collectionCurator(item.count)
+      };
+    });
   }
 
   optionMaker(data, initiator) {
-
     return data.map((data, index) => {
       switch (initiator) {
-        case 'activated_device':
+        case "activated_device":
           this.selectedActivatedDevices.push(index);
           break;
-        case 'updates_pushed':
+        case "updates_pushed":
           this.selected_devices_forupdatesPushed.push(index);
           break;
-        case 'updates_completed':
+        case "updates_completed":
           this.selected_devices_forupdatesCompleted.push(index);
           break;
-        case 'devices_forAPK':
+        case "devices_forAPK":
           this.selected_devices_forAPK.push(index);
       }
 
       return {
         label: data.name,
         value: index
-      }
-    });
-
-  }
-
-  makePartnersDrop(data) {
-    const partnersWrap = data.map((item: any) => {
-
-      return {
-        label: item.partner,
-        value: item.partner
-      }
-    });
-
-    let res = Array.from(new Set(partnersWrap.map(JSON.stringify)));
-    return res.map((item: any) => {
-      return JSON.parse(item)
+      };
     });
   }
 
   generateGraph1WithDrop(data, selectedPartner) {
     let dataToMap = this.dataMapper(data, selectedPartner);
-    this.activatedDevices = this.optionMaker(dataToMap, 'activated_device');
-    this.deviceActivatedConf = this.graphGenerator('Total Number of Device Activated', undefined, dataToMap, [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ]);
+    this.activatedDevices = this.optionMaker(dataToMap, "activated_device");
+    this.deviceActivatedConf = this.graphGenerator(
+      "Total Number of Device Activated",
+      undefined,
+      dataToMap,
+      [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+    );
   }
 
   generateGraph2WithDrop(data, selectedPartner) {
     let dataToMap = this.dataMapper(data, selectedPartner);
-    this.devices_forupdatesPushed = this.optionMaker(dataToMap, 'updates_pushed');
-    this.updatesPushedConf = this.graphGenerator('Total Number of Updates Pushed', undefined, dataToMap, [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ]);
+    this.devices_forupdatesPushed = this.optionMaker(
+      dataToMap,
+      "updates_pushed"
+    );
+    this.updatesPushedConf = this.graphGenerator(
+      "Total Number of Updates Pushed",
+      undefined,
+      dataToMap,
+      [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+    );
   }
 
   generateGraph3WithDrop(data, selectedPartner) {
-    let dataToMap = data.filter(item => item.partner == selectedPartner)
+    let dataToMap = data
+      .filter(item => item.partner == selectedPartner)
       .map(item => {
         return {
           name: item.model,
           data: this.collectionCurator1(item.update_count)
-        }
+        };
       });
     this.devices_forupdatesCompleted = [];
-    this.devices_forupdatesCompleted = this.optionMaker(dataToMap, 'updates_completed');
-    this.updatesCompletedConf = this.graphGenerator('Total Number of Updates Completed', undefined, dataToMap, [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ]);
+    this.devices_forupdatesCompleted = this.optionMaker(
+      dataToMap,
+      "updates_completed"
+    );
+    this.updatesCompletedConf = this.graphGenerator(
+      "Total Number of Updates Completed",
+      undefined,
+      dataToMap,
+      [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+    );
   }
 
   generateGraph4WithDrop(data, selectedPartner) {
+    let apk_versions = [];
+    let apk_version = [];
+    let uniqueApks;
 
-    let dataToMap = data.filter(item => item.partner == selectedPartner)
+    data.map(item => {
+      apk_version = Object.keys(item.apk_version_count).map(version => version);
+      apk_versions = [...apk_versions, ...apk_version];
+    });
+    apk_versions;
+
+    uniqueApks = apk_versions.filter(function(item, pos) {
+      return apk_versions.indexOf(item) == pos;
+    });
+
+    let dataToMap = data
+      .filter(item => item.partner == selectedPartner)
       .map(item => {
         return {
           name: item.model,
           data: this.collectionCuratorForApk(item.apk_version_count)
-        }
+        };
       });
-      this.devices_forAPK = this.optionMaker(dataToMap, 'devices_forAPK');      
-      this.APKConf = this.graphGenerator('Total Devices on APK version', 'APK Version', dataToMap, ['2.0.2', '2.0.3']);
+    this.devices_forAPK = this.optionMaker(dataToMap, "devices_forAPK");
+    this.APKConf = this.graphGenerator(
+      "Total Devices on APK version",
+      "APK Version",
+      dataToMap,
+      uniqueApks
+    );
   }
 
-
-  fetchData() {
-
+  onYear1Change(event) {
+    this.currentYear1 = event.value;
     // 1. Devices Activated
-    this.AppService.getDevicesActivated().subscribe((data: any) => {
+    this.AppService.getDevicesActivated(this.currentYear1).subscribe(
+      (data: any) => {
+        this.raw_devicesActivated = data;
+        this.partners1 = this.makePartnersDrop(data);
+        debugger;
+        this.selectedPartner1 = this.partners1[0]["value"];
 
+        this.generateGraph1WithDrop(data, this.selectedPartner1);
+      }
+    );
+  }
+
+  onYear2Change(event) {
+    this.currentYear2 = event.value;
+    // 1. Devices Activated
+    //2. Updates Pushed
+    this.AppService.getUpdatesPushed(this.currentYear2).subscribe((data: any) => {
+      this.raw_updatesPushed = data;
+      this.partners2 = this.makePartnersDrop(data);
+      this.selectedPartner2 = this.partners2[0]["value"];
+      this.generateGraph2WithDrop(data, this.selectedPartner2);
+    });
+  }
+
+  onYear3Change(event) {
+    this.currentYear3 = event.value;
+    this.AppService.getUpdatesCompleted(this.currentYear3).subscribe((data: any) => {
+      this.raw_updatesCompleted = data;
+      this.partners3 = this.makePartnersDrop(data);
+      this.selectedPartner3 = this.partners3[0]["value"];
+
+      this.generateGraph3WithDrop(data, this.selectedPartner3);
+    });
+  }
+
+  yearMaker() {
+    this.AppService.getYears().subscribe((data: any) => {
+      this.years = data.map(item => {
+        return { label: item, value: item };
+      });
+      this.fetchData(data[0]);
+    });
+  }
+
+  makePartnersDrop(data) {
+    const partnersWrap = data.map((item: any) => {
+      return {
+        label: item.partner,
+        value: item.partner
+      };
+    });
+
+    let res = Array.from(new Set(partnersWrap.map(JSON.stringify)));
+    return res.map((item: any) => {
+      return JSON.parse(item);
+    });
+  }
+
+  fetchData(currentYear) {
+    // 1. Devices Activated
+    this.AppService.getDevicesActivated(currentYear).subscribe((data: any) => {
       this.raw_devicesActivated = data;
       this.partners1 = this.makePartnersDrop(data);
-      this.selectedPartner1 = this.partners1[0]['value'];
+
+      this.selectedPartner1 = this.partners1[0]["value"];
 
       this.generateGraph1WithDrop(data, this.selectedPartner1);
     });
 
     //2. Updates Pushed
-    this.AppService.getUpdatesPushed().subscribe((data: any) => {
+    this.AppService.getUpdatesPushed(currentYear).subscribe((data: any) => {
       this.raw_updatesPushed = data;
       this.partners2 = this.makePartnersDrop(data);
-      this.selectedPartner2 = this.partners2[0]['value'];
-
+      this.selectedPartner2 = this.partners2[0]["value"];
       this.generateGraph2WithDrop(data, this.selectedPartner2);
-
     });
 
     //3. Updates Completed
-    this.AppService.getUpdatesCompleted().subscribe((data: any) => {
+    this.AppService.getUpdatesCompleted(currentYear).subscribe((data: any) => {
       this.raw_updatesCompleted = data;
       this.partners3 = this.makePartnersDrop(data);
-      this.selectedPartner3 = this.partners3[0]['value'];
+      this.selectedPartner3 = this.partners3[0]["value"];
 
       this.generateGraph3WithDrop(data, this.selectedPartner3);
-
     });
+
     // 4.
     this.AppService.getTotalOnAPK().subscribe((data: any) => {
       this.raw_apkData = data;
       this.partners4 = this.makePartnersDrop(data);
-      this.selectedPartner4 = this.partners4[0]['value'];
+      this.selectedPartner4 = this.partners4[0]["value"];
       this.generateGraph4WithDrop(data, this.selectedPartner3);
     });
 
     //5. Device Models
     this.AppService.getDeviceModelsData().subscribe((data: any) => {
+      this.deviceModels = data.map((item, index) => {
+        this.selected_deviceModels.push(index);
+        return {
+          label: item.partner,
+          value: index
+        };
+      });
 
-            this.deviceModels = data.map((item, index) => {
-              this.selected_deviceModels.push(index);
-              return {
-                label: item.partner,
-                value: index
-              }
-            });
-      
-            let dataToMap = data.map(item => {
-              return [item.partner,item.count]
-            });
-      
-            let xAxis = data.map(item => {
-              return item.partner
-            });
-            
-            this.deviceModelsConf = this.createChart5(dataToMap);
-      
-            // this.deviceModelsConf = this.graphGenerator('Total Device Models', 'Oems', dataToMap, xAxis, false);
-      
-          })
+      let dataToMap = data.map(item => {
+        return [item.partner, item.count];
+      });
 
+      let xAxis = data.map(item => {
+        return item.partner;
+      });
 
+      this.deviceModelsConf = this.createChart5(dataToMap);
+
+      // this.deviceModelsConf = this.graphGenerator('Total Device Models', 'Oems', dataToMap, xAxis, false);
+    });
   }
 
   createChart5(data) {
     var config = {
-      chart: { type: 'column', width: 800 },
+      chart: { type: "column", width: 800 },
       legend: {
         enabled: false
       },
@@ -422,7 +505,7 @@ export class HomeComponent implements OnInit {
         },
         column: {
           colorByPoint: true
-      }
+        }
         // column: {
         //   stacking: stacked ? 'normal' : null,
         //   pointPadding: 0.2,
@@ -430,10 +513,10 @@ export class HomeComponent implements OnInit {
         // }
       },
       title: {
-        text: 'Total Device Models'
+        text: "Total Device Models"
       },
       xAxis: {
-        type: 'category',
+        type: "category"
         // labels: {
         //     rotation: -45,
         //     style: {
@@ -441,39 +524,41 @@ export class HomeComponent implements OnInit {
         //         fontFamily: 'Verdana, sans-serif'
         //     }
         // }
-    },
-    yAxis: {
+      },
+      yAxis: {
         min: 0,
         title: {
-            text: 'Total Number'
+          text: "Total Number"
         }
-    },
-    series: [{
-      name: 'Population',
-      data: data
-      // data: [
-      //     ['Shanghai', 23.7],
-      //     ['Lagos', 16.1],
-      //     ['Istanbul', 14.2],
-      //     ['Karachi', 14.0],
-      //     ['Mumbai', 12.5],
-      //     ['Moscow', 12.1],
-      //     ['São Paulo', 11.8],
-      //     ['Beijing', 11.7],
-      //     ['Guangzhou', 11.1],
-      //     ['Delhi', 11.1],
-      //     ['Shenzhen', 10.5],
-      //     ['Seoul', 10.4],
-      //     ['Jakarta', 10.0],
-      //     ['Kinshasa', 9.3],
-      //     ['Tianjin', 9.3],
-      //     ['Tokyo', 9.0],
-      //     ['Cairo', 8.9],
-      //     ['Dhaka', 8.9],
-      //     ['Mexico City', 8.9],
-      //     ['Lima', 8.9]
-      // ],
-    }]
+      },
+      series: [
+        {
+          name: "Population",
+          data: data
+          // data: [
+          //     ['Shanghai', 23.7],
+          //     ['Lagos', 16.1],
+          //     ['Istanbul', 14.2],
+          //     ['Karachi', 14.0],
+          //     ['Mumbai', 12.5],
+          //     ['Moscow', 12.1],
+          //     ['São Paulo', 11.8],
+          //     ['Beijing', 11.7],
+          //     ['Guangzhou', 11.1],
+          //     ['Delhi', 11.1],
+          //     ['Shenzhen', 10.5],
+          //     ['Seoul', 10.4],
+          //     ['Jakarta', 10.0],
+          //     ['Kinshasa', 9.3],
+          //     ['Tianjin', 9.3],
+          //     ['Tokyo', 9.0],
+          //     ['Cairo', 8.9],
+          //     ['Dhaka', 8.9],
+          //     ['Mexico City', 8.9],
+          //     ['Lima', 8.9]
+          // ],
+        }
+      ]
     };
 
     return config;
@@ -499,11 +584,7 @@ export class HomeComponent implements OnInit {
     this.generateGraph4WithDrop(this.raw_apkData, event.value);
   }
 
-
-
-
   collectionCurator(dataStack) {
-
     let res = Array(12).fill(0);
     dataStack.forEach(item => {
       res[item.month - 1] = item.total;
@@ -512,7 +593,6 @@ export class HomeComponent implements OnInit {
   }
 
   collectionCurator1(dataStack) {
-
     let res = Array(12).fill(0);
     dataStack.forEach(item => {
       res[item.month - 1] = item.count;
@@ -528,6 +608,4 @@ export class HomeComponent implements OnInit {
     });
     return res;
   }
-
-
 }

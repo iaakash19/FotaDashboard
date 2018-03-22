@@ -1,7 +1,7 @@
 <p-growl [(value)]="msgs"></p-growl>
-<p-confirmDialog></p-confirmDialog> 
+<p-confirmDialog></p-confirmDialog>
 
-<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
+<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div>
 
 <div class="wrapper">
   <h2>Push on Production</h2>
@@ -19,6 +19,8 @@
       </div>
     </div>
 
+    {{  isDeviceModel }}
+    {{ isCurrentBuild }}
     <div class="row" *ngIf="isCurrentBuild">
       <div class="form-group" *ngIf="isCurrentBuild">
         <label for="">Current Build Versions</label>

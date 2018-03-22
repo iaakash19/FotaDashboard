@@ -32,7 +32,7 @@ export class RegisterModelComponent implements OnInit {
     'Device Model': null
   }
 
- 
+
   constructor(
     private fb: FormBuilder,
     private AppService: AppService,
@@ -53,11 +53,11 @@ export class RegisterModelComponent implements OnInit {
     ro.build.date.utc=&lt;Build UTC Time Stamp&gt;<br/>
     ro.fota.platform=&lt;chipset&gt;_&lt;OS&gt;<br/>
     ro.fota.type=phone<br/>
-    ro.fota.app=2.0.0<br/>
+    ro.fota.app=3.0.0<br/>
     ro.fota.oem=&lt;oemname&gt;_&lt;chipset&gt;_&lt;os&gt;<br/>
     ro.fota.device=&lt;ModelMarketName&gt;<br/>
     ro.fota.version=&lt;OEM&gt;_&lt;Modelname&gt;_&lt;buildversioncode&gt;_&lt;ro.build.date.utc&gt;<br/>
-    ro.fota.token=&lt;${this.token}&gt;<br/>
+    ro.fota.token=${this.token}<br/>
     # end fota properties`;
 
     return prop;
@@ -72,29 +72,29 @@ export class RegisterModelComponent implements OnInit {
     });
   }
 
-  
+
   showDialog(data) {
     this.display = true;
     this.prop = `# begin fota properties<br/>
     ro.build.date.utc=&lt;Build UTC Time Stamp&gt;<br/>
     ro.fota.platform=&lt;chipset&gt;_&lt;OS&gt;<br/>
     ro.fota.type=phone<br/>
-    ro.fota.app=2.0.0<br/>
+    ro.fota.app=3.0.0<br/>
     ro.fota.oem=&lt;oemname&gt;_&lt;chipset&gt;_&lt;os&gt;<br/>
     ro.fota.device=&lt;ModelMarketName&gt;<br/>
     ro.fota.version=&lt;OEM&gt;_&lt;Modelname&gt;_&lt;buildversioncode&gt;_&lt;ro.build.date.utc&gt;<br/>
-    ro.fota.token=&lt;${data.Token}&gt;<br/>
+    ro.fota.token=${data.Token}<br/>
     # end fota properties`;
   }
 
- 
+
 
   showBuild(token) {
     const prop = `# begin fota properties
     ro.build.date.utc=<Build UTC Time Stamp>
     ro.fota.platform=<chipset>_<OS>
     ro.fota.type=phone
-    ro.fota.app=2.0.0
+    ro.fota.app=3.0.0
     ro.fota.oem=<oemname>_<chipset>_<os>
     ro.fota.device=<ModelMarketName>
     ro.fota.version=<OEM>_<Modelname>_<buildversioncode>_<ro.build.date.utc>
@@ -131,7 +131,7 @@ export class RegisterModelComponent implements OnInit {
   }
   handleClose() {
     this.isPreview = false;
-    
+
   }
   handleSave() {
     this.isLoading = true;
@@ -151,7 +151,7 @@ export class RegisterModelComponent implements OnInit {
         this.fetchModels();
       },
       err => {
-        
+
         const errMsg = JSON.parse(err.error).err_msg;
         this.isLoading = false;
         this.messageService.add({

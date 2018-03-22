@@ -1,25 +1,75 @@
-<p-growl [(value)]="msgs"></p-growl> 
+<p-growl [(value)]="msgs"></p-growl>
 
-<p-dataTable [value]="activation_report" exportFilename="activation_report" #dt [rows]="10" [paginator]="true">
+
+<p-dataTable [value]="activation_report" exportFilename="activation_report" #dt>
   <p-header>
+
     <div class="ui-helper-clearfix">
-      <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export to CSV" (click)="dt.exportCSV()" style="float:left"></button>
+      <div class="button-bar">
+        <button type="button" pButton icon="fa-file-o" iconPos="left" label="Export to CSV" (click)="triggerExport()" style="float:left"></button>
+
+        <button class=" btn btn-warning search" type="button" (click)="triggerSearch()">Search</button>
+        <button class="btn btn-warning clear" type="button" (click)="clearAll()">Clear</button>
+      </div>
+
     </div>
   </p-header>
-  <p-column field="partner" header="Partner" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-  <p-column field="model" header="Model" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
-  <p-column field="IMEI1" header="IMEI1" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-  <p-column field="IMEI2" header="IMEI2" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-  
-  <p-column header="Activation Date">
-      <ng-template pTemplate="filter" let-col>
-          <p-calendar placeholder="Start and End Date" [(ngModel)]="rangeDates" selectionMode="range" readonlyInput="true" (onSelect)="onDateSelect($event)" showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar> 
-        </ng-template>
-    <ng-template let-data="rowData" pTemplate="body">
-      {{data.activationDate | date:'medium' }}
+  <p-column field="partnerName" header="Partner">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">Partner</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'partnerName')"
+        [(ngModel)]="hookedState.one">
     </ng-template>
   </p-column>
-  <p-footer>There are
-    <strong>{{total_count}}</strong> records</p-footer>
+
+  <p-column field="DeviceModel" header="Model">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">Model</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'DeviceModel')"
+        [(ngModel)]="hookedState.two">
+    </ng-template>
+  </p-column>
+
+  <p-column field="IMEI1">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">IMEI1</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'IMEI1')"
+        [(ngModel)]="hookedState.three">
+    </ng-template>
+  </p-column>
+
+  <p-column field="IMEI2" header="IMEI2">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">IMEI2</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'IMEI2')"
+        [(ngModel)]="hookedState.four">
+    </ng-template>
+  </p-column>
+
+  <p-column header="Activation Date">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">Activation Date</span>
+
+
+      <p-calendar placeholder="Start and End Date" [(ngModel)]="rangeDates" selectionMode="range" readonlyInput="true" (onSelect)="triggerFilter($event, 'date')"
+        showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar>
+
+    </ng-template>
+
+    <ng-template let-data="rowData" pTemplate="body">
+      {{data.ActivationDate | date:'medium' }}
+    </ng-template>
+  </p-column>
+
+  <p-footer>
+    <div class="paginator">
+      <p-paginator *ngIf="dataLoaded" rows="5" totalRecords="{{total_count}}" first="1" (onPageChange)="paginate($event)"></p-paginator>
+
+    </div>
+  </p-footer>
 </p-dataTable>
+
+
+<!-- ActivationDate : "2018-01-10 15:09:30" DeviceModel : "INTEX AQUA LIONS X1" IMEI1 : "911602650040844" IMEI2 : "911602650040851"
+partnerName : "intex" -->

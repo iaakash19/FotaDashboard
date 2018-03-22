@@ -19,4 +19,8 @@ export class DashboardComponent implements OnInit {
     this.AuthService.logOutUser();
   }
 
+  isSuperUser() {
+    return this.AuthService.getUserType();
+  }
+
 }

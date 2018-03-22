@@ -3,9 +3,13 @@
   <div class="loading-pulse"></div>
 </div>
 
+<div class="loader" *ngIf="isLoading">
+  <div class="loading-pulse"></div>
+</div>
 
-<div class="wrapper">
-  <h2>Create Wiki</h2>
+
+<div class="wrapper" *ngIf="showForm">
+  <h2>{{ editMode ? 'Edit' : 'Create' }} Wiki</h2>
   <form [formGroup]="wikiForm" (submit)="submit()">
     <div class="wikiBlock" formArrayName="queryBlock" *ngFor="let wiki of wikis.controls; let i = index; let first=first; let last = last">
 
@@ -19,15 +23,15 @@
           <p-editor formControlName="answer" [style]="{'height':'160px'}"></p-editor>
         </div>
         <div class="action_buttons row">
-          <button *ngIf="!last" class="btn btn-warning" type="button" (click)="removeBlock(i)">Delete Block</button>
+          <button *ngIf="!last && !editMode" class="btn btn-warning" type="button" (click)="removeBlock(i)">Delete Block</button>
         </div>
       </div>
 
     </div>
 
     <div class="buttonRow">
-  <button class="btn btn-primary" type="button" (click)="addBlock()">Add Block</button>
-  <button class="btn btn-success" type="submit">Save</button>
+  <button *ngIf="!editMode" class="btn btn-primary" type="button" (click)="addBlock()">Add Block</button>
+  <button class="btn btn-success" type="submit">{{ editMode ? 'Edit' : 'Save' }}</button>
     </div>
 
   </form>

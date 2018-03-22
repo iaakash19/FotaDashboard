@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
+
   @ViewChild('username') username: ElementRef;
   @ViewChild('password') password: ElementRef;
 
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    
+
     // username
     this.username_control =  this.loginForm.get('username');
     this.userNameBlurs$ = Observable.fromEvent(this.username.nativeElement, 'blur');
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-    
+
     this.ControlObserver();
   }
 
@@ -91,14 +91,14 @@ export class LoginComponent implements OnInit {
         }).join(' ');
       }
     }
-   
-   
+
+
   }
 
   onLogin() {
     this.AuthService.login(this.loginForm.value).subscribe(
       (data:any) => {
-        this.AuthService.setToken(data.token);
+        this.AuthService.setToken(data.token, data);
         this.Router.navigate(['dashboard/home']);
       },
       err =>  {

@@ -62,3 +62,9 @@ label {
         background: rgba(0,0,0,0.1);
     }
 }
+
+.year_selection {
+      display: flex;
+      flex-flow: column;
+      margin-left: 20px;
+}

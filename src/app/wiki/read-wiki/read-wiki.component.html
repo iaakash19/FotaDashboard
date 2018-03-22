@@ -1,3 +1,18 @@
-<p>
-  read-wiki works!
-</p>
+<div class="loader" *ngIf="isLoading">
+  <div class="loading-pulse"></div>
+</div>
+
+<div class="wrapper">
+  <h2>Wiki</h2>
+  <p-accordion>
+
+    <p-accordionTab *ngFor="let block of wikiWrap" [header]="block.question">
+      <div [innerHTML]="block.answer"></div>
+      <div class="row" *ngIf="isSuperUser()">
+        <button class="btn btn-warning" type="button" (click)="removeBlock(block.id)">Delete Block</button>
+        <button class="btn btn-success" type="button" (click)="editBlock(block.id)">Edit</button>
+      </div>
+    </p-accordionTab>
+
+  </p-accordion>
+</div>

@@ -1,16 +1,20 @@
 <p-growl [(value)]="msgs"></p-growl>
 
-<p-confirmDialog></p-confirmDialog> 
-<preview 
+<p-confirmDialog></p-confirmDialog>
+
+<preview
 *ngIf="isPreview"
 [dataWrap]="previewConf"
 (onClose)="handleClose($event)"
 (onSave)="handleSave($event)">
-</preview> 
+</preview>
 
 <div class="loader" *ngIf="isLoading">
   <div class="loading-pulse"></div>
 </div>
+
+
+
 
 <div class="wrapper">
 
@@ -37,9 +41,9 @@
 
       <div class="form-group" *ngIf="isCurrentBuild">
         <label for="">Base Version</label>
-        <p-dropdown [options]="baseVersions" formControlName="BaseVersion"></p-dropdown>        
+        <p-dropdown [options]="baseVersions" formControlName="BaseVersion"></p-dropdown>
       </div>
-      
+
       <div class="form-group">
         <label for="">Available Version</label>
         <input type="text" formControlName="AvailVersion">
@@ -53,21 +57,25 @@
             <input type="text" formControlName="UpdateName">
           </div>
 
-      
+
       <div class="form-group">
           <label for="">Key HighLights</label>
           <input type="text" formControlName="KeyHighLights">
         </div>
-      
-        <div class="form-group">
+
+        <div class="form-group with-uploader">
+          <div class="loader" *ngIf="isLoadingComp">
+            <span class="message">Uploading... Please Wait</span>
+            <div class="loading-pulse"></div>
+          </div>
             <label for="">File</label>
             <p-fileUpload auto="auto" customUpload="true" name="demo[]" (uploadHandler)="onBasicUpload($event)" #logo></p-fileUpload>
           </div>
-      
+
     </div>
 
     <div class="row">
-      
+
         <div class="form-group">
             <label for="">Update For</label>
             <p-dropdown [options]="modes" formControlName="UpdateFor"></p-dropdown>
@@ -85,13 +93,13 @@
 
 <div class="wrapper">
   <h2>Available Updates</h2>
-  
+
   <p-dataTable [value]="updates" [rows]="10" [paginator]="true">
 
     <p-column field="partnerName" header="Partner Name" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
     <p-column field="DeviceModel" header="Device Model" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
     <p-column field="BaseVersion" header="BaseVersion" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-    
+
     <p-column field="AvailVersion" header="Available Version" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
     <p-column field="DeviceType" header="Device Type" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
     <p-column field="UpdateName" header="UpdateName" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
@@ -101,20 +109,20 @@
 
     <p-column header="Date">
         <ng-template pTemplate="filter" let-col>
-            <p-calendar placeholder="Select Date" [(ngModel)]="u_date" readonlyInput="true" (onSelect)="onDateSelect($event)" showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar> 
+            <p-calendar placeholder="Select Date" [(ngModel)]="u_date" readonlyInput="true" (onSelect)="onDateSelect($event)" showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar>
           </ng-template>
         <ng-template let-data="rowData" pTemplate="body">
           {{data.Date |  date:'medium' }}
         </ng-template>
       </p-column>
       <p-column field="DownloadUrl" header="Download Url" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-      
+
 
     <p-column field="DownloadSize" header="Download Size" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
     <p-column field="Md5" header="Md5" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
     <p-column field="KeyHighLights" header="Key HighLights" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-    
+
     <p-column>
       <ng-template let-data="rowData" pTemplate="body">
         <button class="btn btn-warning" (click)="deleteUpdate(data.id)">Delete</button>

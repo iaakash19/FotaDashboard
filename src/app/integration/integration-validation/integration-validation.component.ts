@@ -24,11 +24,13 @@ export class IntegrationValidationComponent implements OnInit {
   isUpdate: boolean = false;
   optionsPanel:any;
   msgs: Message[] = [];
-  
+  devices:any;
+
   constructor(private confirmationService: ConfirmationService, private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.fetchPartners();
+    this.fetchDevicesForTable();
 
     this.testUpdate = this.fb.group({
       partnerName: ['', Validators.required],
@@ -37,36 +39,42 @@ export class IntegrationValidationComponent implements OnInit {
       UpdateName: ['', Validators.required],
       IMEI: ['', Validators.required]
     });
-    
+
     this.testUpdate.get('IMEI').valueChanges.subscribe(data => {
       if(data) {
-        data.length == 15 ? this.fetchIMEIDetails() : this.IMEI_details = null;        
+        data.length == 15 ? this.fetchIMEIDetails() : this.IMEI_details = null;
       }else {
         this.IMEI_details = null;
       }
     })
-  
+
     this.testUpdate.get("partnerName").valueChanges.subscribe(partner => {
       if(partner) {
-        this.fetchDeviceModel(partner);        
+        this.fetchDeviceModel(partner);
       }
 
     });
 
     this.testUpdate.get("DeviceModel").valueChanges.subscribe(model => {
       if(model) {
-        this.fetchCurrentBuild(model);        
+        this.fetchCurrentBuild(model);
       }
 
     });
 
     this.testUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
       if(currentVersion) {
-        this.fetchUpdateAvailable(currentVersion);        
+        this.fetchUpdateAvailable(currentVersion);
       }
 
     });
 
+  }
+
+  fetchDevicesForTable() {
+    this.AppService.getDevices().subscribe((data:any) =>{
+      this.devices = data.results;
+    })
   }
 
   fetchCurrentBuild(model) {
@@ -167,7 +175,7 @@ export class IntegrationValidationComponent implements OnInit {
         const errMsg = JSON.parse(err.error).err_msg;
         this.isLoading = false;
         this.messageService.add({severity:'error', summary:'Message', detail:errMsg});
-  
+
       }
       )
       },
@@ -176,7 +184,7 @@ export class IntegrationValidationComponent implements OnInit {
       }
     });
 
-   
+
   }
 
   deleteIMEI(id) {
@@ -187,7 +195,7 @@ export class IntegrationValidationComponent implements OnInit {
       accept: () => {
         this.isLoading = true;
         this.AppService.deleteIMEI(id).subscribe(data => {
-          
+
           this.isLoading = false;
           this.IMEI_details = null;
           this.testUpdate.get('IMEI').setValue('');
@@ -203,7 +211,7 @@ export class IntegrationValidationComponent implements OnInit {
           this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
       }
   });
-   
+
   }
 
 }

@@ -1,8 +1,8 @@
 <p-growl [(value)]="msgs"></p-growl>
 
-<p-confirmDialog></p-confirmDialog> 
+<p-confirmDialog></p-confirmDialog>
 
-<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
+<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div>
 
 <div class="wrapper">
   <h2>Set up Test Updates</h2>
@@ -34,7 +34,7 @@
     <!-- "AvailableUpdates": [{"Date": "","UpdateId": ""}]
     "DeviceStatus": [{'Date':"", 'UpdateId': "", 'Status': ""}]
     "OngoingUpdates": [{"Date": "","UpdateId": ""}]
-    "CompletedUpdates": [{"Date": "","UpdateId": ""}] 
+    "CompletedUpdates": [{"Date": "","UpdateId": ""}]
   || !detail.key.DeviceStatus || !detail.key.OngoingUpdates || !detail.key.CompletedUpdates
   -->
 
@@ -64,7 +64,7 @@
                           </li>
                        </ul>
                    </div>
-                   
+
                  </div>
               </ng-container>
               <ng-container *ngIf="detail.key !== 'AvailableUpdates'">
@@ -78,10 +78,10 @@
                                 </ng-container>
                         </ng-container>
                     </ng-container>
-            
+
                </ng-container>
-         
-          
+
+
       </ng-container>
         <div class="row button-row right">
           <button class="btn btn-small btn-warning" type="button" (click)="deleteIMEI(IMEI_details.id)">Delete</button>
@@ -93,3 +93,24 @@
     </div>
   </form>
 </div>
+
+<p-dataTable [value]="devices" [rows]="10" [paginator]="true">
+
+  <p-column field="partnerName" header="Partner Name"></p-column>
+<p-column field="DeviceModel" header="DeviceModel"></p-column>
+
+    <p-column field="IMEI1" header="IMEI1"></p-column>
+    <p-column field="IMEI2" header="IMEI2"></p-column>
+    <p-column field="ActivationDate" header="Activation Date"></p-column>
+
+  <!-- <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column> -->
+  <p-column header="Edit">
+    <ng-template let-data="rowData" pTemplate="body">
+      <div class="configWrap">
+        <i class="fa fa-minus-circle"></i>
+      </div>
+
+
+    </ng-template>
+  </p-column>
+</p-dataTable>

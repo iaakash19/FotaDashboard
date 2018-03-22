@@ -61,6 +61,10 @@ const ROUTES: Routes = [
           {
             path: 'wiki',
             component: ReadWikiComponent
+          },
+          {
+            path: 'wiki/edit/:id',
+            component: CreateWikiComponent
           }
         ]
     }

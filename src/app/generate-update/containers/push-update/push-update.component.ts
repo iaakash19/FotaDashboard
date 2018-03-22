@@ -40,16 +40,24 @@ export class PushUpdateComponent implements OnInit {
 
 
     this.pushUpdate.get("partnerName").valueChanges.subscribe(partner => {
-      this.fetchDeviceModel(partner);
+      debugger;
+      if (partner) {
+        this.fetchDeviceModel(partner);
+      }
 
     });
 
     this.pushUpdate.get("DeviceModel").valueChanges.subscribe(model => {
-      this.fetchCurrentBuild(model);
+      if(model) {
+        this.fetchCurrentBuild(model);
+      }
+
     });
 
     this.pushUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
-      this.fetchUpdateAvailable(currentVersion);
+      if (currentVersion) {
+        this.fetchUpdateAvailable(currentVersion);
+      }
 
     });
 
@@ -141,6 +149,11 @@ export class PushUpdateComponent implements OnInit {
         this.isLoading = true;
         this.AppService.pushUpdate(this.pushUpdate.value, 'Production').subscribe(data => {
           this.isLoading = false;
+          this.isCurrentBuild = false;
+          this.isUpdate = false;
+          this.isDeviceModel = false;
+          this.pushUpdate.reset();
+
           this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Update Pushed to Production' });
         },
           err => {

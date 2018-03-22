@@ -4,7 +4,6 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class AppService {
-
   BASE_URL = `http://fota.dynamyn.mobi/notify/fotav/`;
 
   private toggleBodyClass$ = new ReplaySubject<any>();
@@ -13,14 +12,18 @@ export class AppService {
   private toggleBodyMask$ = new ReplaySubject<any>();
   public toggleBodyShadow$ = this.toggleBodyMask$.asObservable();
 
-  constructor(
-    private Http: HttpClient
-  ) { }
+  constructor(private Http: HttpClient) {}
 
-setBodyMask(value) {
-  this.toggleBodyMask$.next(value);
-}
+  setBodyMask(value) {
+    this.toggleBodyMask$.next(value);
+  }
 
+  getYears() {
+     return this.Http.get(`${this.BASE_URL}getYear/`);
+  }
+  getDevices() {
+    return this.Http.get(`${this.BASE_URL}register/?DeviceState=Test`);
+  }
   setBodyClass(key) {
     this.toggleBodyClass$.next(key);
   }
@@ -54,13 +57,12 @@ setBodyMask(value) {
       input.append(key, data[key]);
     });
     return this.Http.post(`${this.BASE_URL}oemRegister/`, input);
-
   }
 
   generateUpdate(data, param) {
     let input = new FormData();
     Object.keys(data).map(key => {
-        input.append(key, data[key]);
+      input.append(key, data[key]);
     });
     return this.Http.post(`${this.BASE_URL}updateGen/`, input);
   }
@@ -69,28 +71,29 @@ setBodyMask(value) {
     return this.Http.get(`${this.BASE_URL}updateGen/`);
   }
 
-  filtergeUpdateByDate(date){
-    const month_from = parseInt(date.split('-')[1]);
+  filtergeUpdateByDate(date) {
+    const month_from = parseInt(date.split("-")[1]);
 
-    const newFrom = `${date.split('-')[0]}-${month_from+1}-${date.split('-')[2]}`;
+    const newFrom = `${date.split("-")[0]}-${month_from + 1}-${
+      date.split("-")[2]
+    }`;
 
-    return this.Http.get(`${this.BASE_URL}updateGen/`,{
-      params: new HttpParams()
-      .set("Date", newFrom)
+    return this.Http.get(`${this.BASE_URL}updateGen/`, {
+      params: new HttpParams().set("Date", newFrom)
     });
   }
 
   getCurrentBuild(partner, model) {
-
-    return this.Http.get(`${this.BASE_URL}getBaseVersion/`, {
-      params: new HttpParams()
-        .set("partnerName", partner)
-        .set("DeviceModel", model.replace("+", "%2B"))
-    });
+    if (model) {
+      return this.Http.get(`${this.BASE_URL}getBaseVersion/`, {
+        params: new HttpParams()
+          .set("partnerName", partner)
+          .set("DeviceModel", model.replace("+", "%2B"))
+      });
+    }
   }
 
-
-  getUpdatesAvailable(partner, model, currentVersion, UpdateFor=null) {
+  getUpdatesAvailable(partner, model, currentVersion, UpdateFor = null) {
     return this.Http.get(`${this.BASE_URL}updateGen/`, {
       params: new HttpParams()
         .set("partnerName", partner)
@@ -100,10 +103,9 @@ setBodyMask(value) {
     });
   }
 
-  getDeviceModel(partner = 'intex') {
+  getDeviceModel(partner = "intex") {
     return this.Http.get(`${this.BASE_URL}oemRegister/`, {
-      params: new HttpParams()
-        .set("partnerName", partner)
+      params: new HttpParams().set("partnerName", partner)
     });
   }
 
@@ -119,7 +121,6 @@ setBodyMask(value) {
     return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
   }
 
-
   getPartnersData() {
     return this.Http.get(`${this.BASE_URL}partnerRegister/`);
   }
@@ -128,16 +129,16 @@ setBodyMask(value) {
     return this.Http.get(`${this.BASE_URL}mCount/`);
   }
 
-  getDevicesActivated() {
-    return this.Http.get(`${this.BASE_URL}tCount/`);
+  getDevicesActivated(year?) {
+    return this.Http.get(`${this.BASE_URL}tCount/?year=${year}`);
   }
 
-  getUpdatesPushed() {
-    return this.Http.get(`${this.BASE_URL}pCount/`);
+  getUpdatesPushed(year?) {
+    return this.Http.get(`${this.BASE_URL}pCount/?year=${year}`);
   }
 
-  getUpdatesCompleted() {
-    return this.Http.get(`${this.BASE_URL}cCount/`);
+  getUpdatesCompleted(year?) {
+    return this.Http.get(`${this.BASE_URL}cCount/?year=${year}`);
   }
 
   getTotalOnAPK() {
@@ -153,15 +154,60 @@ setBodyMask(value) {
   // Activation report- http://devfota.gammo.me/activationReport/
   // Failed Report - http://devfota.gammo.me/failedReport/
 
-  getDisplayReport() {
-    return this.Http.get(`${this.BASE_URL}display/`);
+  getDisplayReport(page, filters?) {
+    let filterString = null;
+
+    if (filters) {
+      let params = [];
+
+      Object.keys(filters).map(key => {
+        let param = `${key}=${filters[key]}`;
+        params.push(param);
+      });
+      filterString = params.join("&");
+      return this.Http.get(
+        `${this.BASE_URL}display/?page=${page}&${filterString}`
+      );
+    } else {
+      return this.Http.get(`${this.BASE_URL}display/?page=${page}`);
+    }
   }
-  getUpdateReport() {
-    return this.Http.get(`${this.BASE_URL}updateReport/`);
+  getUpdateReport(page, filters?) {
+    let filterString = null;
+
+    if (filters) {
+      let params = [];
+
+      Object.keys(filters).map(key => {
+        let param = `${key}=${filters[key]}`;
+        params.push(param);
+      });
+      filterString = params.join("&");
+      return this.Http.get(
+        `${this.BASE_URL}updateReport/?page=${page}&${filterString}`
+      );
+    } else {
+      return this.Http.get(`${this.BASE_URL}updateReport/?page=${page}`);
+    }
   }
 
-  getActivationReport() {
-    return this.Http.get(`${this.BASE_URL}activationReport/`);
+  getActivationReport(page, filters?) {
+    let filterString = null;
+
+    if (filters) {
+      let params = [];
+
+      Object.keys(filters).map(key => {
+        let param = `${key}=${filters[key]}`;
+        params.push(param);
+      });
+      filterString = params.join("&");
+      return this.Http.get(
+        `${this.BASE_URL}activationReport/?page=${page}&${filterString}`
+      );
+    } else {
+      return this.Http.get(`${this.BASE_URL}activationReport/?page=${page}`);
+    }
   }
 
   getFailedReport() {
@@ -177,14 +223,17 @@ setBodyMask(value) {
   }
 
   filterRowsByDate(from, to, type) {
-    const month_from = parseInt(from.split('-')[1]);
-    const month_to = parseInt(to.split('-')[1]);
+    const month_from = parseInt(from.split("-")[1]);
+    const month_to = parseInt(to.split("-")[1]);
 
-    const newFrom = `${from.split('-')[0]}-${month_from+1}-${from.split('-')[2]}`;
-    const newTo = `${to.split('-')[0]}-${month_to+1}-${to.split('-')[2]}`;
+    const newFrom = `${from.split("-")[0]}-${month_from + 1}-${
+      from.split("-")[2]
+    }`;
+    const newTo = `${to.split("-")[0]}-${month_to + 1}-${to.split("-")[2]}`;
 
-
-    return this.Http.get(`${this.BASE_URL}${type}/?Date__gte=${newFrom}&Date__lte=${newTo}`);
+    return this.Http.get(
+      `${this.BASE_URL}${type}/?Date__gte=${newFrom}&Date__lte=${newTo}`
+    );
   }
 
   createWiki(wiki) {
@@ -199,4 +248,37 @@ setBodyMask(value) {
     return this.Http.get(`${this.BASE_URL}saveQues/`);
   }
 
+  deleteWikiBlock(id) {
+    return this.Http.delete(`${this.BASE_URL}saveQues/${id}`);
+  }
+
+  getWikiBlock(id) {
+    return this.Http.get(`${this.BASE_URL}saveQues/${id}`);
+  }
+
+  editWikiBlock(id, data) {
+    return this.Http.put(`${this.BASE_URL}saveQues/${id}/`, data);
+  }
+
+  uploadfile(file) {
+    let input = new FormData();
+    input.append("File", file.File);
+    // Object.keys(file).map(key => {
+    //   input.append(File, file);
+    // });
+
+    return this.Http.post(`${this.BASE_URL}uploadFile/`, input);
+  }
+
+  getActivationCsv() {
+    return this.Http.get(`${this.BASE_URL}activationReport/?export=True`);
+  }
+
+  getDisplayCsv() {
+    return this.Http.get(`${this.BASE_URL}display/?export=True`);
+  }
+
+  getUpdateCsv() {
+    return this.Http.get(`${this.BASE_URL}updateReport/?export=True`);
+  }
 }

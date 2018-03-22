@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CalendarModule, TabViewModule, DialogModule, DropdownModule, FileUploadModule, GrowlModule, DataTableModule, PaginatorModule, MultiSelectModule } from 'primeng/primeng';
+import { AccordionModule, CalendarModule, TabViewModule, DialogModule, DropdownModule, FileUploadModule, GrowlModule, DataTableModule, PaginatorModule, MultiSelectModule } from 'primeng/primeng';
 import { RepOverObjPipe } from './repOver_obj.pipe';
 import { PreviewComponent } from './preview/preview.component';
 
@@ -10,9 +10,10 @@ import { PreviewComponent } from './preview/preview.component';
     DropdownModule,
     FileUploadModule,
     TabViewModule,
-    CalendarModule
+    CalendarModule,
+    AccordionModule
   ],
-  exports: [PreviewComponent, CalendarModule, DropdownModule, DialogModule, FileUploadModule, DataTableModule, GrowlModule,RepOverObjPipe, MultiSelectModule, TabViewModule],
+  exports: [PreviewComponent, CalendarModule, AccordionModule, DropdownModule, DialogModule, PaginatorModule, FileUploadModule, DataTableModule, GrowlModule,RepOverObjPipe, MultiSelectModule, TabViewModule],
   declarations: [RepOverObjPipe, PreviewComponent]
 })
 export class SharedModule { }

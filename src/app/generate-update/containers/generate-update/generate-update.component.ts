@@ -25,6 +25,7 @@ export class GenerateUpdateComponent implements OnInit {
   isPreview: boolean = false;
   file:any = null;
   u_date:Date;
+  isLoadingComp: boolean = false;
 
   modes = [
     {
@@ -82,11 +83,11 @@ export class GenerateUpdateComponent implements OnInit {
         this.fetchDeviceModel(data);
         this.isDeviceModel = true;
       }
-    
+
     });
     this.generateUpdate.get("DeviceModel").valueChanges.subscribe(data => {
       if(data) {
-        this.fetchCurrentBuild(data);        
+        this.fetchCurrentBuild(data);
       }
     });
 
@@ -127,8 +128,18 @@ export class GenerateUpdateComponent implements OnInit {
   }
 
   onBasicUpload(event) {
-    this.generateUpdate.get("File").setValue(event.files[0]);
+
+    this.isLoadingComp = true;
+
     this.file = event.files[0];
+    let data = {
+      File: this.file
+    };
+
+    this.AppService.uploadfile(data).subscribe((data:any) => {
+      this.isLoadingComp = false;
+      this.generateUpdate.get("File").setValue(data.DownloadUrl);
+    })
   }
 
   fetchDeviceModel(partner) {
@@ -170,7 +181,7 @@ export class GenerateUpdateComponent implements OnInit {
     })
   }
   deleteUpdate(id) {
-    
+
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -193,7 +204,7 @@ export class GenerateUpdateComponent implements OnInit {
       }
     });
 
-   
+
   }
 
   curatePreviewConf() {
@@ -209,10 +220,11 @@ export class GenerateUpdateComponent implements OnInit {
       'Update For': this.generateUpdate.get('UpdateFor').value,
       }
       debugger;
-    
+
     this.isPreview = true;
     this.AppService.setBodyMask(true);
   }
+
   handleClose() {
     this.isPreview = false;
   }
@@ -226,8 +238,10 @@ export class GenerateUpdateComponent implements OnInit {
         this.fetchAllUpdates();
 
         this.isLoading = false;
+
         this.generateUpdate.reset();
         this.logo.clear();
+
         this.isDeviceModel = false;
         this.isCurrentBuild = false;
 
@@ -241,24 +255,24 @@ export class GenerateUpdateComponent implements OnInit {
   }
 
   OnGenerateUpdate() {
-   this.curatePreviewConf(); 
+   this.curatePreviewConf();
   }
 
   onDateSelect(event) {
       var date = new Date(this.u_date);
-      
+
       var year1 = date.getFullYear();
       var month1 = date.getMonth();
       var date1 = date.getDate();
 
-    
-      
+
+
       const dateFilter = `${year1}-${month1}-${date1}`;
 
       this.AppService.filtergeUpdateByDate(dateFilter).subscribe(data => {
-        this.updates = data;        
+        this.updates = data;
       })
-    
+
   }
 
   ClearDates() {

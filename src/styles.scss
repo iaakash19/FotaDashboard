@@ -160,7 +160,6 @@ input {
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: .25rem;
   margin-bottom: 2rem;
-  max-width: 96.25rem;
   overflow: visible;
 }
 
@@ -777,6 +776,116 @@ p-editor {
 
 .btn-primary {
   background: linear-gradient(180deg, #1dc7ea 0, #4091ff);
+}
+
+
+.ui-accordion-header {
+  text-transform: capitalize;
+}
+
+
+p-accordiontab {
+        display: block;
+        border: 1px solid #e3e3e3;
+        margin-bottom: 0.5rem;
+        border-radius: 3px;
+        transition: background 0.3s ease;
+
+&:hover {
+      background: linear-gradient(180deg, #1dc7ea 0, #4091ff);
+color: white;
+
 
 }
+}
+
+  .ui-accordion .ui-accordion-header {
+
+      border: none !important;
+
+background: transparent;
+
+
+}
+
+.ui-accordion .ui-accordion-header.ui-state-active {
+   border-bottom: 1px solid #d9d9d9 !important;
+       background: linear-gradient(180deg, #1dc7ea 0, #4091ff);
+       margin-top: 0;
+       span{
+         color: white;
+       }
+      a {
+        color: white;
+      }
+}
+
+.ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover {
+  background: transparent;
+
+}
+
+.ui-accordion .ui-accordion-content {
+  text-transform: capitalize;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.ui-widget-content a {
+  color: #0001ee;
+  text-decoration: underline;
+
+}
+
+// .ui-datatable .ui-datatable-thead>tr>th {
+
+//   display: flex;
+//   flex-flow: column wrap;
+
+// }
+
+span.ui-column-title {
+  display: block;
+}
+
+
+.with-uploader {
+  .loader {
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    background: rgba(255, 255, 255, 0.75);
+  }
+  span.message {
+    font-weight: 700;
+  }
+  .loading-pulse {
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    &:before {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    &:after {
+      background: rgba(0, 0, 0, 0.5);
+
+    }
+  }
+}
+
+.logo {
+  margin: 1rem auto 0rem 1rem !important;
+}
+.year_selection {
+
+.ui-dropdown {
+  min-width: 100px !important;
+}
+
+}
+
+
+
+
 
