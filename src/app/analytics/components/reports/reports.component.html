@@ -1,11 +1,11 @@
-<p-tabView>
+<p-tabView  (onChange)="handleChange($event)">
   <p-tabPanel header="Activation">
-    <app-activation-report></app-activation-report>
+    <app-activation-report [tabChanged]="tabChanged"></app-activation-report>
   </p-tabPanel>
   <p-tabPanel header="Device State">
-    <app-display-report></app-display-report>
+    <app-display-report [tabChanged]="tabChanged"></app-display-report>
   </p-tabPanel>
   <p-tabPanel header="Production Releases">
-    <app-update-report></app-update-report>
+    <app-update-report [tabChanged]="tabChanged"></app-update-report>
   </p-tabPanel>
 </p-tabView>

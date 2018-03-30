@@ -46,7 +46,9 @@ export class AppService {
   getPartners() {
     return this.Http.get(`${this.BASE_URL}partnerRegister/`);
   }
-
+  patchDevice(id) {
+    return this.Http.patch(`${this.BASE_URL}register/${id}/`, { "DeviceState": "Production" });
+  }
   getDeviceType() {
     return this.Http.get(`${this.BASE_URL}device/`);
   }

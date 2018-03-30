@@ -379,7 +379,6 @@ export class HomeComponent implements OnInit {
       (data: any) => {
         this.raw_devicesActivated = data;
         this.partners1 = this.makePartnersDrop(data);
-        debugger;
         this.selectedPartner1 = this.partners1[0]["value"];
 
         this.generateGraph1WithDrop(data, this.selectedPartner1);
@@ -466,7 +465,7 @@ export class HomeComponent implements OnInit {
       this.raw_apkData = data;
       this.partners4 = this.makePartnersDrop(data);
       this.selectedPartner4 = this.partners4[0]["value"];
-      this.generateGraph4WithDrop(data, this.selectedPartner3);
+      this.generateGraph4WithDrop(data, this.selectedPartner4);
     });
 
     //5. Device Models

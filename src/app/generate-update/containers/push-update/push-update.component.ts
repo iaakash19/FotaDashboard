@@ -40,7 +40,6 @@ export class PushUpdateComponent implements OnInit {
 
 
     this.pushUpdate.get("partnerName").valueChanges.subscribe(partner => {
-      debugger;
       if (partner) {
         this.fetchDeviceModel(partner);
       }

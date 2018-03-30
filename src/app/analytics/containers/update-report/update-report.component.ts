@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from "@angular/core";
 import { AppService } from '../../../app.service';
 import { MessageService } from "primeng/components/common/messageservice";
 import { Message } from "primeng/primeng";
 @Component({
-  selector: 'app-update-report',
-  templateUrl: './update-report.component.html',
-  styleUrls: ['./update-report.component.scss'],
+  selector: "app-update-report",
+  templateUrl: "./update-report.component.html",
+  styleUrls: ["./update-report.component.scss"],
   providers: [MessageService]
 })
-export class UpdateReportComponent implements OnInit {
-  update_report:any;
+export class UpdateReportComponent implements OnInit, OnChanges {
+  update_report: any;
   total_count: any;
   rangeDates: Date[];
-  type = 'updateReport';
+  type = "updateReport";
   msgs: Message[] = [];
 
   filters: any = {};
@@ -22,27 +22,35 @@ export class UpdateReportComponent implements OnInit {
     two: null,
     three: null,
     four: null
-  }
+  };
 
   constructor(
-    private AppService:AppService,
+    private AppService: AppService,
     private messageService: MessageService
-  ) { }
+  ) {}
+
+  @Input() tabChanged;
 
   ClearDates() {
     this.AppService.getUpdateReport(1).subscribe(data => {
       this.update_report = data;
       this.total_count = this.update_report.length;
-    })
+    });
   }
 
   ngOnInit() {
     this.fetchData();
   }
 
+  ngOnChanges(value) {
+    if (value.tabChanged.currentValue) {
+      debugger;
+      this.clearAll();
+    }
+  }
 
   onDateSelect(event) {
-    if(this.rangeDates[0] && this.rangeDates[1] ) {
+    if (this.rangeDates[0] && this.rangeDates[1]) {
       var fromDate = new Date(this.rangeDates[0]);
 
       var year1 = fromDate.getFullYear();
@@ -66,24 +74,23 @@ export class UpdateReportComponent implements OnInit {
           summary: "Message",
           detail: "Rows Filtered"
         });
-      })
+      });
     }
   }
 
   fetchData(page = 1, filters?) {
-    this.AppService.getUpdateReport(page, filters).subscribe((data:any) => {
+    this.AppService.getUpdateReport(page, filters).subscribe((data: any) => {
       this.update_report = data.results;
       this.total_count = data.count;
-    })
+    });
   }
   paginate(event) {
     this.fetchData(event.page + 1);
   }
 
   triggerFilter(event, key) {
-
     let value = event.target.value;
-    if (value == '') {
+    if (value == "") {
       delete this.filters[key];
     } else {
       var found;
@@ -91,7 +98,7 @@ export class UpdateReportComponent implements OnInit {
       if (Object.keys(this.filters).length == 0) {
         let filter = {
           [key]: event.target.value
-        }
+        };
         this.filters[key] = event.target.value;
       } else {
         Object.keys(this.filters).map(item => {
@@ -100,17 +107,16 @@ export class UpdateReportComponent implements OnInit {
             found = true;
             return;
           }
-        })
+        });
         if (!found) {
           this.filters[key] = event.target.value;
         }
       }
     }
-
   }
 
   triggerSearch() {
-    console.log('filters', this.filters);
+    console.log("filters", this.filters);
     this.fetchData(this.currentPage, this.filters);
   }
 
@@ -121,7 +127,7 @@ export class UpdateReportComponent implements OnInit {
       two: null,
       three: null,
       four: null
-    }
+    };
     this.fetchData(this.currentPage);
   }
 
@@ -132,7 +138,6 @@ export class UpdateReportComponent implements OnInit {
   triggerExport() {
     this.AppService.getUpdateCsv().subscribe((data: any) => {
       this.downloadFile(data.url);
-    })
+    });
   }
-
 }

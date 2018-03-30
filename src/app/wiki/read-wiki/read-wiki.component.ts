@@ -24,7 +24,6 @@ export class ReadWikiComponent implements OnInit {
     this.AppService.getWiki().subscribe(data => {
       this.isLoading = false;
       this.wikiWrap = data;
-      debugger;
     })
   }
 

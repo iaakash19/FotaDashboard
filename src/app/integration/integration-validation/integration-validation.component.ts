@@ -77,6 +77,13 @@ export class IntegrationValidationComponent implements OnInit {
     })
   }
 
+  patchRow(id) {
+    this.AppService.patchDevice(id).subscribe((data: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Success' });
+      this.fetchDevicesForTable();
+    })
+  }
+
   fetchCurrentBuild(model) {
     this.AppService.getCurrentBuild(this.testUpdate.value.partnerName, model).subscribe((currentBuild:any) => {
 

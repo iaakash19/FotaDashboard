@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { AppService } from '../../../app.service';
 import { MessageService } from "primeng/components/common/messageservice";
 import { Message } from "primeng/primeng";
@@ -13,7 +13,7 @@ import { Message } from "primeng/primeng";
   styleUrls: ["./activation-report.component.scss"],
   providers: [MessageService]
 })
-export class ActivationReportComponent implements OnInit {
+export class ActivationReportComponent implements OnInit, OnChanges {
   activation_report: any;
   total_count: number = 0;
   rangeDates: Date[];
@@ -36,8 +36,17 @@ export class ActivationReportComponent implements OnInit {
     private messageService: MessageService
   ) {}
 
+  @Input() tabChanged;
+
   ngOnInit() {
     this.fetchData();
+  }
+
+  ngOnChanges(value) {
+   if(value.tabChanged.currentValue) {
+      debugger;
+     this.clearAll();
+   }
   }
 
   ClearDates() {
@@ -48,7 +57,6 @@ export class ActivationReportComponent implements OnInit {
     // })
   }
   onDateSelect(event) {
-
     if (this.rangeDates[0] && this.rangeDates[1]) {
       var fromDate = new Date(this.rangeDates[0]);
 
@@ -73,9 +81,8 @@ export class ActivationReportComponent implements OnInit {
       }`;
       const newTo = `${to.split("-")[0]}-${month_to + 1}-${to.split("-")[2]}`;
 
-      debugger;
       this.filters["Date__gte"] = newFrom;
-       this.filters["Date__lte"] = newTo;
+      this.filters["Date__lte"] = newTo;
 
       // this.AppService.filterRowsByDate(from, to, this.type).subscribe(data => {
       //   this.activation_report = data;
@@ -92,7 +99,6 @@ export class ActivationReportComponent implements OnInit {
   fetchData(page = 1, filters?) {
     this.AppService.getActivationReport(page, filters).subscribe(
       (data: any) => {
-        debugger;
         this.activation_report = data.results;
         this.total_count = data.count;
         this.dataLoaded = true;

@@ -81,6 +81,13 @@
             <p-dropdown [options]="modes" formControlName="UpdateFor"></p-dropdown>
 
           </div>
+
+          <div class="form-group">
+            <label for="">Update Type</label>
+            <p-dropdown [options]="update_types" formControlName="UpdateType"></p-dropdown>
+
+          </div>
+
     </div>
 
 
@@ -105,7 +112,7 @@
     <p-column field="UpdateName" header="UpdateName" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 <p-column field="UpdateFor" header="Update For" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
-
+<p-column field="UpdateType" header="Update Type" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
 
     <p-column header="Date">
         <ng-template pTemplate="filter" let-col>

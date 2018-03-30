@@ -32,11 +32,9 @@ export class CreateWikiComponent implements OnInit {
   ngOnInit() {
 
     this.route.params.subscribe((data: any) => {
-      debugger;
       if (data && Object.keys(data).length) {
         this.editMode = true;
         this.getWikiBlock(data.id);
-        debugger;
       }
       else {
         this.initForm();
