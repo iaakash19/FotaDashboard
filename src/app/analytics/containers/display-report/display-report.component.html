@@ -25,9 +25,6 @@
     </ng-template>
   </p-column>
 
-
-
-
   <p-column field="currentVersion" header="Current Version">
     <ng-template pTemplate="header" let-col>
       <span class="ui-column-title">Current Version</span>
@@ -36,6 +33,13 @@
     </ng-template>
   </p-column>
 
+<p-column field="availableVersion" header="Available Version">
+  <ng-template pTemplate="header" let-col>
+    <span class="ui-column-title">Available Version</span>
+    <input [(ngModel)]="hookedState.five" class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text"
+      (input)="triggerFilter($event, 'availableVersion')">
+  </ng-template>
+</p-column>
 
 
   <p-column field="count" header="Count">
@@ -45,12 +49,26 @@
     </ng-template>
   </p-column>
 
+  <p-column header="Activation Date">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">Activation Date</span>
+
+      <p-calendar placeholder="Start and End Date" [(ngModel)]="rangeDates" selectionMode="range" readonlyInput="true" (onSelect)="triggerFilter($event, 'date')"
+        showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar>
+
+    </ng-template>
+
+    <ng-template let-data="rowData" pTemplate="body">
+      {{data.ActivationDate | date:'medium' }}
+    </ng-template>
+  </p-column>
 
 
   <p-footer>
     <div class="paginator">
-      <p-paginator rows="10" totalRecords="{{total_count}}" first="1" (onPageChange)="paginate($event)"></p-paginator>
+      <p-paginator *ngIf="dataLoaded" rows="10" totalRecords="{{total_count}}" first="1" (onPageChange)="paginate($event)"></p-paginator>
     </div>
+
   </p-footer>
 
 </p-dataTable>

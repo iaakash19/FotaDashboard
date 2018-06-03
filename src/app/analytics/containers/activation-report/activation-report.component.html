@@ -51,7 +51,6 @@
     <ng-template pTemplate="header" let-col>
       <span class="ui-column-title">Activation Date</span>
 
-
       <p-calendar placeholder="Start and End Date" [(ngModel)]="rangeDates" selectionMode="range" readonlyInput="true" (onSelect)="triggerFilter($event, 'date')"
         showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar>
 

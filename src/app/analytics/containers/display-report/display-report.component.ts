@@ -24,7 +24,9 @@ export class DisplayReportComponent implements OnInit, OnChanges {
     four: null,
     five: null
   };
-
+  dateFrom;
+  dateTo;
+  dataLoaded = false;
   constructor(
     private AppService: AppService,
     private messageService: MessageService
@@ -45,10 +47,16 @@ export class DisplayReportComponent implements OnInit, OnChanges {
 
   ngOnChanges(value) {
     if (value.tabChanged.currentValue) {
-       debugger;
       this.clearAll();
+      this.dataLoaded = false;
+      this.fetchData();
+      setTimeout(() => {
+        this.dataLoaded = true;
+      }, 10);
     }
   }
+
+
 
   onDateSelect(event) {
     if (this.rangeDates[0] && this.rangeDates[1]) {
@@ -67,23 +75,44 @@ export class DisplayReportComponent implements OnInit, OnChanges {
       const from = `${year1}-${month1}-${date1}`;
       const to = `${year2}-${month2}-${date2}`;
 
-      this.AppService.filterRowsByDate(from, to, this.type).subscribe(data => {
-        this.display_report = data;
-        this.total_count = this.display_report.length;
-        this.messageService.add({
-          severity: "success",
-          summary: "Message",
-          detail: "Rows Filtered"
-        });
-      });
+      const month_from = parseInt(from.split("-")[1]);
+      const month_to = parseInt(to.split("-")[1]);
+
+      const newFrom = `${from.split("-")[0]}-${month_from + 1}-${
+        from.split("-")[2]
+        }`;
+      const newTo = `${to.split("-")[0]}-${month_to + 1}-${to.split("-")[2]}`;
+
+      this.filters["Date__gte"] = newFrom;
+      this.filters["Date__lte"] = newTo;
+      // this.AppService.filterRowsByDate(from, to, this.type).subscribe(data => {
+      //   this.activation_report = data;
+      //   this.total_count = this.activation_report.length;
+      //   this.messageService.add({
+      //     severity: "success",
+      //     summary: "Message",
+      //     detail: "Rows Filtered"
+      //   });
+      // });
     }
   }
 
   paginate(event) {
-    this.fetchData(event.page + 1);
+    // this.dataLoaded = false;
+    // this.fetchData(event.page + 1, this.filters);
+
+    this.currentPage = event.page + 1;
+    this.fetchData(this.currentPage, this.filters);
   }
 
   triggerFilter(event, key) {
+    if (key == "date") {
+      if (!this.dateFrom) this.dateFrom = event;
+      else {
+        this.dateTo = event;
+        this.onDateSelect(event);
+      }
+    }else {
     let value = event.target.value;
     if (value == "") {
       delete this.filters[key];
@@ -110,16 +139,17 @@ export class DisplayReportComponent implements OnInit, OnChanges {
     }
     console.log("filter here", this.filters);
   }
+  }
 
   triggerSearch() {
     console.log("filters", this.filters);
+    this.currentPage = 1;
     this.fetchData(this.currentPage, this.filters);
   }
 
   // fetchData(page = 1, filters?) {
   //   this.AppService.getActivationReport(page, filters).subscribe(
   //     (data: any) => {
-  //       // debugger;
   //       this.activation_report = data.results;
   //       this.total_count = data.count;
   //     })
@@ -127,6 +157,7 @@ export class DisplayReportComponent implements OnInit, OnChanges {
 
   fetchData(page = 1, filters?) {
     this.AppService.getDisplayReport(page, filters).subscribe((data: any) => {
+      this.dataLoaded = true;
       this.display_report = data.results;
       this.total_count = data.count;
     });
@@ -134,6 +165,7 @@ export class DisplayReportComponent implements OnInit, OnChanges {
 
   clearAll() {
     this.filters = {};
+    this.rangeDates = null;
     this.hookedState = {
       one: null,
       two: null,
@@ -149,7 +181,7 @@ export class DisplayReportComponent implements OnInit, OnChanges {
   }
 
   triggerExport() {
-    this.AppService.getDisplayCsv().subscribe((data: any) => {
+    this.AppService.getDisplayCsv(this.filters).subscribe((data: any) => {
       this.downloadFile(data.url);
     });
   }

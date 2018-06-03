@@ -4,7 +4,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class AppService {
-  BASE_URL = `http://fota.dynamyn.mobi/notify/fotav/`;
+  BASE_URL = `http://devfota.gammo.me/notify/fotav/`;
 
   private toggleBodyClass$ = new ReplaySubject<any>();
   public toggleBody$ = this.toggleBodyClass$.asObservable();
@@ -272,15 +272,60 @@ export class AppService {
     return this.Http.post(`${this.BASE_URL}uploadFile/`, input);
   }
 
-  getActivationCsv() {
-    return this.Http.get(`${this.BASE_URL}activationReport/?export=True`);
+  getActivationCsv(filters) {
+    let filterString = null;
+
+    if (filters) {
+      let params = [];
+
+      Object.keys(filters).map(key => {
+        let param = `${key}=${filters[key]}`;
+        params.push(param);
+      });
+      filterString = params.join("&");
+
+      return this.Http.get(`${this.BASE_URL}activationReport/?export=True&${filterString}`);
+    } else {
+      return this.Http.get(`${this.BASE_URL}activationReport/?export=True`);
+    }
+
   }
 
-  getDisplayCsv() {
-    return this.Http.get(`${this.BASE_URL}display/?export=True`);
+  getDisplayCsv(filters) {
+    let filterString = null;
+
+    if (filters) {
+      let params = [];
+
+      Object.keys(filters).map(key => {
+        let param = `${key}=${filters[key]}`;
+        params.push(param);
+      });
+      filterString = params.join("&");
+
+      return this.Http.get(`${this.BASE_URL}display/?export=True&${filterString}`);
+    } else {
+      return this.Http.get(`${this.BASE_URL}display/?export=True`);
+    }
+
   }
 
-  getUpdateCsv() {
-    return this.Http.get(`${this.BASE_URL}updateReport/?export=True`);
+  getUpdateCsv(filters) {
+    let filterString = null;
+
+    if (filters) {
+      let params = [];
+
+      Object.keys(filters).map(key => {
+        let param = `${key}=${filters[key]}`;
+        params.push(param);
+      });
+      filterString = params.join("&");
+
+      return this.Http.get(`${this.BASE_URL}updateReport/?export=True&${filterString}`);
+    } else {
+      return this.Http.get(`${this.BASE_URL}updateReport/?export=True`);
+    }
+
   }
 }

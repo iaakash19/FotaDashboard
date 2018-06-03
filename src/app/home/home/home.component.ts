@@ -276,6 +276,10 @@ export class HomeComponent implements OnInit {
         "Dec"
       ]
     );
+    if (dataToMap.length == 0) {
+      this.activatedDevices = [];
+      debugger;
+    }
   }
 
   generateGraph2WithDrop(data, selectedPartner) {
@@ -284,6 +288,10 @@ export class HomeComponent implements OnInit {
       dataToMap,
       "updates_pushed"
     );
+    if (dataToMap.length == 0) {
+      this.devices_forupdatesPushed = [];
+      debugger;
+    }
     this.updatesPushedConf = this.graphGenerator(
       "Total Number of Updates Pushed",
       undefined,
@@ -314,11 +322,18 @@ export class HomeComponent implements OnInit {
           data: this.collectionCurator1(item.update_count)
         };
       });
+
     this.devices_forupdatesCompleted = [];
     this.devices_forupdatesCompleted = this.optionMaker(
       dataToMap,
       "updates_completed"
     );
+
+    if (dataToMap.length == 0) {
+      this.devices_forupdatesCompleted = [];
+      debugger;
+    }
+
     this.updatesCompletedConf = this.graphGenerator(
       "Total Number of Updates Completed",
       undefined,
@@ -379,9 +394,15 @@ export class HomeComponent implements OnInit {
       (data: any) => {
         this.raw_devicesActivated = data;
         this.partners1 = this.makePartnersDrop(data);
-        this.selectedPartner1 = this.partners1[0]["value"];
 
-        this.generateGraph1WithDrop(data, this.selectedPartner1);
+        if (this.partners1.length > 0) {
+          this.selectedPartner1 = this.partners1[0]["value"];
+          this.generateGraph1WithDrop(data, this.selectedPartner1);
+        }
+        else {
+          this.generateGraph1WithDrop(data, []);
+        }
+
       }
     );
   }
@@ -393,8 +414,16 @@ export class HomeComponent implements OnInit {
     this.AppService.getUpdatesPushed(this.currentYear2).subscribe((data: any) => {
       this.raw_updatesPushed = data;
       this.partners2 = this.makePartnersDrop(data);
-      this.selectedPartner2 = this.partners2[0]["value"];
-      this.generateGraph2WithDrop(data, this.selectedPartner2);
+      if (this.partners2.length > 0) {
+        this.selectedPartner2 = this.partners2[0]["value"];
+        debugger;
+        this.generateGraph2WithDrop(data, this.selectedPartner2);
+      }
+      else {
+        this.generateGraph2WithDrop(data, []);
+
+      }
+
     });
   }
 
@@ -402,10 +431,17 @@ export class HomeComponent implements OnInit {
     this.currentYear3 = event.value;
     this.AppService.getUpdatesCompleted(this.currentYear3).subscribe((data: any) => {
       this.raw_updatesCompleted = data;
+
       this.partners3 = this.makePartnersDrop(data);
+      if (this.partners3.length > 0) {
       this.selectedPartner3 = this.partners3[0]["value"];
 
       this.generateGraph3WithDrop(data, this.selectedPartner3);
+      }
+      else {
+        this.generateGraph3WithDrop(data, []);
+
+      }
     });
   }
 
@@ -532,7 +568,7 @@ export class HomeComponent implements OnInit {
       },
       series: [
         {
-          name: "Population",
+          name: "",
           data: data
           // data: [
           //     ['Shanghai', 23.7],

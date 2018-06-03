@@ -31,6 +31,7 @@ export class ActivationReportComponent implements OnInit, OnChanges {
   dateFrom;
   dateTo;
   dataLoaded = false;
+
   constructor(
     private AppService: AppService,
     private messageService: MessageService
@@ -44,8 +45,12 @@ export class ActivationReportComponent implements OnInit, OnChanges {
 
   ngOnChanges(value) {
    if(value.tabChanged.currentValue) {
-      debugger;
      this.clearAll();
+     this.dataLoaded = false;
+     this.fetchData();
+     setTimeout(() => {
+       this.dataLoaded = true;
+     }, 10);
    }
   }
 
@@ -108,7 +113,7 @@ export class ActivationReportComponent implements OnInit, OnChanges {
 
   paginate(event) {
     this.currentPage = event.page + 1;
-    this.fetchData(this.currentPage);
+    this.fetchData(this.currentPage, this.filters);
   }
 
   triggerFilter(event, key) {
@@ -148,6 +153,9 @@ export class ActivationReportComponent implements OnInit, OnChanges {
 
   triggerSearch() {
     console.log("filters", this.filters);
+    this.dataLoaded = false;
+
+    this.currentPage = 1;
     this.fetchData(this.currentPage, this.filters);
   }
 
@@ -169,7 +177,7 @@ export class ActivationReportComponent implements OnInit, OnChanges {
   }
 
   triggerExport() {
-    this.AppService.getActivationCsv().subscribe((data: any) => {
+    this.AppService.getActivationCsv(this.filters).subscribe((data: any) => {
       this.downloadFile(data.url);
     });
   }

@@ -7,7 +7,7 @@
         <label for="">Select Partner</label>
         <p-dropdown [options]="partners1" [(ngModel)]="selectedPartner1" (onChange)="onPartnerChange1($event)"></p-dropdown>
       </div>
-      <div class="model">
+      <div class="model" *ngIf="activatedDevices && activatedDevices.length > 0">
         <label for="">Select Model</label>
         <p-multiSelect [options]="activatedDevices" [(ngModel)]="selectedActivatedDevices" (onChange)="handleLegendChange1($event)"></p-multiSelect>
       </div>
@@ -28,9 +28,9 @@
         <label for="">Select Partner</label>
         <p-dropdown [options]="partners2" [(ngModel)]="selectedPartner2" (onChange)="onPartnerChange2($event)"></p-dropdown>
       </div>
-      <div class="model">
+      <div class="model" *ngIf="devices_forupdatesPushed && devices_forupdatesPushed.length > 0">
         <label for="">Select Model</label>
-        <p-multiSelect [options]="devices_forupdatesPushed" [(ngModel)]="selected_devices_forupdatesPushed" (onChange)="handleLegendChange2($event)"></p-multiSelect>
+        <p-multiSelect  [options]="devices_forupdatesPushed" [(ngModel)]="selected_devices_forupdatesPushed" (onChange)="handleLegendChange2($event)"></p-multiSelect>
       </div>
 <div class="year_selection">
   <label for="">Select Year</label>
@@ -50,7 +50,7 @@
 <p-dropdown class="yearDrop" [options]="partners3" [(ngModel)]="selectedPartner3" (onChange)="onPartnerChange3($event)"></p-dropdown>
 
       </div>
-      <div class="model">
+      <div class="model" *ngIf="devices_forupdatesCompleted && devices_forupdatesCompleted.length > 0">
 
         <label for="">Select Model</label>
         <p-multiSelect [options]="devices_forupdatesCompleted" [(ngModel)]="selected_devices_forupdatesCompleted" (onChange)="handleLegendChange3($event)"></p-multiSelect>

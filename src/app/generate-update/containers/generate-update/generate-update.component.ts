@@ -32,6 +32,10 @@ export class GenerateUpdateComponent implements OnInit {
   isLoadingComp: boolean = false;
   update_types = [
     {
+      label: "Select Mode",
+      value: null
+    },
+    {
       label: "Normal",
       value: "NORMAL"
     },
@@ -93,7 +97,9 @@ export class GenerateUpdateComponent implements OnInit {
       UpdateType: ["", Validators.required],
       DeviceModel: ["", Validators.required],
       KeyHighLights: ["", Validators.required],
-      File: this.fb.control("", Validators.required)
+      DownloadUrl: this.fb.control(""),
+      DownloadSize: this.fb.control(""),
+      Md5: this.fb.control("")
     });
 
     this.generateUpdate.get("partnerName").valueChanges.subscribe(data => {
@@ -155,7 +161,10 @@ export class GenerateUpdateComponent implements OnInit {
 
     this.AppService.uploadfile(data).subscribe((data: any) => {
       this.isLoadingComp = false;
-      this.generateUpdate.get("File").setValue(data.DownloadUrl);
+      this.generateUpdate.get("DownloadUrl").setValue(data.DownloadUrl);
+      this.generateUpdate.get("DownloadSize").setValue(data.DownloadSize);
+      this.generateUpdate.get("Md5").setValue(data.Md5);
+
     });
   }
 
@@ -238,12 +247,14 @@ export class GenerateUpdateComponent implements OnInit {
       "Device Type": this.generateUpdate.get("DeviceType").value,
       "Device Model": this.generateUpdate.get("DeviceModel").value,
       "Base Version": this.generateUpdate.get("BaseVersion").value,
-      File: this.file.name,
       "Available Version": this.generateUpdate.get("AvailVersion").value,
       "Update Name": this.generateUpdate.get("UpdateName").value,
       "Key HighLights": this.generateUpdate.get("KeyHighLights").value,
       "Update For": this.generateUpdate.get("UpdateFor").value,
-      "Update Type": this.generateUpdate.get("UpdateType").value
+      "Update Type": this.generateUpdate.get("UpdateType").value,
+      'DownloadUrl': this.generateUpdate.get("DownloadUrl").value,
+      'DownloadSize': this.generateUpdate.get("DownloadSize").value,
+      'Md5': this.generateUpdate.get("Md5").value,
     };
 
     this.isPreview = true;

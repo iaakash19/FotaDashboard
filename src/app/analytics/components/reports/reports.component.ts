@@ -11,7 +11,6 @@ export class ReportsComponent implements OnInit {
   ngOnInit() {}
 
   handleChange(event) {
-    debugger;
     this.tabChanged = !this.tabChanged;
   }
 }

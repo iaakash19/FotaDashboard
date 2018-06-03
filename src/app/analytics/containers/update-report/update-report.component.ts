@@ -21,9 +21,10 @@ export class UpdateReportComponent implements OnInit, OnChanges {
     one: null,
     two: null,
     three: null,
-    four: null
+    four: null,
+    five: null
   };
-
+  dataLoaded;
   constructor(
     private AppService: AppService,
     private messageService: MessageService
@@ -44,8 +45,12 @@ export class UpdateReportComponent implements OnInit, OnChanges {
 
   ngOnChanges(value) {
     if (value.tabChanged.currentValue) {
-      debugger;
       this.clearAll();
+      this.dataLoaded = false;
+      this.fetchData();
+      setTimeout(() => {
+        this.dataLoaded = true;
+      }, 10);
     }
   }
 
@@ -80,12 +85,16 @@ export class UpdateReportComponent implements OnInit, OnChanges {
 
   fetchData(page = 1, filters?) {
     this.AppService.getUpdateReport(page, filters).subscribe((data: any) => {
+      this.dataLoaded = true;
       this.update_report = data.results;
       this.total_count = data.count;
+
     });
   }
   paginate(event) {
-    this.fetchData(event.page + 1);
+    this.dataLoaded = false;
+    this.fetchData(event.page + 1, this.filters);
+
   }
 
   triggerFilter(event, key) {
@@ -117,6 +126,7 @@ export class UpdateReportComponent implements OnInit, OnChanges {
 
   triggerSearch() {
     console.log("filters", this.filters);
+    this.currentPage = 1;
     this.fetchData(this.currentPage, this.filters);
   }
 
@@ -126,7 +136,8 @@ export class UpdateReportComponent implements OnInit, OnChanges {
       one: null,
       two: null,
       three: null,
-      four: null
+      four: null,
+      five: null
     };
     this.fetchData(this.currentPage);
   }
@@ -136,7 +147,7 @@ export class UpdateReportComponent implements OnInit, OnChanges {
   }
 
   triggerExport() {
-    this.AppService.getUpdateCsv().subscribe((data: any) => {
+    this.AppService.getUpdateCsv(this.filters).subscribe((data: any) => {
       this.downloadFile(data.url);
     });
   }
