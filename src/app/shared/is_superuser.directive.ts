@@ -6,7 +6,7 @@ import { LocalStorageService } from "angular-2-local-storage";
 @Directive({
   selector: '[appHasRole]'
 })
-export class HasRoleDirective implements OnInit, OnDestroy {
+export class HasRoleDirective implements OnInit {
   // the role the user must have
   @Input() appHasRole: string;
 
@@ -32,13 +32,20 @@ export class HasRoleDirective implements OnInit, OnDestroy {
   ngOnInit() {
     //  We subscribe to the roles$ to know the roles the user has
     let isSuperUser = this.localStorage.get("superuser");
-    debugger;
+    console.log('superuser', isSuperUser);
 
+    if (!isSuperUser) {
+      this.viewContainerRef.clear();
+    }else {
+      if (!this.isVisible) {
+        // We update the `isVisible` property and add the
+        // templateRef to the view using the
+        // 'createEmbeddedView' method of the viewContainerRef
+        this.isVisible = true;
+        this.viewContainerRef.createEmbeddedView(this.templateRef);
+      }
+    }
 
   }
 
-  // Clear the subscription on destroy
-  ngOnDestroy() {
-    this.stop$.next();
-  }
 }

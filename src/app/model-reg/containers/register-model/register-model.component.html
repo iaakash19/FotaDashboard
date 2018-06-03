@@ -3,21 +3,23 @@
         <div class="propWrapper" [innerHTML]="prop"></div>
     </p-dialog>
 
-    <preview 
+    <preview
     *ngIf="isPreview"
     [dataWrap]="previewConf"
     (onClose)="handleClose($event)"
-    (onSave)="handleSave($event)"> 
-    </preview> 
+    (onSave)="handleSave($event)">
+    </preview>
 
 <p-growl [(value)]="msgs"></p-growl>
 
-<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div> 
+<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div>
 
-<div class="wrapper">
+<div class="wrapper" *appHasRole>
+
 <h2>Register Model</h2>
 
 <form [formGroup]="modelRegister" (submit)="onModelRegister()">
+
 
   <div class="row">
       <div class="form-group">
@@ -54,6 +56,6 @@
                         <button type="text" (click)="showDialog(data)" pButton icon="fa-external-link-square" label="Generate Build.Prop"></button>
                     </ng-template>
          </p-column>
-         
+
         </p-dataTable>
 </div>

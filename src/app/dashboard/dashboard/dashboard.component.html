@@ -29,6 +29,7 @@
 <a [routerLink]="['/dashboard/create-wiki']">Create Wiki</a>
 
 </li>
+
 <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
 <a [routerLink]="['/dashboard/wiki']">Wiki</a>
 
@@ -36,7 +37,10 @@
 
 
 <li>
-<a href="" (click)="logOutUser()" *appHasRole="'user'">Logout</a>
+<!-- <a href="" (click)="logOutUser()" *appHasRole="'user'">Logout</a> -->
+<a href="" (click)="logOutUser()">Logout</a>
+
+
 
 </li>
 
