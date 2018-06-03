@@ -6,7 +6,8 @@ import { LocalStorageService } from "angular-2-local-storage";
 
 @Injectable()
 export class AuthService {
-  BASE_URL = `http://devfota.gammo.me/notify/fotav/login/`;
+  // BASE_URL = `http://devfota.gammo.me/notify/fotav/login/`;
+  BASE_URL = ` http://fota.dynamyn.mobi/notify/fotav/login/`; //test
 
 
   private currentToken = null;

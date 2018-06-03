@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IntegrationModule } from '../integration/integration.module';
 import { AnalyticsModule } from '../analytics/analytics.module';
-
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -20,7 +20,8 @@ import { AnalyticsModule } from '../analytics/analytics.module';
     GenerateUpdateModule,
     DashboardRoutingModule,
     AnalyticsModule,
-    WikiModule
+    WikiModule,
+    SharedModule
   ],
   declarations: [DashboardComponent]
 })
