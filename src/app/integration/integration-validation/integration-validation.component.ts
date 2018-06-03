@@ -25,49 +25,54 @@ export class IntegrationValidationComponent implements OnInit {
   optionsPanel:any;
   msgs: Message[] = [];
   devices:any;
+  data;
+  status = 'Active';
 
   constructor(private confirmationService: ConfirmationService, private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
 
   ngOnInit() {
-    this.fetchPartners();
-    this.fetchDevicesForTable();
 
-    this.testUpdate = this.fb.group({
-      partnerName: ['', Validators.required],
-      DeviceModel: ['', Validators.required],
-      CurrentBuildVersion: ['', Validators.required],
-      UpdateName: ['', Validators.required],
-      IMEI: ['', Validators.required]
-    });
+    this.fetchIVData();
 
-    this.testUpdate.get('IMEI').valueChanges.subscribe(data => {
-      if(data) {
-        data.length == 15 ? this.fetchIMEIDetails() : this.IMEI_details = null;
-      }else {
-        this.IMEI_details = null;
-      }
-    })
+    // this.fetchPartners();
+    // this.fetchDevicesForTable();
 
-    this.testUpdate.get("partnerName").valueChanges.subscribe(partner => {
-      if(partner) {
-        this.fetchDeviceModel(partner);
-      }
+    // this.testUpdate = this.fb.group({
+    //   partnerName: ['', Validators.required],
+    //   DeviceModel: ['', Validators.required],
+    //   CurrentBuildVersion: ['', Validators.required],
+    //   UpdateName: ['', Validators.required],
+    //   IMEI: ['', Validators.required]
+    // });
 
-    });
+    // this.testUpdate.get('IMEI').valueChanges.subscribe(data => {
+    //   if(data) {
+    //     data.length == 15 ? this.fetchIMEIDetails() : this.IMEI_details = null;
+    //   }else {
+    //     this.IMEI_details = null;
+    //   }
+    // })
 
-    this.testUpdate.get("DeviceModel").valueChanges.subscribe(model => {
-      if(model) {
-        this.fetchCurrentBuild(model);
-      }
+    // this.testUpdate.get("partnerName").valueChanges.subscribe(partner => {
+    //   if(partner) {
+    //     this.fetchDeviceModel(partner);
+    //   }
 
-    });
+    // });
 
-    this.testUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
-      if(currentVersion) {
-        this.fetchUpdateAvailable(currentVersion);
-      }
+    // this.testUpdate.get("DeviceModel").valueChanges.subscribe(model => {
+    //   if(model) {
+    //     this.fetchCurrentBuild(model);
+    //   }
 
-    });
+    // });
+
+    // this.testUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
+    //   if(currentVersion) {
+    //     this.fetchUpdateAvailable(currentVersion);
+    //   }
+
+    // });
 
   }
 
@@ -220,5 +225,18 @@ export class IntegrationValidationComponent implements OnInit {
   });
 
   }
+
+  handleChange(event) {
+    const index = event.index;
+    index == 0 ? this.status = 'Active' : this.status = 'Inactive';
+    this.fetchIVData(this.status);
+  }
+
+  fetchIVData(status="'Active'") {
+    this.AppService.getList(status).subscribe(data => {
+      debugger;
+    })
+  }
+
 
 }

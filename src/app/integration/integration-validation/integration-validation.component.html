@@ -3,7 +3,7 @@
 <p-confirmDialog></p-confirmDialog>
 
 <div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div>
-
+<!--
 <div class="wrapper">
 
   <h2>Set up Test Updates</h2>
@@ -32,12 +32,7 @@
         <p-dropdown [options]="updates" formControlName="UpdateName"></p-dropdown>
       </div>
     </div>
-    <!-- "AvailableUpdates": [{"Date": "","UpdateId": ""}]
-    "DeviceStatus": [{'Date':"", 'UpdateId': "", 'Status': ""}]
-    "OngoingUpdates": [{"Date": "","UpdateId": ""}]
-    "CompletedUpdates": [{"Date": "","UpdateId": ""}]
-  || !detail.key.DeviceStatus || !detail.key.OngoingUpdates || !detail.key.CompletedUpdates
-  -->
+
 
     <div class="form-group mx300">
       <label for="">IMEI1</label>
@@ -47,8 +42,7 @@
     <div class="IMEI_box" *ngIf="IMEI_details">
       <h2>Details</h2>
       <div class="IMEI_wrap">
-        <!-- {{IMEI_details | json}} -->
-      <!-- <ng-container *ngFor="let detail of IMEI_details | repover_obj"> -->
+
           <ng-container *ngFor="let detail of IMEI_details | repover_obj">
               <ng-container *ngIf="detail.key === 'CompletedUpdates' || detail.key === 'DeviceStatus' || detail.key === 'AvailableUpdates' || detail.key === 'OngoingUpdates'">
                  <div class="row" *ngIf="detail.value.length > 0">
@@ -97,9 +91,9 @@
       <button class="btn btn-success" type="submit" [disabled]="!testUpdate.valid">Test</button>
     </div>
   </form>
-</div>
+</div> -->
 
-<p-dataTable [value]="devices" [rows]="10" [paginator]="true">
+<!-- <p-dataTable [value]="devices" [rows]="10" [paginator]="true">
 
   <p-column field="partnerName" header="Partner Name"></p-column>
 <p-column field="DeviceModel" header="DeviceModel"></p-column>
@@ -108,7 +102,6 @@
     <p-column field="IMEI2" header="IMEI2"></p-column>
     <p-column field="ActivationDate" header="Activation Date"></p-column>
 
-  <!-- <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column> -->
   <p-column header="Edit">
     <ng-template let-data="rowData" pTemplate="body">
       <div class="configWrap" (click)="patchRow(data.id)">
@@ -118,4 +111,15 @@
 
     </ng-template>
   </p-column>
-</p-dataTable>
+</p-dataTable> -->
+
+<p-tabView (onChange)="handleChange($event)">
+  <p-tabPanel header="Active">
+    <app-list [data]="data"></app-list>
+  </p-tabPanel>
+  <p-tabPanel header="InActive">
+<app-list [data]="data"></app-list>
+
+
+  </p-tabPanel>
+</p-tabView>

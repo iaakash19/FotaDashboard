@@ -4,7 +4,8 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class AppService {
-  BASE_URL = `http://devfota.gammo.me/notify/fotav/`;
+  BASE_URL = ` http://fota.dynamyn.mobi/notify/fotav/`; //test
+  // BASE_URL = `http://devfota.gammo.me/notify/fotav/`;
 
   private toggleBodyClass$ = new ReplaySubject<any>();
   public toggleBody$ = this.toggleBodyClass$.asObservable();
@@ -326,6 +327,12 @@ export class AppService {
     } else {
       return this.Http.get(`${this.BASE_URL}updateReport/?export=True`);
     }
+
+  }
+
+  getList(status) {
+    //http://fota.dynamyn.mobi/notify/fotav/updateGen/?UpdateFor=Test&BuildState=Active
+    return this.Http.get(`${this.BASE_URL}updateGen/?UpdateFor=Test&BuildState=Active`);
 
   }
 }
