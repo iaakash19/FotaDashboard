@@ -332,7 +332,7 @@ export class AppService {
 
   getList(status) {
     //http://fota.dynamyn.mobi/notify/fotav/updateGen/?UpdateFor=Test&BuildState=Active
-    return this.Http.get(`${this.BASE_URL}updateGen/?UpdateFor=Test&BuildState=Active`);
+    return this.Http.get(`${this.BASE_URL}updateGen/?UpdateFor=Test&BuildState=${status}`);
 
   }
 }

@@ -7,10 +7,11 @@
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a [routerLink]="['/dashboard/home']">Home</a>
       </li>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+<li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" *appHasRole>
+
         <a [routerLink]="['/dashboard/register-oem']"> Register Oem</a>
       </li>
-      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" >
         <a [routerLink]="['/dashboard/register-model']"> Register Model</a>
       </li>
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">

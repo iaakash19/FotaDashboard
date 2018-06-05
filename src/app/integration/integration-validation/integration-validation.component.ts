@@ -233,10 +233,24 @@ export class IntegrationValidationComponent implements OnInit {
   }
 
   fetchIVData(status="'Active'") {
-    this.AppService.getList(status).subscribe(data => {
-      debugger;
+    debugger;
+    this.AppService.getList(status).subscribe((data:any) => {
+      this.data = data.map(item => {
+          return {
+            partnerName: item.partnerName,
+            DeviceModel: item.DeviceModel,
+            UpdateName: item.UpdateName,
+            BaseVersion: item.BaseVersion,
+            AvailVersion: item.AvailVersion,
+            BuildStatus: item.BuildStatus,
+            Tests: item.BuildStatus
+          }
+      })
     })
   }
 
 
 }
+
+
+//Fields to display in table: partnerName, DeviceModel, UpdateName, BaseVersion,AvailVersion, BuildStatus, Tests

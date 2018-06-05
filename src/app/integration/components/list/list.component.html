@@ -1,3 +1,44 @@
-<p>
-  list works!
-</p>
+<!-- <p-table [value]="cars">
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngFor="let col of cols">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-car>
+    <tr>
+      <td *ngFor="let col of cols">
+        {{car[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table> -->
+
+<!-- <pre> {{ cols | json }} </pre>
+<pre> {{ rows | json }} </pre> -->
+
+<p-dataTable [value]="rows">
+<!-- <p-column field="partnerName" header="Partner Name"></p-column> -->
+
+<p-column *ngFor="let col of cols" [field]="col.value" [header]="col.label"></p-column>
+
+
+<!-- <ng-template pTemplate="header">
+  <tr>
+    <th *ngFor="let col of cols">
+      {{col.label}}
+    </th>
+  </tr>
+</ng-template>
+<ng-template pTemplate="body" let-row>
+  <tr>
+    <td *ngFor="let col of cols">
+      {{row[col.value]}}
+    </td>
+  </tr>
+</ng-template> -->
+
+</p-dataTable>
+
+

@@ -103,6 +103,8 @@ export class RegisterOemComponent implements OnInit {
 
     this.oemRegister = this.fb.group({
       partnerName: ["", Validators.required],
+      admin_email: [''],
+      oem_email: [''],
       config: this.fb.group({
         Url: ["", Validators.required],
         Notif_Frequency: ["", Validators.required],
@@ -126,7 +128,7 @@ fetchPartners() {
   this.AppService.getPartners().subscribe((data:any) => {
     this.partners = data;
     let res = Array.from(new Set(this.partners.map(JSON.stringify)));
-    
+
     res.length > 1 ? this.showPartnerFilter = true: this.showPartnerFilter = false;
 
     // partnerName
@@ -157,7 +159,7 @@ fetchPartners() {
   // checkForUpdate: ["", Validators.required],
   // btnName: ["", Validators.required],
   // downloadAutoOnWiFi: ["", Validators.required]
-  
+
 
   handleSave() {
     this.isLoading = true;
@@ -183,7 +185,7 @@ fetchPartners() {
 
   editConfig(data) {
     this.idOfEditedConfig = data.id;
-    
+
     this.iseditConfig = true;
     this.AppService.setBodyMask(true);
     this.populateForm(data);
@@ -203,7 +205,7 @@ fetchPartners() {
   }
 
   saveConfig() {
-    
+
     this.AppService.editOem(this.idOfEditedConfig, this.editConfigForm.value).subscribe(data => {
       this.dismissModal();
       this.fetchPartners();
@@ -217,6 +219,6 @@ fetchPartners() {
   dismissModal() {
     this.iseditConfig = false;
     this.AppService.setBodyMask(false);
-    
+
   }
 }
