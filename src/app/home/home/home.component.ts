@@ -54,6 +54,7 @@ export class HomeComponent implements OnInit {
   selectedYear1;
   selectedYear2;
   selectedYear3;
+  selectedPartner1FromDrop;
 
   monthSlab: [
     "Jan",
@@ -94,7 +95,7 @@ export class HomeComponent implements OnInit {
   currentYear1;
   currentYear2;
   currentYear3;
-  constructor(private AppService: AppService) {}
+  constructor(private AppService: AppService) { }
 
   ngOnInit() {
 
@@ -232,10 +233,15 @@ export class HomeComponent implements OnInit {
   }
 
   optionMaker(data, initiator) {
+
+    this.selectedActivatedDevices = [];
+
     return data.map((data, index) => {
+
       switch (initiator) {
         case "activated_device":
           this.selectedActivatedDevices.push(index);
+          debugger;
           break;
         case "updates_pushed":
           this.selected_devices_forupdatesPushed.push(index);
@@ -366,7 +372,7 @@ export class HomeComponent implements OnInit {
     });
     apk_versions;
 
-    uniqueApks = apk_versions.filter(function(item, pos) {
+    uniqueApks = apk_versions.filter(function (item, pos) {
       return apk_versions.indexOf(item) == pos;
     });
 
@@ -396,13 +402,13 @@ export class HomeComponent implements OnInit {
         this.partners1 = this.makePartnersDrop(data);
 
         if (this.partners1.length > 0) {
-          this.selectedPartner1 = this.partners1[0]["value"];
-          this.generateGraph1WithDrop(data, this.selectedPartner1);
+          // this.selectedPartner1 = this.partners1[0]["value"];
+          this.generateGraph1WithDrop(data, this.selectedPartner1FromDrop);
         }
         else {
           this.generateGraph1WithDrop(data, []);
         }
-
+        // this.generateGraph1WithDrop(this.raw_devicesActivated, event.value);
       }
     );
   }
@@ -434,9 +440,9 @@ export class HomeComponent implements OnInit {
 
       this.partners3 = this.makePartnersDrop(data);
       if (this.partners3.length > 0) {
-      this.selectedPartner3 = this.partners3[0]["value"];
+        this.selectedPartner3 = this.partners3[0]["value"];
 
-      this.generateGraph3WithDrop(data, this.selectedPartner3);
+        this.generateGraph3WithDrop(data, this.selectedPartner3);
       }
       else {
         this.generateGraph3WithDrop(data, []);
@@ -600,6 +606,7 @@ export class HomeComponent implements OnInit {
   }
 
   onPartnerChange1(event) {
+    this.selectedPartner1FromDrop = event.value;
     this.selectedActivatedDevices = [];
     this.generateGraph1WithDrop(this.raw_devicesActivated, event.value);
   }
