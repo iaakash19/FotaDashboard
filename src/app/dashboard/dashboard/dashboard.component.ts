@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
      }else {
        this.showWiki = true;
      }
-      debugger;
     })
   }
 

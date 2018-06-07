@@ -1,0 +1,71 @@
+[debug] [2018-06-07T11:58:22.981Z] ----------------------------------------------------------------------
+[debug] [2018-06-07T11:58:22.983Z] Command:       /Users/aakashohri/.nvm/versions/node/v8.9.1/bin/node /Users/aakashohri/.nvm/versions/node/v8.9.1/bin/firebase deploy
+[debug] [2018-06-07T11:58:22.984Z] CLI Version:   3.17.7
+[debug] [2018-06-07T11:58:22.984Z] Platform:      darwin
+[debug] [2018-06-07T11:58:22.984Z] Node Version:  v8.9.1
+[debug] [2018-06-07T11:58:22.984Z] Time:          Thu Jun 07 2018 17:28:22 GMT+0530 (IST)
+[debug] [2018-06-07T11:58:22.984Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-06-07T11:58:23.000Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-06-07T11:58:23.000Z] > authorizing via signed-in user
+[debug] [2018-06-07T11:58:23.002Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-06-07T11:58:23.003Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/Zi1UxkehYaV0PwUAR91qWOuIxk8vmCoqKslY055Raq0',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Jun 07 2018 17:28:23 GMT+0530 (IST)
+[debug] [2018-06-07T11:58:23.466Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-07T11:58:23.494Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fota-89875  
+  
+ Thu Jun 07 2018 17:28:23 GMT+0530 (IST)
+[debug] [2018-06-07T11:58:24.793Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-07T11:58:24.794Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/fota-89875/tokens  
+  
+ Thu Jun 07 2018 17:28:24 GMT+0530 (IST)
+[debug] [2018-06-07T11:58:25.923Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'fota-89875'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2018-06-07T11:58:27.496Z] >>> HTTP REQUEST PUT https://fota-89875.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+ 
+ Thu Jun 07 2018 17:28:27 GMT+0530 (IST)
+[debug] [2018-06-07T11:58:29.844Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules syntax for database fota-89875 is valid
+[info] i  hosting: preparing dist directory for upload...
+[debug] [2018-06-07T11:58:30.053Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/fota-89875/uploads/-LEP6B_6mykcEsuM4Kz1?fileCount=22&message=  
+  
+ Thu Jun 07 2018 17:28:30 GMT+0530 (IST)
+[debug] [2018-06-07T11:58:38.612Z] <<< HTTP RESPONSE 200
+[debug] [2018-06-07T11:58:38.612Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 22 files uploaded successfully
+[info] i  database: releasing rules...
+[debug] [2018-06-07T11:58:39.362Z] >>> HTTP REQUEST PUT https://fota-89875.firebaseio.com/.settings/rules.json  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+ 
+ Thu Jun 07 2018 17:28:39 GMT+0530 (IST)
+[debug] [2018-06-07T11:58:40.416Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules for database fota-89875 released successfully
+[debug] [2018-06-07T11:58:40.418Z] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/fota-89875/releases  
+ { hosting: 
+   { public: 'dist',
+     ignore: [ 'firebase.json', '**/.*', '**/node_modules/**' ],
+     rewrites: [ [Object] ],
+     version: '-LEP6B_6mykcEsuM4Kz1',
+     prefix: '-LEP6B_6mykcEsuM4Kz1/',
+     manifest: [] } } 
+ Thu Jun 07 2018 17:28:40 GMT+0530 (IST)

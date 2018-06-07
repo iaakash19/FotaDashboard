@@ -116,13 +116,7 @@ export class AppService {
     return this.Http.get(`${this.BASE_URL}oemRegister/`);
   }
 
-  pushUpdate(config, param) {
-    let input = new FormData();
-    Object.keys(config).map(key => {
-      input.append(key, config[key]);
-    });
-    return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
-  }
+
 
   getPartnersData() {
     return this.Http.get(`${this.BASE_URL}partnerRegister/`);
@@ -335,6 +329,38 @@ export class AppService {
     return this.Http.get(`${this.BASE_URL}updateGen/?UpdateFor=Test&BuildState=${status}`);
 
   }
+
+  getTestDetails(testObj) {
+    return this.Http.get(`${this.BASE_URL}testdata/?uid=${testObj.rowId}&TestNo=${testObj.testId}`);
+  }
+
+  getStatus() {
+    return this.Http.get(`${this.BASE_URL}teststatus/`);
+  }
+
+  saveTest(testObj, data) {
+    return this.Http.put(`${this.BASE_URL}testdata/?uid=${testObj.rowId}&TestNo=${testObj.testId}`, data);
+  }
+
+  pushUpdate(config, param?) {
+    let input = new FormData();
+    Object.keys(config).map(key => {
+      input.append(key, config[key]);
+    });
+    return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
+  }
+
+  saveRemarkss(rowId, data) {
+    // debugger;
+    let config = { 'BuildRemarks': data };
+
+    let input = new FormData();
+    Object.keys(config).map(key => {
+      input.append(key, config[key]);
+    });
+    return this.Http.put(`${this.BASE_URL}updateGen/${rowId}/`, input );
+  }
 }
 
 
+//911602650040844

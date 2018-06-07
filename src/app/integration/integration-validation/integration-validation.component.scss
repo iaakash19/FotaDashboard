@@ -83,3 +83,18 @@ label {
         margin-bottom: 0.5rem;
     }
 }
+
+.form-group{
+  &.sidewise {
+        flex-flow: row nowrap;
+        align-items: center;
+  }
+}
+
+  form.non-editable {
+    input {
+      pointer-events: none;
+      border: none;
+    }
+  }
+

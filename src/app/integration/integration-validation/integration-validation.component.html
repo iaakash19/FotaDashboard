@@ -2,9 +2,12 @@
 
 <p-confirmDialog></p-confirmDialog>
 
-<div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div>
-<!--
-<div class="wrapper">
+<div class="loader" *ngIf="isLoading">
+  <div class="loading-pulse"></div>
+</div>
+
+
+<!-- <div class="wrapper">
 
   <h2>Set up Test Updates</h2>
   <form [formGroup]="testUpdate" (submit)="testUpdates()">
@@ -43,45 +46,45 @@
       <h2>Details</h2>
       <div class="IMEI_wrap">
 
-          <ng-container *ngFor="let detail of IMEI_details | repover_obj">
-              <ng-container *ngIf="detail.key === 'CompletedUpdates' || detail.key === 'DeviceStatus' || detail.key === 'AvailableUpdates' || detail.key === 'OngoingUpdates'">
-                 <div class="row" *ngIf="detail.value.length > 0">
-                   <label>{{detail.key}}</label>
-                   <div class="collection">
-                      <ul *ngFor="let item of detail.value">
-                          <li>
-                            <label for="">Date</label>
-                            <span>{{ item.Date | date:'medium' }}</span>
-                          </li>
-                          <li>
-                              <label for="">UpdateId</label>
-                              <span>{{ item.UpdateId }}</span>
-                          </li>
-                          <li *ngIf="detail.key === 'OngoingUpdates'">
-                            <label for="">Status</label>
-                            <span>{{ item.Status }}</span>
-                          </li>
-                       </ul>
-                   </div>
+        <ng-container *ngFor="let detail of IMEI_details | repover_obj">
+          <ng-container *ngIf="detail.key === 'CompletedUpdates' || detail.key === 'DeviceStatus' || detail.key === 'AvailableUpdates' || detail.key === 'OngoingUpdates'">
+            <div class="row" *ngIf="detail.value.length > 0">
+              <label>{{detail.key}}</label>
+              <div class="collection">
+                <ul *ngFor="let item of detail.value">
+                  <li>
+                    <label for="">Date</label>
+                    <span>{{ item.Date | date:'medium' }}</span>
+                  </li>
+                  <li>
+                    <label for="">UpdateId</label>
+                    <span>{{ item.UpdateId }}</span>
+                  </li>
+                  <li *ngIf="detail.key === 'OngoingUpdates'">
+                    <label for="">Status</label>
+                    <span>{{ item.Status }}</span>
+                  </li>
+                </ul>
+              </div>
 
-                 </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="detail.key !== 'AvailableUpdates'">
+            <ng-container *ngIf="detail.key !== 'CompletedUpdates'">
+              <ng-container *ngIf="detail.key !== 'OngoingUpdates'">
+                <ng-container *ngIf="detail.key !== 'DeviceStatus'">
+                  <div class="row">
+                    <label for="">{{ detail.key }}</label>
+                    <span class="value"> {{ detail.value }} </span>
+                  </div>
+                </ng-container>
               </ng-container>
-              <ng-container *ngIf="detail.key !== 'AvailableUpdates'">
-                    <ng-container *ngIf="detail.key !== 'CompletedUpdates'">
-                        <ng-container *ngIf="detail.key !== 'OngoingUpdates'">
-                            <ng-container *ngIf="detail.key !== 'DeviceStatus'">
-                                <div class="row">
-                                    <label for="">{{ detail.key }}</label>
-                                    <span class="value"> {{ detail.value }} </span>
-                                  </div>
-                                </ng-container>
-                        </ng-container>
-                    </ng-container>
+            </ng-container>
 
-               </ng-container>
+          </ng-container>
 
 
-      </ng-container>
+        </ng-container>
         <div class="row button-row right">
           <button class="btn btn-small btn-warning" type="button" (click)="deleteIMEI(IMEI_details.id)">Delete</button>
         </div>
@@ -113,13 +116,80 @@
   </p-column>
 </p-dataTable> -->
 
+<p-dialog header="Title" [(visible)]="display">
+
+  <form [formGroup]="testForm" [ngClass]="{'editable': isEditable, 'non-editable': !isEditable}">
+    <div class="form-group sidewise">
+      <label for="">TestNo</label>
+      <input type="text" formControlName="TestNo">
+    </div>
+    <div class="form-group sidewise">
+
+      <label for="">IMEI</label>
+
+
+      <input type="text" formControlName="IMEI">
+
+    </div>
+
+    <div class="form-group sidewise">
+
+      <label for="">Status</label>
+
+      <input *ngIf="!isEditable" type="text" formControlName="Status">
+
+
+      <p-dropdown *ngIf="isEditable" [options]="statuses" formControlName="Status"></p-dropdown>
+    </div>
+
+    <div class="form-group sidewise">
+
+      <label for="">TestRemarks</label>
+
+      <input type="text" formControlName="TestRemarks">
+
+    </div>
+    <div class="button_grp">
+      <button>Close</button>
+      <button *ngIf="!isEditable" (click)="turnOnEdit()">Edit</button>
+
+      <button *ngIf="isEditable" (click)="saveTest()">Save</button>
+    </div>
+  </form>
+</p-dialog>
+
+
+<p-dialog header="Title" [(visible)]="openIMEIBox">
+  <div class="form-group sidewise">
+    <label for="">IMEI</label>
+    <input type="text" name="emei" [(ngModel)]="selectedIMEI">
+  </div>
+  <div class="button_grp">
+    <button (click)="testIMEI()">Test</button>
+  </div>
+</p-dialog>
+
+<p-dialog header="Title" [(visible)]="openRemarksModal">
+  <div class="form-group sidewise">
+    <label for="">Remarks</label>
+<p-editor [(ngModel)]="remarks" [style]="{'height':'160px'}"></p-editor>
+
+
+
+  </div>
+  <div class="button_grp">
+    <button (click)="saveRemarks()">Save</button>
+  </div>
+</p-dialog>
+
+
 <p-tabView (onChange)="handleChange($event)">
   <p-tabPanel header="Active">
-    <app-list [data]="data"></app-list>
+    <app-list [statuses]="statuses" [data]="data" (testClick)="handleTestClick($event)" (newIMEI)="handleOnImeiClick($event)"
+ (statusChange)="onStatusChange($event)" [type]="'Active'"></app-list>
+
   </p-tabPanel>
   <p-tabPanel header="InActive">
-<app-list [data]="data"></app-list>
-
-
+    <app-list [data]="data" (testClick)="handleTestClick($event)" [type]="'Inactive'"></app-list>
   </p-tabPanel>
 </p-tabView>

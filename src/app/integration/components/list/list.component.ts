@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -8,9 +8,23 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 export class ListComponent implements OnInit, OnChanges {
 
   @Input() data;
+  @Input() set statuses(data) {
+    debugger;
+      this.status = data;
+  }
 
+  @Input() set type(data) {
+    if(data) {
+      this.tableType = data;
+    }
+  }
+
+  @Output() newIMEI: EventEmitter<any> = new EventEmitter();
+  @Output() statusChange: EventEmitter<any> = new EventEmitter();
   cols = [];
   rows;
+  status;
+  tableType;
 
    objMapper = {
     "partnerName" : "Partner Name",
@@ -19,8 +33,11 @@ export class ListComponent implements OnInit, OnChanges {
      "BaseVersion": "Base Version",
      "AvailVersion": "Avail Version",
      "BuildStatus": "Build Status",
-     "Tests": "Tests"
+     "Tests": "Tests",
+     "id": "id"
   }
+  @Output() testClick: EventEmitter<any> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
@@ -28,8 +45,11 @@ export class ListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(data) {
-    if (data.data.currentValue) {
+    debugger;
+    if (data.data && data.data.currentValue) {
       this.rows = data.data.currentValue;
+      console.log('this.rows:::', this.rows);
+      this.cols = [];
       this.CurateCols();
     }
 
@@ -46,11 +66,24 @@ export class ListComponent implements OnInit, OnChanges {
           value: col
         }
       });
-
       console.log('this.cols:::', this.cols);
-
     }
+  }
 
+  onTextClick(testid, rowId) {
+    const obj = {
+      testId: testid,
+      rowId: rowId
+    }
+    this.testClick.emit(obj);
+  }
+
+  newImei(rowId) {
+    this.newIMEI.emit(rowId);
+  }
+
+  onStatusChange(event, rowId) {
+    this.statusChange.emit({ rowId, status: event.value});
   }
 
 }
