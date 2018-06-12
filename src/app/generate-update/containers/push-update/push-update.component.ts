@@ -24,150 +24,120 @@ export class PushUpdateComponent implements OnInit {
   isUpdate: boolean = false;
   optionsPanel: any;
   msgs: Message[] = [];
+  data;
+  status = 'Active';
+  openPreview = false;
+  previewObj;
+  editObj;
+  showEdit = false;
+  selectedobj;
+  showDelete = false;
+remarks;
 
   constructor(private fb: FormBuilder, private confirmationService: ConfirmationService, private AppService: AppService, private messageService: MessageService) { }
 
   ngOnInit() {
-    this.fetchPartners();
-
-
-    this.pushUpdate = this.fb.group({
-      partnerName: ['', Validators.required],
-      DeviceModel: ['', Validators.required],
-      CurrentBuildVersion: ['', Validators.required],
-      UpdateName: ['', Validators.required]
-    });
-
-
-    this.pushUpdate.get("partnerName").valueChanges.subscribe(partner => {
-      if (partner) {
-        this.fetchDeviceModel(partner);
-      }
-
-    });
-
-    this.pushUpdate.get("DeviceModel").valueChanges.subscribe(model => {
-      if(model) {
-        this.fetchCurrentBuild(model);
-      }
-
-    });
-
-    this.pushUpdate.get("CurrentBuildVersion").valueChanges.subscribe(currentVersion => {
-      if (currentVersion) {
-        this.fetchUpdateAvailable(currentVersion);
-      }
-
-    });
+    this.fetchUpdateData(this.status);
 
   }
 
-  fetchCurrentBuild(model) {
-    this.AppService.getCurrentBuild(this.pushUpdate.value.partnerName, model).subscribe((currentBuild: any) => {
-
-      this.currentVersions = currentBuild.map(item => {
-        return {
-          label: item,
-          value: item
-        }
-      });
-      this.currentVersions.unshift({
-        label: 'Select Base Versions',
-        value: null
-      });
-
-      this.isCurrentBuild = true;
-
-    })
-  }
-
-  fetchUpdateAvailable(currentVersion) {
-    this.AppService.getUpdatesAvailable(this.pushUpdate.value.partnerName, this.pushUpdate.value.DeviceModel, currentVersion, 'Production').subscribe((updates: any) => {
-
-      this.updates = updates.map(item => {
-        return {
-          label: item.UpdateName,
-          value: item.UpdateName
-        }
-      });
-      this.updates.unshift({
-        label: 'Select Updates',
-        value: null
-      });
-
-      this.isUpdate = true;
-
-    })
-  }
-
-  fetchDeviceModel(partner) {
-    this.AppService.getDeviceModel(partner).subscribe((data: any) => {
-
-      this.models = data.map(item => {
-        return {
-          label: item.DeviceModel,
-          value: item.DeviceModel
-        };
-      });
-
-      this.models.unshift({
-        label: 'Select Model',
-        value: null
-      });
-
-      this.isDeviceModel = true;
-
-    })
-  }
-
-
-  fetchPartners() {
-    this.AppService.getPartners().subscribe((data: any) => {
-      this.partners = data.map(obj => {
-        return {
-          label: obj.partnerName,
-          value: obj.partnerName
-        }
-      });
-      this.partners.unshift({
-        label: 'Select Partner',
-        value: null
-      })
-
-    })
-  }
-
-
-
-  onPushUpdate() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'fa fa-question-circle',
-      accept: () => {
-        this.isLoading = true;
-        this.AppService.pushUpdate(this.pushUpdate.value, 'Production').subscribe(data => {
-          this.isLoading = false;
-          this.isCurrentBuild = false;
-          this.isUpdate = false;
-          this.isDeviceModel = false;
-          this.pushUpdate.reset();
-
-          this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Update Pushed to Production' });
-        },
-          err => {
-            const errMsg = JSON.parse(err.error).err_msg;
-            this.isLoading = false;
-            this.messageService.add({ severity: 'error', summary: 'Message', detail: errMsg });
-
+  //UpdateName, partnerName, DeviceModel, BaseVersion,AvailVersion,Date, BuildStatus.
+  fetchUpdateData(status) {
+      this.AppService.fetchUpdateData(status).subscribe((data:any) => {
+        this.data = data.map(item => {
+          return {
+            partnerName: item.partnerName,
+            UpdateName: item.UpdateName,
+            DeviceModel: item.DeviceModel,
+            BaseVersion: item.BaseVersion,
+            AvailVersion: item.AvailVersion,
+            Date: item.Date,
+            BuildStatus: item.BuildStatus,
+            id: item.id
           }
-        )
-      },
-      reject: () => {
-        this.msgs = [{ severity: 'info', summary: 'Rejected', detail: 'You have rejected' }];
-      }
-    });
+        })
+       })
+  }
 
+
+  handleChange(event) {
+    const index = event.index;
+    index == 0 ? this.status = 'Active' : this.status = 'Inactive';
+    this.fetchUpdateData(this.status);
+  }
+
+  openPreviewRow(data) {
+    this.openPreview = true;
+    this.previewObj = data;
+  }
+
+  openEditBox(data) {
+    this.showEdit = true;
+    this.editObj = {
+      UpdateName: data.UpdateName ,
+      UpdateType: data.UpdateType,
+      AvailVersion: data.AvailVersion,
+      KeyHighlights: data.KeyHighlights,
+      id: data.id
+    }
+  }
+
+  triggerEdit() {
+    this.AppService.editUpdate(this.editObj.id, this.editObj).subscribe(data => {
+      })
+  }
+
+  openDeleteBox(data) {
+    this.showDelete = true;
+  }
+
+  delete() {
+    this.AppService.deleteUpdateRevised(this.selectedobj.id, this.remarks).subscribe(data => {
+      debugger;
+    })
+  }
+
+  handlePush() {
+    // partnerName: ['', Validators.required],
+    //   DeviceModel: ['', Validators.required],
+    //     CurrentBuildVersion: ['', Validators.required],
+    //       UpdateName: ['', Validators.required]
+    // this.selectedobj;
+    let data = {
+      partnerName: this.selectedobj.partnerName,
+      DeviceModel: this.selectedobj.DeviceModel,
+      BaseVersion: this.selectedobj.BaseVersion,
+      UpdateName: this.selectedobj.UpdateName
+    }
+    this.AppService.pushUpdate(data).subscribe(res => {
+      debugger;
+    })
+  }
+  handleAction(data) {
+    console.log('data:::', data); // type and id
+    this.selectedobj = this.data.filter(item => item.id == data.id)[0];
+
+    switch (data.type) {
+      case 'more': {
+        this.openPreviewRow(this.selectedobj);
+        break;
+      }
+      case 'edit': {
+        this.selectedobj;
+        this.openEditBox(this.selectedobj);
+        break;
+      }
+      case 'delete': {
+        this.openDeleteBox(this.selectedobj);
+        break;
+      }
+      case 'push': {
+        this.handlePush();
+        break;
+      }
+      default:
+        break;
+    }
   }
 }
 

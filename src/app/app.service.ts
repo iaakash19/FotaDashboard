@@ -360,7 +360,36 @@ export class AppService {
     });
     return this.Http.put(`${this.BASE_URL}updateGen/${rowId}/`, input );
   }
+
+  fetchUpdateData(status) {
+    debugger;
+    return this.Http.get(`${this.BASE_URL}updateGen/?UpdateFor=Production&BuildState=${status}`);
+  }
+
+  editUpdate(rowId, data) {
+    debugger;
+    // ${ this.BASE_URL } updateGen / { id }
+    delete data.id;
+    let config = data;
+
+    let input = new FormData();
+    Object.keys(config).map(key => {
+      input.append(key, config[key]);
+    });
+    return this.Http.put(`${this.BASE_URL}updateGen/${rowId}/`, input);
+  }
+
+  deleteUpdateRevised(rowId, remarks) {
+    // http://fota.dynamyn.mobi/notify/fotav/updatedeleted/
+    let config = {
+      uid: rowId,
+      Remarks: remarks
+    }
+    let input = new FormData();
+    Object.keys(config).map(key => {
+      input.append(key, config[key]);
+    });
+    return this.Http.post(`${this.BASE_URL}updatedeleted/`, config);
+  }
+
 }
-
-
-//911602650040844

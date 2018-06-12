@@ -1,4 +1,4 @@
-<p-growl [(value)]="msgs"></p-growl>
+<!-- <p-growl [(value)]="msgs"></p-growl>
 <p-confirmDialog></p-confirmDialog>
 
 <div class="loader" *ngIf="isLoading"><div class="loading-pulse"></div></div>
@@ -36,4 +36,104 @@
       <button class="btn btn-success" type="submit" [disabled]="!pushUpdate.valid">Push</button>
     </div>
   </form>
-</div>
+</div> -->
+
+
+
+<!-- Delete Box-->
+<p-dialog header="Delete" [(visible)]="showDelete">
+
+<p-editor [(ngModel)]="remarks" [style]="{'height':'160px'}"></p-editor>
+
+
+  <div class="button_grp">
+    <button (click)="delete()">Delete</button>
+  </div>
+</p-dialog>
+
+
+
+
+<!-- Preview Box-->
+<p-dialog header="Preview" [(visible)]="openPreview">
+
+<ul *ngIf="openPreview">
+
+<li> {{previewObj.partnerName }} </li>
+
+<li> {{previewObj.UpdateName }} </li>
+
+
+<li> {{previewObj.DeviceModel }} </li>
+
+
+<li> {{previewObj.BaseVersion }} </li>
+
+
+<li> {{previewObj.AvailVersion }} </li>
+
+
+<li> {{previewObj.Date }} </li>
+
+
+<li> {{previewObj.BuildStatus }} </li>
+<li> {{ previewObj.id }} </li>
+
+
+
+  </ul>
+  <div class="button_grp">
+    <button>Close</button>
+  </div>
+</p-dialog>
+
+
+<!-- Edit Box UpdateName, UpdateType,AvailVersion,KeyHighlights-->
+<p-dialog header="Edit" [(visible)]="showEdit">
+<!-- <pre> {{ editObj | json }} </pre> -->
+   <form *ngIf="showEdit">
+
+    <div class="form-group">
+      <label for="">UpdateName</label>
+<input name="UpdateName" type="text" [(ngModel)]="editObj.UpdateName">
+
+    </div>
+
+    <div class="form-group">
+      <label for="">UpdateType</label>
+<input name="UpdateType" type="text" [(ngModel)]="editObj.UpdateType">
+
+
+    </div>
+
+    <div class="form-group">
+      <label for="">AvailVersion</label>
+<input name="AvailVersion" type="text" [(ngModel)]="editObj.AvailVersion">
+
+
+    </div>
+
+    <div class="form-group">
+      <label for="">KeyHighlights</label>
+<input name="KeyHighlights" type="text" [(ngModel)]="editObj.KeyHighlights">
+
+
+    </div>
+
+    <div class="button-stack">
+      <button (click)="triggerEdit()">Edit</button>
+    </div>
+
+  </form>
+</p-dialog>
+
+
+<p-tabView (onChange)="handleChange($event)">
+  <p-tabPanel header="Active">
+    <app-list [data]="data" [type]="'Active'" (action)="handleAction($event)"></app-list>
+
+  </p-tabPanel>
+  <p-tabPanel header="Expired">
+    <app-list [data]="data" [type]="'Expired'"></app-list>
+  </p-tabPanel>
+</p-tabView>
