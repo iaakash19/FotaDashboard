@@ -59,7 +59,6 @@ export class ListComponent implements OnInit, OnChanges {
           value: col
         }
       });
-      console.log('this.cols:::', this.cols);
     }
   }
 

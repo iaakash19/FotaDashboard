@@ -351,7 +351,6 @@ export class AppService {
   }
 
   saveRemarkss(rowId, data) {
-    // debugger;
     let config = { 'BuildRemarks': data };
 
     let input = new FormData();
@@ -362,12 +361,10 @@ export class AppService {
   }
 
   fetchUpdateData(status) {
-    debugger;
     return this.Http.get(`${this.BASE_URL}updateGen/?UpdateFor=Production&BuildState=${status}`);
   }
 
   editUpdate(rowId, data) {
-    debugger;
     // ${ this.BASE_URL } updateGen / { id }
     delete data.id;
     let config = data;
@@ -392,4 +389,20 @@ export class AppService {
     return this.Http.post(`${this.BASE_URL}updatedeleted/`, config);
   }
 
+  testAgain(rowId) {
+    let config = {
+      UpdateFor: 'Test'
+    }
+
+    let input = new FormData();
+    Object.keys(config).map(key => {
+      input.append(key, config[key]);
+    });
+    return this.Http.put(`${this.BASE_URL}updateGen/${rowId}/`, input);
+
+  }
+
+  triggerDeleteOnExpired(id) {
+    return this.Http.delete(`${this.BASE_URL}updateGen/${id}`);
+  }
 }

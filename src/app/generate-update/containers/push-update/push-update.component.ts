@@ -93,7 +93,11 @@ remarks;
 
   delete() {
     this.AppService.deleteUpdateRevised(this.selectedobj.id, this.remarks).subscribe(data => {
-      debugger;
+      if (this.status == 'Inactive') {
+        this.AppService.triggerDeleteOnExpired(this.selectedobj.id).subscribe(data => {
+
+        })
+      }
     })
   }
 
@@ -113,7 +117,20 @@ remarks;
       debugger;
     })
   }
+
+  triggerTestAgain() {
+    this.AppService.testAgain(this.selectedobj.id).subscribe(data => {
+
+    })
+  }
+
+  triggerDeleteOnExpired() {
+    // this.AppService.triggerDeleteOnExpired().subscribe(data => {
+
+    // })
+  }
   handleAction(data) {
+    debugger;
     console.log('data:::', data); // type and id
     this.selectedobj = this.data.filter(item => item.id == data.id)[0];
 
@@ -133,6 +150,15 @@ remarks;
       }
       case 'push': {
         this.handlePush();
+        break;
+      }
+      case 'test_again': {
+        this.triggerTestAgain();
+        break;
+      }
+      case 'delete_on_expired': {
+        // this.triggerDeleteOnExpired();
+        this.openDeleteBox(this.selectedobj);
         break;
       }
       default:

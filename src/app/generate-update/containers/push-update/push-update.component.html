@@ -134,6 +134,7 @@
 
   </p-tabPanel>
   <p-tabPanel header="Expired">
-    <app-list [data]="data" [type]="'Expired'"></app-list>
+<app-list [data]="data" [type]="'Expired'" (action)="handleAction($event)"></app-list>
+
   </p-tabPanel>
 </p-tabView>

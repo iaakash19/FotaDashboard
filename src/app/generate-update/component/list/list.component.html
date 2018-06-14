@@ -8,13 +8,21 @@
 
 <p-column [header]="'Action Buttons'">
 
-<ng-template let-data="rowData" pTemplate="body">
+<ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Active'">
   <a (click)="actionButtonClick('more', data.id)">More</a>
 <a (click)="actionButtonClick('edit', data.id)">Edit</a>
 <a (click)="actionButtonClick('delete', data.id)">Delete</a>
 <a (click)="actionButtonClick('push', data.id)">Push</a>
 
 </ng-template>
+
+<ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Expired'">
+  <a (click)="actionButtonClick('test_again', data.id)">Test Again</a>
+  <a (click)="actionButtonClick('delete_on_expired', data.id)">Delete</a>
+
+
+</ng-template>
+
 
   </p-column>
   <!-- <p-column [header]="'Action Buttons'" *ngIf="tableType == 'Active'">
