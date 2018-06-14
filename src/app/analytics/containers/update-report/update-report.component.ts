@@ -139,6 +139,10 @@ export class UpdateReportComponent implements OnInit, OnChanges {
       four: null,
       five: null
     };
+    this.dataLoaded = false;
+    setTimeout(() => {
+      this.dataLoaded = true;
+    }, 100);
     this.fetchData(this.currentPage);
   }
 

@@ -202,13 +202,11 @@ export class HomeComponent implements OnInit {
       },
       xAxis: {
         categories: x_Axis,
-        // crosshair: true
         title: {
           text: xTitle
         }
       },
       yAxis: {
-        // tickInterval: 1,
         min: 0,
         stackLabels: {
           enabled: true
@@ -547,24 +545,12 @@ export class HomeComponent implements OnInit {
         column: {
           colorByPoint: true
         }
-        // column: {
-        //   stacking: stacked ? 'normal' : null,
-        //   pointPadding: 0.2,
-        //   borderWidth: 0,
-        // }
       },
       title: {
         text: "Total Device Models"
       },
       xAxis: {
         type: "category"
-        // labels: {
-        //     rotation: -45,
-        //     style: {
-        //         fontSize: '13px',
-        //         fontFamily: 'Verdana, sans-serif'
-        //     }
-        // }
       },
       yAxis: {
         min: 0,
@@ -574,36 +560,50 @@ export class HomeComponent implements OnInit {
       },
       series: [
         {
-          name: "",
+          name: data,
           data: data
-          // data: [
-          //     ['Shanghai', 23.7],
-          //     ['Lagos', 16.1],
-          //     ['Istanbul', 14.2],
-          //     ['Karachi', 14.0],
-          //     ['Mumbai', 12.5],
-          //     ['Moscow', 12.1],
-          //     ['São Paulo', 11.8],
-          //     ['Beijing', 11.7],
-          //     ['Guangzhou', 11.1],
-          //     ['Delhi', 11.1],
-          //     ['Shenzhen', 10.5],
-          //     ['Seoul', 10.4],
-          //     ['Jakarta', 10.0],
-          //     ['Kinshasa', 9.3],
-          //     ['Tianjin', 9.3],
-          //     ['Tokyo', 9.0],
-          //     ['Cairo', 8.9],
-          //     ['Dhaka', 8.9],
-          //     ['Mexico City', 8.9],
-          //     ['Lima', 8.9]
-          // ],
         }
       ]
     };
 
     return config;
   }
+
+//    var config = {
+//   chart: { type: "column", width: 800 },
+//   legend: {
+//     enabled: false
+//   },
+//   title: {
+//     text: graph_title
+//   },
+//   plotOptions: {
+//     series: {
+//       pointWidth: 30
+//     },
+//     column: {
+//       stacking: stacked ? "normal" : null,
+//       pointPadding: 0.2,
+//       borderWidth: 0
+//     }
+//   },
+//   xAxis: {
+//     categories: x_Axis,
+//     title: {
+//       text: xTitle
+//     }
+//   },
+//   yAxis: {
+//     min: 0,
+//     stackLabels: {
+//       enabled: true
+//     },
+//     title: {
+//       text: "Total Number"
+//     }
+//   },
+//   series: data
+// };
 
   onPartnerChange1(event) {
     this.selectedPartner1FromDrop = event.value;

@@ -3,10 +3,6 @@ import { AppService } from '../../../app.service';
 import { MessageService } from "primeng/components/common/messageservice";
 import { Message } from "primeng/primeng";
 
-
-
-
-
 @Component({
   selector: "app-activation-report",
   templateUrl: "./activation-report.component.html",
@@ -169,6 +165,11 @@ export class ActivationReportComponent implements OnInit, OnChanges {
       four: null,
       five: null
     };
+    this.dataLoaded = false;
+    setTimeout(() => {
+      this.dataLoaded = true;
+    }, 100);
+    this.currentPage = 1;
     this.fetchData(this.currentPage);
   }
 
