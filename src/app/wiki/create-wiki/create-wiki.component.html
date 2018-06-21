@@ -26,7 +26,14 @@
           <button *ngIf="!last && !editMode" class="btn btn-warning" type="button" (click)="removeBlock(i)">Delete Block</button>
         </div>
       </div>
-
+<div class="form-group with-uploader">
+  <div class="loader" *ngIf="isLoadingComp">
+    <span class="message">Uploading... Please Wait</span>
+    <div class="loading-pulse"></div>
+  </div>
+  <label for="">File</label>
+  <p-fileUpload auto="auto" customUpload="true" name="demo[]" (uploadHandler)="onBasicUpload($event, i)" #logo></p-fileUpload>
+</div>
     </div>
 
     <div class="buttonRow">

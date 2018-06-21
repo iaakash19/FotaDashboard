@@ -405,4 +405,25 @@ export class AppService {
   triggerDeleteOnExpired(id) {
     return this.Http.delete(`${this.BASE_URL}updateGen/${id}`);
   }
+
+  uploadAndgeturl(file) {
+        let input = new FormData();
+  input.append("File", file.File);
+  // Object.keys(file).map(key => {
+  //   input.append(File, file);
+  // });
+
+  return this.Http.post(`${this.BASE_URL}uploadFile/`, input);
+  }
 }
+
+
+// uploadfile(file) {
+//   let input = new FormData();
+//   input.append("File", file.File);
+//   // Object.keys(file).map(key => {
+//   //   input.append(File, file);
+//   // });
+
+//   return this.Http.post(`${this.BASE_URL}uploadFile/`, input);
+// }
