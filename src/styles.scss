@@ -885,7 +885,94 @@ span.ui-column-title {
 
 }
 
+p-chips {
+      display: block;
+      margin-bottom: 1rem;
+  ul {
+        display: block !important;
+        width: 100% !important;
+        padding: .30rem .75rem !important;
+        font-size: 1rem !important;
+        line-height: 1.25 !important;
+        color: #464a4c !important;
+        background-color: #fff !important;
+        background-image: none !important;
+        background-clip: padding-box !important;
+        border: 1px solid rgba(0, 0, 0, 0.15) !important;
+        border-radius: .25rem !important;
+        transition: border-color ease-in-out .15s !important;
+        box-shadow: ease-in-out .15s !important;
+  }
+}
 
+
+
+.pill {
+     padding: 0.15rem 0.35rem;
+     text-decoration: none !important;
+     color: white !important;
+     border: 1px solid transparent;
+     font-size: 0.65rem;
+     border-radius: 0.1rem;
+  &-primary {
+    background: #007bff;
+    border-color: #007bff;
+  }
+  &-secondary {
+    background: #6c757d;
+     border-color: #6c757d;
+  }
+  &-danger {
+    background:#dc3545;
+     border-color: #dc3545;
+  }
+  &-success {
+    background: #28a745;
+     border-color: #28a745;
+  }
+}
+
+.fota-dialog {
+&.ui-dialog.ui-widget .ui-dialog-content {
+    min-height: 16rem;
+}
+li {
+  margin-bottom: 10px !important;
+}
+.ui-widget-content {
+  top: 0 !important;
+}
+.button_grp {
+      display: flex;
+      justify-content: flex-end;
+  button {
+     padding: 0.15rem 0.35rem;
+     text-decoration: none !important;
+     color: white !important;
+     border: 1px solid transparent;
+     border-radius: 0.1rem;
+     background:#dc3545;
+     border-color: #dc3545;
+  }
+}
+
+&.edit {
+  &.ui-dialog.ui-widget .ui-dialog-content {
+    min-height: 23rem;
+  }
+  button {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+&.delete {
+   button {
+     margin-top: 20px;
+     padding: 0.5rem 0.75rem;
+   }
+}
+
+}
 
 
 

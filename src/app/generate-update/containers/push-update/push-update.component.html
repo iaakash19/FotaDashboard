@@ -41,7 +41,7 @@
 
 
 <!-- Delete Box-->
-<p-dialog header="Delete" [(visible)]="showDelete">
+<p-dialog styleClass="fota-dialog delete" header="Delete" [(visible)]="showDelete">
 
 <p-editor [(ngModel)]="remarks" [style]="{'height':'160px'}"></p-editor>
 
@@ -55,29 +55,35 @@
 
 
 <!-- Preview Box-->
-<p-dialog header="Preview" [(visible)]="openPreview">
+<p-dialog styleClass="fota-dialog" header="Preview" [(visible)]="openPreview" [contentStyle]="{'overflow':'visible'}" minHeight="400px">
 
 <ul *ngIf="openPreview">
 
-<li> {{previewObj.partnerName }} </li>
+<li> <strong> Partner Name:</strong> {{previewObj.partnerName }} </li>
 
-<li> {{previewObj.UpdateName }} </li>
-
-
-<li> {{previewObj.DeviceModel }} </li>
+<li> <strong> Update Name:</strong> {{previewObj.UpdateName }} </li>
 
 
-<li> {{previewObj.BaseVersion }} </li>
+<li>
+  <strong> Device Model:</strong>{{previewObj.DeviceModel }} </li>
 
 
-<li> {{previewObj.AvailVersion }} </li>
+<li>
+  <strong> Base Version:</strong> {{previewObj.BaseVersion }} </li>
 
 
-<li> {{previewObj.Date }} </li>
+<li>
+  <strong> Available Version:</strong> {{previewObj.AvailVersion }} </li>
 
 
-<li> {{previewObj.BuildStatus }} </li>
-<li> {{ previewObj.id }} </li>
+<li>
+  <strong> Date:</strong> {{previewObj.Date }} </li>
+
+
+<li>
+<strong> Build Status:</strong> {{previewObj.BuildStatus }} </li>
+
+<!-- <li> {{ previewObj.id }} </li> -->
 
 
 
@@ -88,9 +94,8 @@
 </p-dialog>
 
 
-<!-- Edit Box UpdateName, UpdateType,AvailVersion,KeyHighlights-->
-<p-dialog header="Edit" [(visible)]="showEdit">
-<!-- <pre> {{ editObj | json }} </pre> -->
+<!-- Edit Box-->
+<p-dialog styleClass="fota-dialog edit" header="Edit" [(visible)]="showEdit">
    <form *ngIf="showEdit">
 
     <div class="form-group">
@@ -121,7 +126,7 @@
     </div>
 
     <div class="button-stack">
-      <button (click)="triggerEdit()">Edit</button>
+<button class="pill pill-primary" (click)="triggerEdit()">Edit</button>
     </div>
 
   </form>

@@ -9,17 +9,21 @@
 <p-column [header]="'Action Buttons'">
 
 <ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Active'">
-  <a (click)="actionButtonClick('more', data.id)">More</a>
-<a (click)="actionButtonClick('edit', data.id)">Edit</a>
-<a (click)="actionButtonClick('delete', data.id)">Delete</a>
-<a (click)="actionButtonClick('push', data.id)">Push</a>
+  <div class="pillWrap">
+<a class="pill pill-primary" (click)="actionButtonClick('more', data.id)">More</a>
+<a class="pill pill-secondary" (click)="actionButtonClick('edit', data.id)">Edit</a>
+<a class="pill pill-danger" (click)="actionButtonClick('delete', data.id)">Delete</a>
+<a class="pill pill-success" (click)="actionButtonClick('push', data.id)">Push</a>
+  </div>
+
 
 </ng-template>
 
 <ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Expired'">
-  <a (click)="actionButtonClick('test_again', data.id)">Test Again</a>
-  <a (click)="actionButtonClick('delete_on_expired', data.id)">Delete</a>
-
+<div class="pillWrap">
+<a class="pill pill-primary" (click)="actionButtonClick('test_again', data.id)">Test Again</a>
+<a class="pill pill-danger" (click)="actionButtonClick('delete_on_expired', data.id)">Delete</a>
+</div>
 
 </ng-template>
 

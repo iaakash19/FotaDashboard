@@ -36,26 +36,34 @@
     padding: 2rem;
     margin: 0 auto;
     width: 100%;
-    transform: translate3d(0, 25vh , 0);   
+    transform: translate3d(0, 25vh , 0);
 }
 
 
 @keyframes slideDown {
     from {
-        transform: translate3d(0,145vh, 0);    
+        transform: translate3d(0,145vh, 0);
     }
     to {
-        transform: translate3d(0, 25vh , 0);    
+        transform: translate3d(0, 25vh , 0);
     }
 }
 
 /* The element to apply the animation to */
 .editModal {
-    
+
     animation-name: slideDown;
     animation-duration: 0.5s;
 }
 
 .cancel_button {
     float:right;
+}
+
+label {
+  font-size: 12px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #9a9a9a;
 }
