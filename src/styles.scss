@@ -976,3 +976,11 @@ li {
 
 
 
+.action_button {
+  p-dropdown {
+    flex: 0 0 60%;
+    .ui-dropdown {
+      min-width: 100% !important;
+    }
+  }
+}

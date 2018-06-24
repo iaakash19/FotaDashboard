@@ -150,35 +150,32 @@
 
     </div>
     <div class="button_grp">
-      <button>Close</button>
-      <button *ngIf="!isEditable" (click)="turnOnEdit()">Edit</button>
+<button class="pill pill-danger">Close</button>
+<button class="pill pill-secondary" *ngIf="!isEditable" (click)="turnOnEdit()">Edit</button>
 
-      <button *ngIf="isEditable" (click)="saveTest()">Save</button>
+<button class="pill pill-primary" *ngIf="isEditable" (click)="saveTest()">Save</button>
     </div>
   </form>
 </p-dialog>
 
 
-<p-dialog header="Title" [(visible)]="openIMEIBox">
+<p-dialog header="IMEI" [(visible)]="openIMEIBox">
   <div class="form-group sidewise">
     <label for="">IMEI</label>
     <input type="text" name="emei" [(ngModel)]="selectedIMEI">
   </div>
   <div class="button_grp">
-    <button (click)="testIMEI()">Test</button>
+<button class="pill pill-primary" (click)="testIMEI()">Test</button>
   </div>
 </p-dialog>
 
-<p-dialog header="Title" [(visible)]="openRemarksModal">
+<p-dialog header="Remarks" [(visible)]="openRemarksModal">
   <div class="form-group sidewise">
     <label for="">Remarks</label>
 <p-editor [(ngModel)]="remarks" [style]="{'height':'160px'}"></p-editor>
-
-
-
   </div>
   <div class="button_grp">
-    <button (click)="saveRemarks()">Save</button>
+<button class="pill pill-primary" (click)="saveRemarks()">Save</button>
   </div>
 </p-dialog>
 

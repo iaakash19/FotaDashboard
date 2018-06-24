@@ -82,41 +82,50 @@
 
 <li>
 <strong> Build Status:</strong> {{previewObj.BuildStatus }} </li>
-
-<!-- <li> {{ previewObj.id }} </li> -->
-
-
-
   </ul>
   <div class="button_grp">
-    <button>Close</button>
+<button (click)="openPreview = false">Close</button>
   </div>
 </p-dialog>
 
+
+ <!-- partnerName: data.partnerName, DeviceModel: data.DeviceModel, BaseVersion: data.BaseVersion, Date: data.Date, UpdateName:
+data.UpdateName , UpdateType: data.UpdateType, AvailVersion: data.AvailVersion, id: data.id -->
 
 <!-- Edit Box-->
 <p-dialog styleClass="fota-dialog edit" header="Edit" [(visible)]="showEdit">
    <form *ngIf="showEdit">
 
+<div class="form-group">
+<label for="">Partner Name</label>
+<input name="partnerName" type="text" [(ngModel)]="editObj.partnerName">
+</div>
+
+<div class="form-group">
+<label for="">Base Version</label>
+<input name="BaseVersion" type="text" [(ngModel)]="editObj.BaseVersion">
+</div>
+
     <div class="form-group">
       <label for="">UpdateName</label>
 <input name="UpdateName" type="text" [(ngModel)]="editObj.UpdateName">
-
     </div>
 
     <div class="form-group">
       <label for="">UpdateType</label>
 <input name="UpdateType" type="text" [(ngModel)]="editObj.UpdateType">
 
-
     </div>
 
     <div class="form-group">
       <label for="">AvailVersion</label>
 <input name="AvailVersion" type="text" [(ngModel)]="editObj.AvailVersion">
-
-
     </div>
+
+<div class="form-group">
+<label for="">Device Model</label>
+<input name="DeviceModel" type="text" [(ngModel)]="editObj.DeviceModel">
+</div>
 
     <div class="form-group">
       <label for="">KeyHighlights</label>

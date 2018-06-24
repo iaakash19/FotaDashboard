@@ -9,9 +9,17 @@ export class ListComponent implements OnInit, OnChanges {
 
   @Input() data;
   @Input() set statuses(data) {
-    debugger;
+
       this.status = data;
+      if(this.status) {
+        this.status.unshift({
+          label: 'Select Status',
+          value: null
+        })
+      }
+
   }
+  selected_status;
 
   @Input() set type(data) {
     if(data) {
@@ -60,7 +68,10 @@ export class ListComponent implements OnInit, OnChanges {
         this.cols.push(key);
       });
 
-      this.cols = this.cols.map(col => {
+      this.cols = this.cols.filter(col => {
+        return (col !== 'id' && col !== 'BuildStatus')
+      })
+      .map(col => {
         return {
           label: this.objMapper[col],
           value: col
@@ -83,7 +94,14 @@ export class ListComponent implements OnInit, OnChanges {
   }
 
   onStatusChange(event, rowId) {
-    this.statusChange.emit({ rowId, status: event.value});
+    if(event.value) {
+      this.statusChange.emit({ rowId, status: event.value });
+    }
+  }
+
+  handleOnHide(event) {
+    this.selected_status = null;
+    debugger;
   }
 
 }

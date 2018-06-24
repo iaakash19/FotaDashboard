@@ -15,15 +15,22 @@
                   </li>
               </ul>
           </ng-container>
-          
-          <ng-container *ngIf="item.key != 'conf'">
+
+<ng-container *ngIf="item.key != 'conf' && item.key !== 'Admin Email' && item.key !== 'OEM Email'">
               <label for="">{{ item.key }}</label>
               <span>{{ item.value }}</span>
             </ng-container>
+
+<ng-container *ngIf="item.key == 'Admin Email' || item.key == 'OEM Email'">
+  <label for="">{{ item.key }}</label>
+  <span>{{ item.value }}</span>
+</ng-container>
+
+
         </li>
       </ul>
 
-      
+
     </div>
     <footer>
       <div class="row">

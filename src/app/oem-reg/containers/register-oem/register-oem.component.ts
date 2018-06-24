@@ -25,6 +25,8 @@ export class RegisterOemComponent implements OnInit {
 
   previewConf:Object = {
     'Partner Name': null,
+    'Admin Email': null,
+    'OEM Email': null,
     'conf': {
       'Url': null,
       'Button Name': null,
@@ -143,6 +145,8 @@ fetchPartners() {
   curatePreviewConf() {
     this.previewConf = {
       'Partner Name': this.oemRegister.get('partnerName').value,
+      'Admin Email': this.oemRegister.get('admin_email').value,
+      'OEM Email': this.oemRegister.get('oem_email').value,
       'conf': {
         'Url': this.oemRegister.get('config').value.Url,
         'Button Name': this.oemRegister.get('config').value.btnName,

@@ -1,48 +1,26 @@
 <p-dataTable [value]="rows">
 
   <ng-container *ngFor="let col of cols">
-
     <p-column [field]="col.value" [header]="col.label"></p-column>
-
   </ng-container>
 
-<p-column [header]="'Action Buttons'">
-
-<ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Active'">
-  <div class="pillWrap">
-<a class="pill pill-primary" (click)="actionButtonClick('more', data.id)">More</a>
-<a class="pill pill-secondary" (click)="actionButtonClick('edit', data.id)">Edit</a>
-<a class="pill pill-danger" (click)="actionButtonClick('delete', data.id)">Delete</a>
-<a class="pill pill-success" (click)="actionButtonClick('push', data.id)">Push</a>
-  </div>
-
-
-</ng-template>
-
-<ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Expired'">
-<div class="pillWrap">
-<a class="pill pill-primary" (click)="actionButtonClick('test_again', data.id)">Test Again</a>
-<a class="pill pill-danger" (click)="actionButtonClick('delete_on_expired', data.id)">Delete</a>
-</div>
-
-</ng-template>
-
-
-  </p-column>
-  <!-- <p-column [header]="'Action Buttons'" *ngIf="tableType == 'Active'">
-
-    <ng-template let-data="rowData" pTemplate="body">
-      <a (click)="newImei(data.id)">New</a>
-
-      <p-dropdown [options]="status" (onChange)="onStatusChange($event, data.id)"></p-dropdown>
-
-
-
-
+  <p-column [header]="'Action Buttons'">
+    <ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Active'">
+      <div class="pillWrap">
+        <a class="pill pill-primary" (click)="actionButtonClick('more', data.id)">More</a>
+        <a class="pill pill-secondary" (click)="actionButtonClick('edit', data.id)">Edit</a>
+        <a class="pill pill-danger" (click)="actionButtonClick('delete', data.id)">Delete</a>
+        <a class="pill pill-success" (click)="actionButtonClick('push', data.id)">Push</a>
+      </div>
     </ng-template>
 
-  </p-column> -->
+    <ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Expired'">
+      <div class="pillWrap">
+        <a class="pill pill-primary" (click)="actionButtonClick('test_again', data.id)">Test Again</a>
+        <a class="pill pill-danger" (click)="actionButtonClick('delete_on_expired', data.id)">Delete</a>
+      </div>
+    </ng-template>
+
+  </p-column>
 
 </p-dataTable>
-
-

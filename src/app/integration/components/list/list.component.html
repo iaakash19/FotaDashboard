@@ -48,7 +48,7 @@
 
   <ng-container *ngFor="let col of cols">
 
-<p-column *ngIf="col.label !== 'Tests'" [field]="col.value" [header]="col.label"></p-column>
+    <p-column *ngIf="col.label !== 'Tests'" [field]="col.value" [header]="col.label"></p-column>
 
     <p-column *ngIf="col.label == 'Tests'" [header]="col.label">
       <ng-template let-data="rowData" pTemplate="body">
@@ -62,18 +62,15 @@
 
   </ng-container>
 
-<p-column [header]="'Action Buttons'" *ngIf="tableType == 'Active'">
+  <p-column [header]="'Action Buttons'" *ngIf="tableType == 'Active'">
 
-<ng-template let-data="rowData" pTemplate="body">
-<a (click)="newImei(data.id)">New</a>
+    <ng-template let-data="rowData" pTemplate="body">
+      <div class="action_button">
+        <a class="pill pill-primary" (click)="newImei(data.id)">New</a>
+<p-dropdown [(ngModel)]="selected_status" [options]="status" (onChange)="onStatusChange($event, data.id)"></p-dropdown>
+      </div>
+    </ng-template>
 
-<p-dropdown [options]="status" (onChange)="onStatusChange($event, data.id)"></p-dropdown>
-
-
-
-
-</ng-template>
-
-</p-column>
+  </p-column>
 
 </p-dataTable>

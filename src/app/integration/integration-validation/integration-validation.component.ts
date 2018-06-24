@@ -40,6 +40,7 @@ export class IntegrationValidationComponent implements OnInit {
   openRemarksModal = false;
   remarks;
 rowId;
+  status_selected;
 
   constructor(private confirmationService: ConfirmationService, private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
 
@@ -346,18 +347,22 @@ rowId;
     }
     this.AppService.pushUpdate(data).subscribe(data => {
         debugger;
+      this.openIMEIBox = false;
+      this.fetchIVData(this.status);
     })
   }
 
   onStatusChange(data) {
     let { rowId, status } = data;
     this.rowId = rowId;
-
+    this.status_selected = status;
     this.openRemarksModal = true;
   }
 
   saveRemarks() {
-    this.AppService.saveRemarkss(this.rowId, this.remarks).subscribe(data => {
+    this.AppService.saveRemarkss(this.rowId, this.remarks, this.status_selected).subscribe(data => {
+      this.openRemarksModal = false;
+      this.fetchIVData(this.status);
       debugger;
     })
   }

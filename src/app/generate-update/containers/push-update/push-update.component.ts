@@ -73,17 +73,24 @@ remarks;
 
   openEditBox(data) {
     this.showEdit = true;
+    debugger;
     this.editObj = {
+      partnerName: data.partnerName,
+      DeviceModel: data.DeviceModel,
+      BaseVersion: data.BaseVersion,
+      Date: data.Date,
       UpdateName: data.UpdateName ,
       UpdateType: data.UpdateType,
       AvailVersion: data.AvailVersion,
-      KeyHighlights: data.KeyHighlights,
+      // KeyHighlights: data.KeyHighlights,
       id: data.id
     }
   }
 
   triggerEdit() {
     this.AppService.editUpdate(this.editObj.id, this.editObj).subscribe(data => {
+      this.showEdit = false;
+      this.fetchUpdateData(this.status);
       })
   }
 
@@ -95,7 +102,8 @@ remarks;
     this.AppService.deleteUpdateRevised(this.selectedobj.id, this.remarks).subscribe(data => {
       if (this.status == 'Inactive') {
         this.AppService.triggerDeleteOnExpired(this.selectedobj.id).subscribe(data => {
-
+          this.showDelete = false;
+          this.fetchUpdateData(this.status);
         })
       }
     })
@@ -115,12 +123,14 @@ remarks;
     }
     this.AppService.pushUpdate(data).subscribe(res => {
       debugger;
+      this.fetchUpdateData(this.status);
+
     })
   }
 
   triggerTestAgain() {
     this.AppService.testAgain(this.selectedobj.id).subscribe(data => {
-
+      this.fetchUpdateData(this.status);
     })
   }
 

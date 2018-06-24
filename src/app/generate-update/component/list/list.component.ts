@@ -41,7 +41,7 @@ export class ListComponent implements OnInit, OnChanges {
   ngOnChanges(data) {
     if (data.data && data.data.currentValue) {
       this.rows = data.data.currentValue;
-      console.log('this.rows:::', this.rows);
+
       this.cols = [];
       this.CurateCols();
     }
@@ -53,12 +53,29 @@ export class ListComponent implements OnInit, OnChanges {
         this.cols.push(key);
       });
 
-      this.cols = this.cols.map(col => {
+      // this.cols = this.cols.filter(col => {
+      //   console.log('col:::', col);
+      //   if(col !== 'id') {
+      //     return {
+      //       label: this.objMapper[col],
+      //       value: col
+      //     }
+      //   }else {
+      //     return;
+      //   }
+      // });
+
+      this.cols = this.cols.filter(col => {
+        return (col !== 'BuildStatus' && col !== 'id')
+      }).map(col => {
+        console.log('col:::', col);
         return {
           label: this.objMapper[col],
           value: col
         }
-      });
+      })
+
+      console.log('this.cols:::', this.cols);
     }
   }
 

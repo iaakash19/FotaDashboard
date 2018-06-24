@@ -350,8 +350,8 @@ export class AppService {
     return this.Http.post(`${this.BASE_URL}pushUpdates/`, input);
   }
 
-  saveRemarkss(rowId, data) {
-    let config = { 'BuildRemarks': data };
+  saveRemarkss(rowId, remarks, status) {
+    let config = { 'BuildRemarks': remarks, 'BuildStatus': status };
 
     let input = new FormData();
     Object.keys(config).map(key => {
