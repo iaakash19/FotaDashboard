@@ -117,6 +117,8 @@ export class RegisterOemComponent implements OnInit {
     });
 
     this.editConfigForm = this.fb.group({
+      AdminEmail: [''],
+      OemEmail: [''],
       config: this.fb.group({
         Url: ["", Validators.required],
         Notif_Frequency: ["", Validators.required],
@@ -145,8 +147,8 @@ fetchPartners() {
   curatePreviewConf() {
     this.previewConf = {
       'Partner Name': this.oemRegister.get('partnerName').value,
-      'Admin Email': this.oemRegister.get('admin_email').value,
-      'OEM Email': this.oemRegister.get('oem_email').value,
+      'Admin Email': this.oemRegister.get('AdminEmail').value,
+      'OEM Email': this.oemRegister.get('OemEmail').value,
       'conf': {
         'Url': this.oemRegister.get('config').value.Url,
         'Button Name': this.oemRegister.get('config').value.btnName,
@@ -169,8 +171,11 @@ fetchPartners() {
     this.isLoading = true;
     this.isPreview = false;
     this.oemRegister.value;
-    debugger;
-    this.AppService.registerOem(this.oemRegister.value).subscribe(
+    let oemValue = Object.assign({}, this.oemRegister.value, {
+      AdminEmail: this.oemRegister.value.AdminEmail.join(','),
+      OemEmail: this.oemRegister.value.OemEmail.join(',')
+    })
+    this.AppService.registerOem(oemValue).subscribe(
       data => {
         this.fetchPartners();
         this.oemRegister.reset();
@@ -201,8 +206,8 @@ fetchPartners() {
     debugger;
     this.editConfigForm.patchValue({
       partnerName: data.partnerName,
-      AdminEmail: data.AdminEmail,
-      OemEmail: data.OemEmail,
+      AdminEmail: data.AdminEmail.split(','),
+      OemEmail: data.OemEmail.split(','),
       config: {
         Url: data.config.Url,
         Notif_Frequency: data.config.Notif_Frequency,
