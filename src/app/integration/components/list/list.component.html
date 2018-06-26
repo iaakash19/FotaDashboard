@@ -1,49 +1,3 @@
-<!-- <p-table [value]="cars">
-  <ng-template pTemplate="header">
-    <tr>
-      <th *ngFor="let col of cols">
-        {{col.header}}
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-car>
-    <tr>
-      <td *ngFor="let col of cols">
-        {{car[col.field]}}
-      </td>
-    </tr>
-  </ng-template>
-</p-table> -->
-
-<!-- <pre> {{ cols | json }} </pre>
-<pre> {{ rows | json }} </pre> -->
-
-<!-- <p-column *ngIf="col.label == 'Tests'" [field]="col.value" [header]="col.label">
-
-</p-column> -->
-
-<!-- <p-column field="partnerName" header="Partner Name"></p-column> -->
-<!-- <p-column *ngFor="let col of cols" [field]="col.value" [header]="col.label"></p-column>
-<p-column *ngFor="let col of cols" [field]="col.value" [header]="col.label"></p-column> -->
-
-
-<!-- <ng-template pTemplate="header">
-  <tr>
-    <th *ngFor="let col of cols">
-      {{col.label}}
-    </th>
-  </tr>
-</ng-template>
-<ng-template pTemplate="body" let-row>
-  <tr>
-    <td *ngFor="let col of cols">
-      {{row[col.value]}}
-    </td>
-  </tr>
-</ng-template> -->
-
-
-
 <p-dataTable [value]="rows">
 
   <ng-container *ngFor="let col of cols">
@@ -67,7 +21,7 @@
     <ng-template let-data="rowData" pTemplate="body">
       <div class="action_button">
         <a class="pill pill-primary" (click)="newImei(data.id)">New</a>
-<p-dropdown [(ngModel)]="selected_status" [options]="status" (onChange)="onStatusChange($event, data.id)"></p-dropdown>
+<p-dropdown [options]="status" (onChange)="onStatusChange($event, data.id)"></p-dropdown>
       </div>
     </ng-template>
 

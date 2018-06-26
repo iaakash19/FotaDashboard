@@ -98,3 +98,19 @@ label {
     }
   }
 
+.form-group{
+  &.readonly {
+    pointer-events: none;
+    input {
+      border: none;
+    }
+  }
+}
+
+.button_grp {
+  margin-top: 15px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  }
+

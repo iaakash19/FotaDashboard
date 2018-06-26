@@ -33,7 +33,20 @@ export class PushUpdateComponent implements OnInit {
   selectedobj;
   showDelete = false;
 remarks;
-
+  update_types = [
+    {
+      label: "Select Mode",
+      value: null
+    },
+    {
+      label: "Normal",
+      value: "NORMAL"
+    },
+    {
+      label: "Forced",
+      value: "FORCED"
+    }
+  ];
   constructor(private fb: FormBuilder, private confirmationService: ConfirmationService, private AppService: AppService, private messageService: MessageService) { }
 
   ngOnInit() {
@@ -82,7 +95,6 @@ remarks;
       UpdateName: data.UpdateName ,
       UpdateType: data.UpdateType,
       AvailVersion: data.AvailVersion,
-      // KeyHighlights: data.KeyHighlights,
       id: data.id
     }
   }
@@ -90,7 +102,6 @@ remarks;
   triggerEdit() {
     this.AppService.editUpdate(this.editObj.id, this.editObj).subscribe(data => {
       this.showEdit = false;
-      this.fetchUpdateData(this.status);
       })
   }
 
@@ -100,6 +111,8 @@ remarks;
 
   delete() {
     this.AppService.deleteUpdateRevised(this.selectedobj.id, this.remarks).subscribe(data => {
+      this.showDelete = false;
+      this.fetchUpdateData(this.status);
       if (this.status == 'Inactive') {
         this.AppService.triggerDeleteOnExpired(this.selectedobj.id).subscribe(data => {
           this.showDelete = false;
@@ -123,14 +136,12 @@ remarks;
     }
     this.AppService.pushUpdate(data).subscribe(res => {
       debugger;
-      this.fetchUpdateData(this.status);
-
     })
   }
 
   triggerTestAgain() {
     this.AppService.testAgain(this.selectedobj.id).subscribe(data => {
-      this.fetchUpdateData(this.status);
+
     })
   }
 

@@ -96,12 +96,12 @@ data.UpdateName , UpdateType: data.UpdateType, AvailVersion: data.AvailVersion, 
 <p-dialog styleClass="fota-dialog edit" header="Edit" [(visible)]="showEdit">
    <form *ngIf="showEdit">
 
-<div class="form-group">
+<div class="form-group readonly">
 <label for="">Partner Name</label>
 <input name="partnerName" type="text" [(ngModel)]="editObj.partnerName">
 </div>
 
-<div class="form-group">
+<div class="form-group readonly">
 <label for="">Base Version</label>
 <input name="BaseVersion" type="text" [(ngModel)]="editObj.BaseVersion">
 </div>
@@ -111,11 +111,17 @@ data.UpdateName , UpdateType: data.UpdateType, AvailVersion: data.AvailVersion, 
 <input name="UpdateName" type="text" [(ngModel)]="editObj.UpdateName">
     </div>
 
-    <div class="form-group">
+<div class="form-group">
+  <label for="">Update Type</label>
+<p-dropdown name="UpdateType" [options]="update_types" [(ngModel)]="editObj.UpdateType"></p-dropdown>
+
+</div>
+
+    <!-- <div class="form-group">
       <label for="">UpdateType</label>
 <input name="UpdateType" type="text" [(ngModel)]="editObj.UpdateType">
 
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="">AvailVersion</label>

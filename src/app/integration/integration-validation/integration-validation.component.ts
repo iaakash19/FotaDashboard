@@ -180,7 +180,7 @@ rowId;
     })
   }
   fetchIMEIDetails() {
-    this.AppService.getdetailsByIMEI1(this.testUpdate.get('IMEI').value)
+    this.AppService.getdetailsByIMEI1(this.selectedIMEI)
       .subscribe((data:any) => {
         this.IMEI_details = data.results[0];
       })
@@ -338,6 +338,8 @@ rowId;
 
   testIMEI() {
 
+    this.fetchIMEIDetails();
+
     let data = {
       partnerName: this.selectedRow[0].partnerName,
       DeviceModel: this.selectedRow[0].DeviceModel,
@@ -347,7 +349,7 @@ rowId;
     }
     this.AppService.pushUpdate(data).subscribe(data => {
         debugger;
-      this.openIMEIBox = false;
+      //this.openIMEIBox = false;
       this.fetchIVData(this.status);
     })
   }

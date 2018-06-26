@@ -30,6 +30,7 @@ export class GenerateUpdateComponent implements OnInit {
   file: any = null;
   u_date: Date;
   isLoadingComp: boolean = false;
+
   update_types = [
     {
       label: "Select Mode",

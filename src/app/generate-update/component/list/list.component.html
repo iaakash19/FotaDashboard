@@ -10,7 +10,7 @@
         <a class="pill pill-primary" (click)="actionButtonClick('more', data.id)">More</a>
         <a class="pill pill-secondary" (click)="actionButtonClick('edit', data.id)">Edit</a>
         <a class="pill pill-danger" (click)="actionButtonClick('delete', data.id)">Delete</a>
-        <a class="pill pill-success" (click)="actionButtonClick('push', data.id)">Push</a>
+<a class="pill pill-success" *ngIf="data.BuildStatus == 'Ready'" (click)="actionButtonClick('push', data.id)">Push </a>
       </div>
     </ng-template>
 

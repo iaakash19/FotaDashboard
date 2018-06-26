@@ -1,5 +1,11 @@
 .form-group {
     max-width: 900px;
+    &.readonly {
+      pointer-events: none;
+      & input {
+        border: none;
+      }
+    }
 }
 
 strong {

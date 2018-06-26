@@ -4,16 +4,16 @@ import { MessageService } from "primeng/components/common/messageservice";
 import { Message } from "primeng/primeng";
 
 @Component({
-  selector: "app-activation-report",
-  templateUrl: "./activation-report.component.html",
-  styleUrls: ["./activation-report.component.scss"],
-  providers: [MessageService]
+  selector: 'app-deleted-report',
+  templateUrl: './deleted-report.component.html',
+  styleUrls: ['./deleted-report.component.scss']
 })
-export class ActivationReportComponent implements OnInit, OnChanges {
+export class DeletedReportComponent implements OnInit {
+
   activation_report: any;
   total_count: number = 0;
   rangeDates: Date[];
-  type = "activationReport";
+  type = "DeletedReport";
   msgs: Message[] = [];
   filters: any = {};
   currentPage: any;
@@ -22,7 +22,8 @@ export class ActivationReportComponent implements OnInit, OnChanges {
     two: null,
     three: null,
     four: null,
-    five: null
+    five: null,
+    six: null
   };
   dateFrom;
   dateTo;
@@ -31,23 +32,26 @@ export class ActivationReportComponent implements OnInit, OnChanges {
   constructor(
     private AppService: AppService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   @Input() tabChanged;
+
+
+
 
   ngOnInit() {
     this.fetchData();
   }
 
   ngOnChanges(value) {
-   if(value.tabChanged.currentValue) {
-     this.clearAll();
-     this.dataLoaded = false;
-     this.fetchData();
-     setTimeout(() => {
-       this.dataLoaded = true;
-     }, 10);
-   }
+    if (value.tabChanged.currentValue) {
+      this.clearAll();
+      this.dataLoaded = false;
+      this.fetchData();
+      setTimeout(() => {
+        this.dataLoaded = true;
+      }, 10);
+    }
   }
 
   ClearDates() {
@@ -75,7 +79,7 @@ export class ActivationReportComponent implements OnInit, OnChanges {
 
       const newFrom = `${from.split("-")[0]}-${month_from + 1}-${
         from.split("-")[2]
-      }`;
+        }`;
       const newTo = `${to.split("-")[0]}-${month_to + 1}-${to.split("-")[2]}`;
 
       this.filters["Date__gte"] = newFrom;
@@ -84,7 +88,7 @@ export class ActivationReportComponent implements OnInit, OnChanges {
   }
 
   fetchData(page = 1, filters?) {
-    this.AppService.getActivationReport(page, filters).subscribe(
+    this.AppService.getDeletedReport(page, filters).subscribe(
       (data: any) => {
         this.activation_report = data.results;
         this.total_count = data.count;
@@ -149,7 +153,8 @@ export class ActivationReportComponent implements OnInit, OnChanges {
       two: null,
       three: null,
       four: null,
-      five: null
+      five: null,
+      six: null
     };
     this.dataLoaded = false;
     setTimeout(() => {
@@ -168,4 +173,5 @@ export class ActivationReportComponent implements OnInit, OnChanges {
       this.downloadFile(data.url);
     });
   }
+
 }

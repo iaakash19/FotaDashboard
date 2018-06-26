@@ -105,8 +105,8 @@ export class RegisterOemComponent implements OnInit {
 
     this.oemRegister = this.fb.group({
       partnerName: ["", Validators.required],
-      admin_email: [''],
-      oem_email: [''],
+      AdminEmail: [''],
+      OemEmail: [''],
       config: this.fb.group({
         Url: ["", Validators.required],
         Notif_Frequency: ["", Validators.required],
@@ -168,6 +168,8 @@ fetchPartners() {
   handleSave() {
     this.isLoading = true;
     this.isPreview = false;
+    this.oemRegister.value;
+    debugger;
     this.AppService.registerOem(this.oemRegister.value).subscribe(
       data => {
         this.fetchPartners();
@@ -196,8 +198,11 @@ fetchPartners() {
   }
 
   populateForm(data) {
+    debugger;
     this.editConfigForm.patchValue({
       partnerName: data.partnerName,
+      AdminEmail: data.AdminEmail,
+      OemEmail: data.OemEmail,
       config: {
         Url: data.config.Url,
         Notif_Frequency: data.config.Notif_Frequency,
@@ -209,7 +214,8 @@ fetchPartners() {
   }
 
   saveConfig() {
-
+    this.editConfigForm.value;
+    debugger;
     this.AppService.editOem(this.idOfEditedConfig, this.editConfigForm.value).subscribe(data => {
       this.dismissModal();
       this.fetchPartners();

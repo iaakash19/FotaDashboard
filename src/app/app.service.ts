@@ -207,6 +207,25 @@ export class AppService {
     }
   }
 
+  getDeletedReport(page, filters?) {
+    let filterString = null;
+
+    if (filters) {
+      let params = [];
+
+      Object.keys(filters).map(key => {
+        let param = `${key}=${filters[key]}`;
+        params.push(param);
+      });
+      filterString = params.join("&");
+      return this.Http.get(
+        `${this.BASE_URL}activationReport/?page=${page}&${filterString}`
+      );
+    } else {
+      return this.Http.get(`${this.BASE_URL}updatedeleted/?page=${page}`);
+    }
+  }
+
   getFailedReport() {
     return this.Http.get(`${this.BASE_URL}failedReport/`);
   }
@@ -234,10 +253,6 @@ export class AppService {
   }
 
   createWiki(wiki) {
-    // let input = new FormData();
-    // Object.keys(wiki).map(key => {
-    //   input.append(key, wiki[key]);
-    // });
     return this.Http.post(`${this.BASE_URL}saveQues/`, wiki);
   }
 

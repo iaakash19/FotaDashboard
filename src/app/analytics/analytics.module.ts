@@ -7,12 +7,13 @@ import { ActivationReportComponent } from './containers/activation-report/activa
 import { FailedReportComponent } from './containers/failed-report/failed-report.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { DeletedReportComponent } from './containers/deleted-report/deleted-report.component';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     SharedModule
   ],
-  declarations: [ReportsComponent, DisplayReportComponent, UpdateReportComponent, ActivationReportComponent, FailedReportComponent]
+  declarations: [ReportsComponent, DisplayReportComponent, UpdateReportComponent, ActivationReportComponent, FailedReportComponent, DeletedReportComponent]
 })
 export class AnalyticsModule { }
