@@ -10,3 +10,17 @@
       flex: 0 0 30%;
 }
 }
+
+.testWrap {
+  display: flex;
+  li {
+        margin-right: 5px;
+        background: #007bff;
+        a {
+              color: white;
+              text-decoration: none;
+              padding: 0.5rem;
+              font-size: 0.75rem;
+        }
+  }
+}

@@ -88,7 +88,7 @@ export class UpdateReportComponent implements OnInit, OnChanges {
       this.dataLoaded = true;
       this.update_report = data.results;
       this.total_count = data.count;
-
+      debugger;
     });
   }
   paginate(event) {

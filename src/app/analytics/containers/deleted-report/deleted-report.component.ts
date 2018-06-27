@@ -6,7 +6,9 @@ import { Message } from "primeng/primeng";
 @Component({
   selector: 'app-deleted-report',
   templateUrl: './deleted-report.component.html',
-  styleUrls: ['./deleted-report.component.scss']
+  styleUrls: ['./deleted-report.component.scss'],
+  providers: [MessageService]
+
 })
 export class DeletedReportComponent implements OnInit {
 

@@ -325,7 +325,7 @@ rowId;
     });
     debugger;
     this.AppService.saveTest(this.testObj, data).subscribe(data => {
-
+      this.display = false;
     })
   }
 

@@ -6,7 +6,7 @@
 
     <p-column *ngIf="col.label == 'Tests'" [header]="col.label">
       <ng-template let-data="rowData" pTemplate="body">
-        <ul>
+        <ul class="testWrap">
           <li *ngFor="let test of data.Tests">
             <a (click)="onTextClick(test, data.id)">{{ test }}</a>
           </li>

@@ -141,7 +141,7 @@ remarks;
 
   triggerTestAgain() {
     this.AppService.testAgain(this.selectedobj.id).subscribe(data => {
-
+      this.fetchUpdateData(this.status);
     })
   }
 

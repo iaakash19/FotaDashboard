@@ -3,8 +3,7 @@
 
 <p-growl [(value)]="msgs"></p-growl>
 
-
-<p-dataTable [value]="activation_report" exportFilename="activation_report" #dt>
+<!-- <p-dataTable [value]="activation_report" exportFilename="activation_report" #dt>
   <p-header>
 
     <div class="ui-helper-clearfix">
@@ -88,11 +87,14 @@
 
     </div>
   </p-footer>
+</p-dataTable> -->
+
+<pre> {{ activation_report | json }} </pre>
+<p-dataTable [value]="activation_report" [rows]="10" [paginator]="true">
+<p-column field="partnerName" header="Partner Name"></p-column>
+<!-- <p-column field="DeviceModel" header="DeviceModel"></p-column> -->
 </p-dataTable>
 
-
-<!-- ActivationDate : "2018-01-10 15:09:30" DeviceModel : "INTEX AQUA LIONS X1" IMEI1 : "911602650040844" IMEI2 : "911602650040851"
-partnerName : "intex" -->
 
 
 
