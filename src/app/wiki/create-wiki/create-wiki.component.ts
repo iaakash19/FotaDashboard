@@ -65,21 +65,22 @@ export class CreateWikiComponent implements OnInit {
     this.AppService.uploadfile(data).subscribe((data: any) => {
       this.isLoadingComp = false;
       this.downloadUrl = data.DownloadUrl;
-      this.urlWrap.push(this.downloadUrl);
+      // this.urlWrap.push(this.downloadUrl);
 
       this.WYSIWYG_VALUE_BLOCK = this.wikiForm.value.queryBlock;
-      // let block = WYSIWYG_VALUE_BLOCK[index];
-      // block.answer;
-      this.urlWrap.map(item => {
-        let str = `<br/><a href=${item} download>`;
-        console.log('str', str);
-        this.WYSIWYG_VALUE_BLOCK[index].answer = `${this.WYSIWYG_VALUE_BLOCK[index].answer}${str}`;
-      })
+      let str = `<br/><a target="_blank" href=${this.downloadUrl} download>${this.downloadUrl}</a>`;
+      this.WYSIWYG_VALUE_BLOCK[index].answer = `${this.WYSIWYG_VALUE_BLOCK[index].answer}${str}`;
 
-      this.WYSIWYG_VALUE_BLOCK;
+      // this.urlWrap.map(item => {
+      //   let str = `<br/><a target="_blank" href=${item} download>${item}</a>`;
+      //   console.log('str', str);
+      //   this.WYSIWYG_VALUE_BLOCK[index].answer = `${this.WYSIWYG_VALUE_BLOCK[index].answer}${str}`;
+      // })
+
       debugger;
     });
   }
+
 
 
   getWikiBlock(id) {
@@ -132,7 +133,6 @@ export class CreateWikiComponent implements OnInit {
       );
     }else {
       let WYSIWYG_VALUE = this.wikiForm.value.queryBlock;
-      debugger;
       this.appService.createWiki(this.wikiForm.value.queryBlock).subscribe(data => {
         this.isLoading = false;
         this.messageService.add({ severity: 'success', summary: 'Message', detail: 'Wiki Created Successfully...' });

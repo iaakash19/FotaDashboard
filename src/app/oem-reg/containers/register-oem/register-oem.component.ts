@@ -203,7 +203,6 @@ fetchPartners() {
   }
 
   populateForm(data) {
-    debugger;
     this.editConfigForm.patchValue({
       partnerName: data.partnerName,
       AdminEmail: data.AdminEmail.split(','),
@@ -220,7 +219,6 @@ fetchPartners() {
 
   saveConfig() {
     this.editConfigForm.value;
-    debugger;
     this.AppService.editOem(this.idOfEditedConfig, this.editConfigForm.value).subscribe(data => {
       this.dismissModal();
       this.fetchPartners();

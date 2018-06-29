@@ -250,7 +250,6 @@ rowId;
 
   fetchIVData(status='Active') {
     this.AppService.getList(status).subscribe((data:any) => {
-      debugger;
       this.data = data.map(item => {
           return {
             id: item.id,
@@ -277,7 +276,6 @@ rowId;
           Status: data[0].Status,
           TestRemarks: data[0].TestRemarks
         }
-      debugger;
       this.patchTestForm(testObj);
     })
   }
@@ -292,7 +290,6 @@ rowId;
   }
 
   patchTestForm(testObj) {
-    debugger;
     this.testForm.patchValue({
       TestNo: testObj.TestNo,
       IMEI: testObj.IMEI,
@@ -323,7 +320,6 @@ rowId;
     let data = Object.assign({}, this.testForm.value, {
       uid: this.testObj.rowId
     });
-    debugger;
     this.AppService.saveTest(this.testObj, data).subscribe(data => {
       this.display = false;
     })
@@ -333,7 +329,6 @@ rowId;
   handleOnImeiClick(rowId) {
     this.selectedRow = this.data.filter(item => item.id == rowId);
     this.openIMEIBox = true;
-    debugger;
   }
 
   testIMEI() {
@@ -348,7 +343,6 @@ rowId;
       IMEI: this.selectedIMEI
     }
     this.AppService.pushUpdate(data).subscribe(data => {
-        debugger;
       //this.openIMEIBox = false;
       this.fetchIVData(this.status);
     })
@@ -365,7 +359,6 @@ rowId;
     this.AppService.saveRemarkss(this.rowId, this.remarks, this.status_selected).subscribe(data => {
       this.openRemarksModal = false;
       this.fetchIVData(this.status);
-      debugger;
     })
   }
 }

@@ -3,7 +3,7 @@
 
 <p-growl [(value)]="msgs"></p-growl>
 
-<!-- <p-dataTable [value]="activation_report" exportFilename="activation_report" #dt>
+ <p-dataTable [value]="activation_report" exportFilename="activation_report" #dt>
   <p-header>
 
     <div class="ui-helper-clearfix">
@@ -87,13 +87,8 @@
 
     </div>
   </p-footer>
-</p-dataTable> -->
-
-<pre> {{ activation_report | json }} </pre>
-<p-dataTable [value]="activation_report" [rows]="10" [paginator]="true">
-<p-column field="partnerName" header="Partner Name"></p-column>
-<!-- <p-column field="DeviceModel" header="DeviceModel"></p-column> -->
 </p-dataTable>
+
 
 
 

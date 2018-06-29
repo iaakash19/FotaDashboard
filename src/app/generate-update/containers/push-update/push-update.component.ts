@@ -86,7 +86,6 @@ remarks;
 
   openEditBox(data) {
     this.showEdit = true;
-    debugger;
     this.editObj = {
       partnerName: data.partnerName,
       DeviceModel: data.DeviceModel,
@@ -135,7 +134,6 @@ remarks;
       UpdateName: this.selectedobj.UpdateName
     }
     this.AppService.pushUpdate(data).subscribe(res => {
-      debugger;
     })
   }
 
@@ -151,7 +149,6 @@ remarks;
     // })
   }
   handleAction(data) {
-    debugger;
     console.log('data:::', data); // type and id
     this.selectedobj = this.data.filter(item => item.id == data.id)[0];
 

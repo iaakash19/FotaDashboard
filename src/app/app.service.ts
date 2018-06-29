@@ -219,7 +219,7 @@ export class AppService {
       });
       filterString = params.join("&");
       return this.Http.get(
-        `${this.BASE_URL}activationReport/?page=${page}&${filterString}`
+        `${this.BASE_URL}updatedeleted/?page=${page}&${filterString}`
       );
     } else {
       return this.Http.get(`${this.BASE_URL}updatedeleted/?page=${page}`);

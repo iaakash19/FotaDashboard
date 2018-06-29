@@ -8,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class ReportsComponent implements OnInit {
   constructor() {}
   tabChanged = false;
+  tab = 0;
   ngOnInit() {}
 
   handleChange(event) {
-    this.tabChanged = !this.tabChanged;
+   this.tab = event.index;
+    // this.tabChanged = !this.tabChanged;
   }
 }

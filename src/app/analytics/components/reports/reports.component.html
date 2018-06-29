@@ -1,14 +1,14 @@
 <p-tabView  (onChange)="handleChange($event)">
   <p-tabPanel header="Activation">
-    <app-activation-report [tabChanged]="tabChanged"></app-activation-report>
+    <app-activation-report *ngIf="tab == 0" ></app-activation-report>
   </p-tabPanel>
   <p-tabPanel header="Device State">
-    <app-display-report [tabChanged]="tabChanged"></app-display-report>
+<app-display-report *ngIf="tab == 1" ></app-display-report>
   </p-tabPanel>
   <p-tabPanel header="Production Releases">
-    <app-update-report [tabChanged]="tabChanged"></app-update-report>
+<app-update-report *ngIf="tab == 2" ></app-update-report>
   </p-tabPanel>
 <p-tabPanel header="Deleted Production Packages">
-<app-deleted-report [tabChanged]="tabChanged"></app-deleted-report>
+<app-deleted-report *ngIf="tab == 3"></app-deleted-report>
 </p-tabPanel>
 </p-tabView>

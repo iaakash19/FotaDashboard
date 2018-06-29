@@ -10,9 +10,10 @@
 
 <div class="wrapper" *ngIf="showForm">
   <h2>{{ editMode ? 'Edit' : 'Create' }} Wiki</h2>
-  <form [formGroup]="wikiForm" (submit)="submit()">
-    <div class="wikiBlock" formArrayName="queryBlock" *ngFor="let wiki of wikis.controls; let i = index; let first=first; let last = last">
 
+  <form [formGroup]="wikiForm" (submit)="submit()">
+
+    <div class="wikiBlock" formArrayName="queryBlock" *ngFor="let wiki of wikis.controls; let i = index; let first=first; let last = last">
       <div class="form_group_wrapper" [formGroupName]="i" #inputRow>
         <div class="form-group">
           <label for="">Question</label>

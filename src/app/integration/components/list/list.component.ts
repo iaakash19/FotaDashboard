@@ -53,7 +53,6 @@ export class ListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(data) {
-    debugger;
     if (data.data && data.data.currentValue) {
       this.rows = data.data.currentValue;
       console.log('this.rows:::', this.rows);
@@ -101,7 +100,6 @@ export class ListComponent implements OnInit, OnChanges {
 
   handleOnHide(event) {
     this.selected_status = null;
-    debugger;
   }
 
 }

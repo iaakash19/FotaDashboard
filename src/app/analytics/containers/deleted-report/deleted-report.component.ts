@@ -92,9 +92,10 @@ export class DeletedReportComponent implements OnInit {
   fetchData(page = 1, filters?) {
     this.AppService.getDeletedReport(page, filters).subscribe(
       (data: any) => {
-        this.activation_report = data.results;
+        this.activation_report = data;
         this.total_count = data.count;
         this.dataLoaded = true;
+        // debugger;
       }
     );
   }

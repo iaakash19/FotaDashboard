@@ -239,7 +239,6 @@ export class HomeComponent implements OnInit {
       switch (initiator) {
         case "activated_device":
           this.selectedActivatedDevices.push(index);
-          debugger;
           break;
         case "updates_pushed":
           this.selected_devices_forupdatesPushed.push(index);
@@ -282,7 +281,6 @@ export class HomeComponent implements OnInit {
     );
     if (dataToMap.length == 0) {
       this.activatedDevices = [];
-      debugger;
     }
   }
 
@@ -294,7 +292,6 @@ export class HomeComponent implements OnInit {
     );
     if (dataToMap.length == 0) {
       this.devices_forupdatesPushed = [];
-      debugger;
     }
     this.updatesPushedConf = this.graphGenerator(
       "Total Number of Updates Pushed",
@@ -335,7 +332,6 @@ export class HomeComponent implements OnInit {
 
     if (dataToMap.length == 0) {
       this.devices_forupdatesCompleted = [];
-      debugger;
     }
 
     this.updatesCompletedConf = this.graphGenerator(
@@ -420,7 +416,6 @@ export class HomeComponent implements OnInit {
       this.partners2 = this.makePartnersDrop(data);
       if (this.partners2.length > 0) {
         this.selectedPartner2 = this.partners2[0]["value"];
-        debugger;
         this.generateGraph2WithDrop(data, this.selectedPartner2);
       }
       else {
