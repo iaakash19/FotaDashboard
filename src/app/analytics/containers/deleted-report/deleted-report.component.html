@@ -1,9 +1,16 @@
 <!-- partnerName, DeviceModel, UpdateName, BaseVersion, AvailVersion, Date, Remarks. -->
 
+<p-dialog header="Remarks" [(visible)]="openRemarks">
+  <div class="form-group sidewise">
+    <label for="">Remarks</label>
+<div [innerHTML]="currentRemarks"></div>
+  </div>
+
+</p-dialog>
 
 <p-growl [(value)]="msgs"></p-growl>
 
- <p-dataTable [value]="activation_report" exportFilename="activation_report" #dt>
+<p-dataTable [value]="activation_report" exportFilename="activation_report" #dt>
   <p-header>
 
     <div class="ui-helper-clearfix">
@@ -33,34 +40,34 @@
     </ng-template>
   </p-column>
 
-<p-column field="UpdateName" header="UpdateName">
-  <ng-template pTemplate="header" let-col>
-<span class="ui-column-title">Update Name</span>
-<input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'UpdateName')"
- [(ngModel)]="hookedState.three">
-  </ng-template>
-</p-column>
-
-
-<p-column field="BaseVersion">
+  <p-column field="UpdateName" header="UpdateName">
     <ng-template pTemplate="header" let-col>
-<span class="ui-column-title">BaseVersion</span>
-<input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'BaseVersion')"
+      <span class="ui-column-title">Update Name</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'UpdateName')"
+        [(ngModel)]="hookedState.three">
+    </ng-template>
+  </p-column>
+
+
+  <p-column field="BaseVersion">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">BaseVersion</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'BaseVersion')"
         [(ngModel)]="hookedState.four">
     </ng-template>
   </p-column>
 
-<p-column field="AvailVersion" header="AvailVersion">
+  <p-column field="AvailVersion" header="AvailVersion">
     <ng-template pTemplate="header" let-col>
-<span class="ui-column-title">AvailVersion</span>
-<input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'AvailVersion')"
+      <span class="ui-column-title">AvailVersion</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'AvailVersion')"
         [(ngModel)]="hookedState.five">
     </ng-template>
   </p-column>
 
-  <p-column header="Activation Date">
+  <p-column header="Deleted Date">
     <ng-template pTemplate="header" let-col>
-      <span class="ui-column-title">Activation Date</span>
+<span class="ui-column-title">Deleted Date</span>
 
       <p-calendar placeholder="Start and End Date" [(ngModel)]="rangeDates" selectionMode="range" readonlyInput="true" (onSelect)="triggerFilter($event, 'date')"
         showButtonBar="true" (onClearClick)="ClearDates()"></p-calendar>
@@ -68,18 +75,21 @@
     </ng-template>
 
     <ng-template let-data="rowData" pTemplate="body">
-      {{data.ActivationDate | date:'medium' }}
+ {{data.Date | date:'medium' }}
     </ng-template>
   </p-column>
 
 
-<p-column field="Remarks" header="Remarks">
-  <ng-template pTemplate="header" let-col>
-<span class="ui-column-title">Remarks</span>
-<input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'Remarks')"
-      [(ngModel)]="hookedState.six">
-  </ng-template>
-</p-column>
+  <p-column header="Remarks">
+    <ng-template pTemplate="header" let-col>
+      <span class="ui-column-title">Remarks</span>
+      <input class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all" type="text" (input)="triggerFilter($event, 'Remarks')"
+        [(ngModel)]="hookedState.six">
+    </ng-template>
+    <ng-template let-data="rowData" pTemplate="body">
+<a (click)="openRemarksModal(data.Remarks)" *ngIf="data.Remarks !== ''">Read More</a>
+    </ng-template>
+  </p-column>
 
   <p-footer>
     <div class="paginator">
@@ -88,8 +98,3 @@
     </div>
   </p-footer>
 </p-dataTable>
-
-
-
-
-

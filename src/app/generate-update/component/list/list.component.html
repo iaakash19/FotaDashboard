@@ -8,9 +8,9 @@
     <ng-template let-data="rowData" pTemplate="body" *ngIf="tableType == 'Active'">
       <div class="pillWrap">
         <a class="pill pill-primary" (click)="actionButtonClick('more', data.id)">More</a>
-        <a class="pill pill-secondary" (click)="actionButtonClick('edit', data.id)">Edit</a>
+<a [ngClass]="{'disabled': data.BuildStatus == 'PUSHED'}" class="pill pill-secondary" (click)="actionButtonClick('edit', data.id)">Edit</a>
         <a class="pill pill-danger" (click)="actionButtonClick('delete', data.id)">Delete</a>
-<a [ngClass]="{'disabled': data.BuildStatus !== 'Ready'}" class="pill pill-success" (click)="actionButtonClick('push', data.id)">Push </a>
+<a [ngClass]="{'disabled': data.BuildStatus !== 'READY'}" class="pill pill-success" (click)="actionButtonClick('push', data.id)">Push </a>
       </div>
     </ng-template>
 

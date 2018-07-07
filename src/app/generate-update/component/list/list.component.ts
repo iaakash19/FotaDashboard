@@ -30,7 +30,8 @@ export class ListComponent implements OnInit, OnChanges {
     "BaseVersion": "Base Version",
     "AvailVersion": "Avail Version",
     "Date": "Date",
-    "id": "id"
+    "id": "id",
+    "BuildStatus": "BuildStatus"
   }
 
   constructor() { }
@@ -66,7 +67,7 @@ export class ListComponent implements OnInit, OnChanges {
       // });
 
       this.cols = this.cols.filter(col => {
-        return (col !== 'BuildStatus' && col !== 'id')
+        return (col !== 'BuildState' && col !== 'id')
       }).map(col => {
         console.log('col:::', col);
         return {

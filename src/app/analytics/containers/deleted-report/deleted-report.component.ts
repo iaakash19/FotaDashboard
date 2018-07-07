@@ -30,6 +30,8 @@ export class DeletedReportComponent implements OnInit {
   dateFrom;
   dateTo;
   dataLoaded = false;
+  currentRemarks = false;
+  openRemarks;
 
   constructor(
     private AppService: AppService,
@@ -175,6 +177,11 @@ export class DeletedReportComponent implements OnInit {
     this.AppService.getActivationCsv(this.filters).subscribe((data: any) => {
       this.downloadFile(data.url);
     });
+  }
+
+  openRemarksModal(remarks) {
+    this.openRemarks = true;
+      this.currentRemarks = remarks;
   }
 
 }

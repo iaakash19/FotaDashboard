@@ -985,17 +985,32 @@ li {
   }
 }
 
-
+app-read-wiki {
 .ui-widget-content a {
-  background: #46be8a;
+  color: #1dc7ea;
+  background:transparent;
   white-space: nowrap;
-  color: white;
-  font-size: 0.75rem;
-  padding: 0.35rem 0.5rem;
-  text-decoration: none;
-  border-radius: 36px;
-  display: block;
-  text-align: center;
+  // color: white;
+  // font-size: 0.75rem;
+  // padding: 0.35rem 0.5rem;
+  // text-decoration: none;
+  // border-radius: 36px;
+  // display: block;
+  // text-align: center;
+  text-transform: lowercase
 }
+}
+
+app-deleted-report {
+.ui-widget-content {
+  top: 0;
+}
+}
+
+.value_short {
+  text-transform: lowercase;
+}
+
+
 
 

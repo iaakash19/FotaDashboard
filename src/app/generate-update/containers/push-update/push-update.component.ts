@@ -32,6 +32,7 @@ export class PushUpdateComponent implements OnInit {
   showEdit = false;
   selectedobj;
   showDelete = false;
+  dataForTable;
 remarks;
   update_types = [
     {
@@ -66,9 +67,28 @@ remarks;
             AvailVersion: item.AvailVersion,
             Date: item.Date,
             BuildStatus: item.BuildStatus,
+            id: item.id,
+            BuildRemarks: item.BuildRemarks,
+            Md5: item.Md5,
+            DownloadUrl: item.DownloadUrl,
+
+          }
+        });
+
+        this.dataForTable = data.map(item => {
+          return {
+            partnerName: item.partnerName,
+            UpdateName: item.UpdateName,
+            DeviceModel: item.DeviceModel,
+            BaseVersion: item.BaseVersion,
+            AvailVersion: item.AvailVersion,
+            Date: item.Date,
+            BuildState: item.BuildState,
+            BuildStatus: item.BuildStatus,
             id: item.id
           }
-        })
+        });
+
        })
   }
 
@@ -134,6 +154,7 @@ remarks;
       UpdateName: this.selectedobj.UpdateName
     }
     this.AppService.pushUpdate(data).subscribe(res => {
+      this.fetchUpdateData(this.status);
     })
   }
 
@@ -149,7 +170,7 @@ remarks;
     // })
   }
   handleAction(data) {
-    console.log('data:::', data); // type and id
+    console.log('data:::', this.data); // type and id
     this.selectedobj = this.data.filter(item => item.id == data.id)[0];
 
     switch (data.type) {
