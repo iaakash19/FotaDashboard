@@ -116,9 +116,10 @@
 
 
 <p-dialog header="IMEI" [(visible)]="openIMEIBox">
+
   <div class="form-group sidewise">
     <label for="">IMEI</label>
-    <input type="text" name="emei" [(ngModel)]="selectedIMEI">
+    <input type="text" name="emei" [(ngModel)]="selectedIMEI" (ngModelChange)="onIMEIChange($event)">
   </div>
 
 <div class="IMEI_box" *ngIf="IMEI_details">
@@ -171,8 +172,8 @@
 </div>
 
   <div class="button_grp">
-<button class="pill pill-danger" (click)="openIMEIBox = false" *ngIf="IMEI_details">Close</button>
-<button class="pill pill-primary" (click)="testIMEI()" *ngIf="!IMEI_details">Test</button>
+<button class="pill pill-danger" (click)="closeIMEI()" *ngIf="IMEI_details">Close</button>
+<button class="pill pill-primary" (click)="testIMEI()" *ngIf="IMEI_details">Test</button>
   </div>
 </p-dialog>
 

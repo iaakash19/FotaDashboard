@@ -50,15 +50,15 @@ export class RegisterModelComponent implements OnInit {
 
   showToken() {
     const prop = `# begin fota properties<br/>
-    ro.build.date.utc=&lt;Build UTC Time Stamp&gt;<br/>
-    ro.fota.platform=&lt;chipset&gt;_&lt;OS&gt;<br/>
-    ro.fota.type=phone<br/>
-    ro.fota.app=3.0.0<br/>
-    ro.fota.oem=&lt;oemname&gt;_&lt;chipset&gt;_&lt;os&gt;<br/>
-    ro.fota.device=&lt;ModelMarketName&gt;<br/>
-    ro.fota.version=&lt;OEM&gt;_&lt;Modelname&gt;_&lt;buildversioncode&gt;_&lt;ro.build.date.utc&gt;<br/>
-    ro.fota.token=${this.token}<br/>
-    # end fota properties`;
+ro.build.time.utc=<Build UTC Time Stamp><br/>
+ro.fota.platform=<chipset>_<OS><br/>
+ro.fota.type=phone<br/>
+ro.fota.app=3.0.2<br/>
+ro.fota.oem=<oemname>_<chipset>_<os><br/>
+ro.fota.device=<ModelMarketName><br/>
+ro.fota.version=<OEM>_<Modelname>_< ro.build.display.real.version >_<ro.build.time.utc><br/>
+ro.fota.token=${this.token}<br/>
+# end fota properties`;
 
     return prop;
   }
@@ -76,30 +76,30 @@ export class RegisterModelComponent implements OnInit {
   showDialog(data) {
     this.display = true;
     this.prop = `# begin fota properties<br/>
-    ro.build.date.utc=&lt;Build UTC Time Stamp&gt;<br/>
-    ro.fota.platform=&lt;chipset&gt;_&lt;OS&gt;<br/>
-    ro.fota.type=phone<br/>
-    ro.fota.app=3.0.0<br/>
-    ro.fota.oem=&lt;oemname&gt;_&lt;chipset&gt;_&lt;os&gt;<br/>
-    ro.fota.device=&lt;ModelMarketName&gt;<br/>
-    ro.fota.version=&lt;OEM&gt;_&lt;Modelname&gt;_&lt;buildversioncode&gt;_&lt;ro.build.date.utc&gt;<br/>
-    ro.fota.token=${data.Token}<br/>
-    # end fota properties`;
+ro.build.time.utc=<Build UTC Time Stamp><br/>
+ro.fota.platform=<chipset>_<OS><br/>
+ro.fota.type=phone<br/>
+ro.fota.app=3.0.2<br/>
+ro.fota.oem=<oemname>_<chipset>_<os><br/>
+ro.fota.device=<ModelMarketName><br/>
+ro.fota.version=<OEM>_<Modelname>_< ro.build.display.real.version >_<ro.build.time.utc><br/>
+ro.fota.token=${this.token}<br/>
+# end fota properties`;
   }
 
 
 
   showBuild(token) {
-    const prop = `# begin fota properties
-    ro.build.date.utc=<Build UTC Time Stamp>
-    ro.fota.platform=<chipset>_<OS>
-    ro.fota.type=phone
-    ro.fota.app=3.0.0
-    ro.fota.oem=<oemname>_<chipset>_<os>
-    ro.fota.device=<ModelMarketName>
-    ro.fota.version=<OEM>_<Modelname>_<buildversioncode>_<ro.build.date.utc>
-    ro.fota.token=<${token}>
-    # end fota properties`;
+    const prop = `# begin fota properties<br/>
+ro.build.time.utc=<Build UTC Time Stamp><br/>
+ro.fota.platform=<chipset>_<OS><br/>
+ro.fota.type=phone<br/>
+ro.fota.app=3.0.2<br/>
+ro.fota.oem=<oemname>_<chipset>_<os><br/>
+ro.fota.device=<ModelMarketName><br/>
+ro.fota.version=<OEM>_<Modelname>_< ro.build.display.real.version >_<ro.build.time.utc><br/>
+ro.fota.token=<${this.token}><br/>
+# end fota properties`;
 
     return prop;
   }

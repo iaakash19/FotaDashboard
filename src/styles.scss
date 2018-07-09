@@ -1011,6 +1011,9 @@ app-deleted-report {
   text-transform: lowercase;
 }
 
-
-
-
+.testWrap {
+      display: flex;
+      max-width: 196px;
+      overflow: scroll;
+      flex-flow: row nowrap;
+}

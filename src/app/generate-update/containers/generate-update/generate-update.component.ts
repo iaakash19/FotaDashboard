@@ -92,12 +92,11 @@ export class GenerateUpdateComponent implements OnInit {
       BaseVersion: ["", Validators.required],
       UpdateName: ["", Validators.required],
       AvailVersion: ["", Validators.required],
-      // ChangeLog: ["", Validators.required],
       DeviceType: ["", Validators.required],
-      UpdateFor: ["", Validators.required],
+
       UpdateType: ["", Validators.required],
       DeviceModel: ["", Validators.required],
-      KeyHighLights: ["", Validators.required],
+     KeyHighLights: ["", Validators.required],
       DownloadUrl: this.fb.control(""),
       DownloadSize: this.fb.control(""),
       Md5: this.fb.control("")
@@ -243,6 +242,8 @@ export class GenerateUpdateComponent implements OnInit {
   }
 
   curatePreviewConf() {
+    this.generateUpdate.value;
+    debugger;
     this.previewConf = {
       "Partner Name": this.generateUpdate.get("partnerName").value,
       "Device Type": this.generateUpdate.get("DeviceType").value,
@@ -251,7 +252,6 @@ export class GenerateUpdateComponent implements OnInit {
       "Available Version": this.generateUpdate.get("AvailVersion").value,
       "Update Name": this.generateUpdate.get("UpdateName").value,
       "Key HighLights": this.generateUpdate.get("KeyHighLights").value,
-      "Update For": this.generateUpdate.get("UpdateFor").value,
       "Update Type": this.generateUpdate.get("UpdateType").value,
       'DownloadUrl': this.generateUpdate.get("DownloadUrl").value,
       'DownloadSize': this.generateUpdate.get("DownloadSize").value,
@@ -270,8 +270,7 @@ export class GenerateUpdateComponent implements OnInit {
     this.isPreview = false;
 
     this.AppService.generateUpdate(
-      this.generateUpdate.value,
-      this.generateUpdate.get("UpdateFor").value
+      this.generateUpdate.value
     ).subscribe(
       data => {
         this.fetchAllUpdates();

@@ -62,7 +62,7 @@ export class AppService {
     return this.Http.post(`${this.BASE_URL}oemRegister/`, input);
   }
 
-  generateUpdate(data, param) {
+  generateUpdate(data) {
     let input = new FormData();
     Object.keys(data).map(key => {
       input.append(key, data[key]);
