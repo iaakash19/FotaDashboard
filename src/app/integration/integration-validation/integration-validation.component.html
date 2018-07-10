@@ -107,9 +107,9 @@
     </div>
     <div class="button_grp">
       <button class="pill pill-danger" (click)="display = false">Close</button>
-      <button class="pill pill-secondary" *ngIf="!isEditable" (click)="turnOnEdit()">Edit</button>
+<button class="pill pill-secondary" *ngIf="!isEditable && this.status !== 'Inactive'" (click)="turnOnEdit()">Edit</button>
 
-      <button class="pill pill-primary" *ngIf="isEditable" (click)="saveTest()">Save</button>
+<button class="pill pill-primary" *ngIf="isEditable && this.status !== 'Inactive'" (click)="saveTest()">Save</button>
     </div>
   </form>
 </p-dialog>

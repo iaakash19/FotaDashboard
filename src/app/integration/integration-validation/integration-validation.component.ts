@@ -99,7 +99,6 @@ export class IntegrationValidationComponent implements OnInit {
   }
 
   onIMEIChange(event) {
-    debugger;
     if (event.length == 15) {
       this.fetchIMEIDetails();
     }
@@ -293,12 +292,14 @@ export class IntegrationValidationComponent implements OnInit {
           Tests: item.Tests
         };
       });
+      debugger;
     });
   }
 
   handleTestClick(testObj) {
     this.testObj = testObj;
     this.AppService.getTestDetails(testObj).subscribe((data: any) => {
+      debugger;
       // open popup with this data
       this.display = true;
       const testObj = {
@@ -371,8 +372,11 @@ export class IntegrationValidationComponent implements OnInit {
     };
     this.AppService.pushUpdate(data).subscribe(data => {
 
-      this.fetchIVData(this.status);
+
       this.closeIMEI();
+      setTimeout(() => {
+        this.fetchIVData(this.status);
+      }, 500);
     });
   }
 

@@ -115,7 +115,6 @@ data.UpdateName , UpdateType: data.UpdateType, AvailVersion: data.AvailVersion, 
 <!-- Edit Box-->
 <p-dialog styleClass="fota-dialog edit" header="Edit" [(visible)]="showEdit">
   <form *ngIf="showEdit">
-<pre> {{ editObj | json }} </pre>
     <div class="form-group readonly">
       <label for="">Partner Name</label>
       <input name="partnerName" type="text" [(ngModel)]="editObj.partnerName">
