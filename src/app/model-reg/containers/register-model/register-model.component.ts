@@ -74,16 +74,17 @@ ro.fota.token=${this.token}<br/>
 
 
   showDialog(data) {
+
     this.display = true;
     this.prop = `# begin fota properties<br/>
-ro.build.time.utc=<Build UTC Time Stamp><br/>
-ro.fota.platform=<chipset>_<OS><br/>
+ro.build.time.utc=&lt;Build UTC Time Stamp&gt;<br/>
+ro.fota.platform=&lt;chipset&gt;_&lt;OS&gt;<br/>
 ro.fota.type=phone<br/>
 ro.fota.app=3.0.2<br/>
-ro.fota.oem=<oemname>_<chipset>_<os><br/>
-ro.fota.device=<ModelMarketName><br/>
-ro.fota.version=<OEM>_<Modelname>_< ro.build.display.real.version >_<ro.build.time.utc><br/>
-ro.fota.token=${this.token}<br/>
+ro.fota.oem=&lt;oemname&gt;_&lt;chipset&gt;_&lt;os&gt;<br/>
+ro.fota.device=&lt;ModelMarketName&gt;<br/>
+ro.fota.version=&lt;OEM>_&lt;Modelname&gt;_&lt;ro.build.display.real.version&gt;_&lt;ro.build.time.utc&gt;<br/>
+ro.fota.token=&lt;${data.Token}&gt;<br/>
 # end fota properties`;
   }
 
@@ -122,6 +123,7 @@ ro.fota.token=<${this.token}><br/>
   fetchModels() {
     this.AppService.getDeviceModels().subscribe(data => {
       this.models = data;
+      debugger;
     });
   }
 
@@ -139,6 +141,7 @@ ro.fota.token=<${this.token}><br/>
     this.token = false;
     this.AppService.registerModel(this.modelRegister.value).subscribe(
       (data: any) => {
+        debugger;
         this.isLoading = false;
         this.modelRegister.reset();
         this.messageService.add({

@@ -30,7 +30,7 @@ export class GenerateUpdateComponent implements OnInit {
   file: any = null;
   u_date: Date;
   isLoadingComp: boolean = false;
-
+  fileUploaded: boolean = false;
   update_types = [
     {
       label: "Select Mode",
@@ -161,6 +161,7 @@ export class GenerateUpdateComponent implements OnInit {
 
     this.AppService.uploadfile(data).subscribe((data: any) => {
       this.isLoadingComp = false;
+      this.fileUploaded = true;
       this.generateUpdate.get("DownloadUrl").setValue(data.DownloadUrl);
       this.generateUpdate.get("DownloadSize").setValue(data.DownloadSize);
       this.generateUpdate.get("Md5").setValue(data.Md5);

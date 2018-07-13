@@ -115,7 +115,7 @@
 </p-dialog>
 
 
-<p-dialog header="IMEI" [(visible)]="openIMEIBox">
+<p-dialog styleClass="fota-dialog IMEI" header=" IMEI " [(visible)]="openIMEIBox" [contentStyle]="{'max-height':'500px'}">
 
   <div class="form-group sidewise">
     <label for="">IMEI</label>
@@ -172,6 +172,8 @@
 </div>
 
   <div class="button_grp">
+
+
 <button class="pill pill-danger" (click)="closeIMEI()" *ngIf="IMEI_details">Close</button>
 <button class="pill pill-primary" (click)="testIMEI()" *ngIf="IMEI_details">Test</button>
   </div>
@@ -195,6 +197,6 @@
 
   </p-tabPanel>
   <p-tabPanel header="InActive">
-    <app-list [data]="data" (testClick)="handleTestClick($event)" [type]="'Inactive'"></app-list>
+    <app-list (delete)="onDelete($event)" [data]="data" (testClick)="handleTestClick($event)" [type]="'Inactive'"></app-list>
   </p-tabPanel>
 </p-tabView>

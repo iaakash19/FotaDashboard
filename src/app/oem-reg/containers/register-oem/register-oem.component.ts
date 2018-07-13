@@ -131,6 +131,7 @@ export class RegisterOemComponent implements OnInit {
 fetchPartners() {
   this.AppService.getPartners().subscribe((data:any) => {
     this.partners = data;
+    debugger;
     let res = Array.from(new Set(this.partners.map(JSON.stringify)));
 
     res.length > 1 ? this.showPartnerFilter = true: this.showPartnerFilter = false;
@@ -195,6 +196,8 @@ fetchPartners() {
   }
 
   editConfig(data) {
+    debugger;
+
     this.idOfEditedConfig = data.id;
 
     this.iseditConfig = true;
@@ -203,6 +206,9 @@ fetchPartners() {
   }
 
   populateForm(data) {
+    let AdminEmail = data.AdminEmail;
+    debugger;
+
     this.editConfigForm.patchValue({
       partnerName: data.partnerName,
       AdminEmail: data.AdminEmail.split(','),
@@ -214,7 +220,7 @@ fetchPartners() {
         btnName: data.config.btnName,
         downloadAutoOnWiFi: data.config.downloadAutoOnWiFi
       }
-    })
+    });
   }
 
   saveConfig() {

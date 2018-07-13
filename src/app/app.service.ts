@@ -226,6 +226,10 @@ export class AppService {
     }
   }
 
+  exportForDelete() {
+
+  }
+
   getFailedReport() {
     return this.Http.get(`${this.BASE_URL}failedReport/`);
   }
@@ -396,6 +400,17 @@ export class AppService {
     let config = {
       uid: rowId,
       Remarks: remarks
+    }
+    let input = new FormData();
+    Object.keys(config).map(key => {
+      input.append(key, config[key]);
+    });
+    return this.Http.post(`${this.BASE_URL}updatedeleted/`, config);
+  }
+
+  deleteIv(id) {
+    let config = {
+      uid: id,
     }
     let input = new FormData();
     Object.keys(config).map(key => {

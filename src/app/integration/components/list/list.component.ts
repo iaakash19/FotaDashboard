@@ -45,6 +45,7 @@ export class ListComponent implements OnInit, OnChanges {
      "id": "id"
   }
   @Output() testClick: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -92,6 +93,9 @@ export class ListComponent implements OnInit, OnChanges {
     this.newIMEI.emit(rowId);
   }
 
+  Ondelete(rowId) {
+    this.delete.emit(rowId);
+  }
   onStatusChange(event, rowId) {
     if(event.value) {
       this.statusChange.emit({ rowId, status: event.value });

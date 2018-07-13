@@ -27,4 +27,15 @@
 
   </p-column>
 
+<p-column [header]="'Action Buttons'" *ngIf="tableType == 'Inactive'">
+
+  <ng-template let-data="rowData" pTemplate="body">
+    <div class="action_button">
+<a class="pill pill-primary" (click)="Ondelete(data.id)">Delete</a>
+
+    </div>
+  </ng-template>
+
+</p-column>
+
 </p-dataTable>

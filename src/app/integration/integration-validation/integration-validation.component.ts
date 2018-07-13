@@ -237,39 +237,45 @@ export class IntegrationValidationComponent implements OnInit {
   // }
 
   deleteIMEI(id) {
-    this.confirmationService.confirm({
-      message: "Are you sure that you want to proceed?",
-      header: "Confirmation",
-      icon: "fa fa-question-circle",
-      accept: () => {
-        this.isLoading = true;
-        this.AppService.deleteIMEI(id).subscribe(
-          data => {
-            this.isLoading = false;
-            this.IMEI_details = null;
-            this.testUpdate.get("IMEI").setValue("");
-            this.messageService.add({
-              severity: "success",
-              summary: "Message",
-              detail: "Success!!"
-            });
-          },
-          err => {
-            this.isLoading = false;
-            this.messageService.add({
-              severity: "error",
-              summary: "Message",
-              detail: "Failed!!"
-            });
-          }
-        );
-      },
-      reject: () => {
-        this.msgs = [
-          { severity: "info", summary: "Rejected", detail: "You have rejected" }
-        ];
-      }
-    });
+    debugger;
+    this.AppService.deleteIMEI(id).subscribe(data => {
+      debugger;
+      this.selectedIMEI = null;
+      this.IMEI_details = null;
+    })
+    // this.confirmationService.confirm({
+    //   message: "Are you sure that you want to proceed?",
+    //   header: "Confirmation",
+    //   icon: "fa fa-question-circle",
+    //   accept: () => {
+    //     this.isLoading = true;
+    //     this.AppService.deleteIMEI(id).subscribe(
+    //       data => {
+    //         this.isLoading = false;
+    //         this.IMEI_details = null;
+    //         this.testUpdate.get("IMEI").setValue("");
+    //         this.messageService.add({
+    //           severity: "success",
+    //           summary: "Message",
+    //           detail: "Success!!"
+    //         });
+    //       },
+    //       err => {
+    //         this.isLoading = false;
+    //         this.messageService.add({
+    //           severity: "error",
+    //           summary: "Message",
+    //           detail: "Failed!!"
+    //         });
+    //       }
+    //     );
+    //   },
+    //   reject: () => {
+    //     this.msgs = [
+    //       { severity: "info", summary: "Rejected", detail: "You have rejected" }
+    //     ];
+    //   }
+    // });
   }
 
   handleChange(event) {
@@ -397,6 +403,14 @@ export class IntegrationValidationComponent implements OnInit {
       this.fetchIVData(this.status);
     });
   }
-}
 
-//Fields to display in table: partnerName, DeviceModel, UpdateName, BaseVersion,AvailVersion, BuildStatus, Tests
+  onDelete(id) {
+    debugger;
+    this.AppService.deleteIv(id).subscribe(
+     data => {
+       debugger;
+       this.fetchIVData(this.status);
+     }
+    );
+  }
+}

@@ -118,7 +118,8 @@
 
   <p-dataTable [value]="partners" [rows]="10" [paginator]="true">
     <p-column field="partnerName" header="Partner Name" [filter]="showPartnerFilter" filterPlaceholder="Search" filterMatchMode="contains"></p-column>
-    <!-- <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Search" filterMatchMode="contains"></p-column> -->
+    <p-column field="AdminEmail" header="Admin Email" filterPlaceholder="Admin Email" filterMatchMode="contains"></p-column>
+    <p-column field="OemEmail" header="Oem Email" filterPlaceholder="Oem Email" filterMatchMode="contains"></p-column>
     <p-column header="Config">
       <ng-template let-data="rowData" pTemplate="body">
         <div class="configWrap">

@@ -32,6 +32,7 @@ export class DeletedReportComponent implements OnInit {
   dataLoaded = false;
   currentRemarks = false;
   openRemarks;
+  BASE_URL = ` http://fota.dynamyn.mobi/notify/fotav/`; //test
 
   constructor(
     private AppService: AppService,
@@ -174,9 +175,10 @@ export class DeletedReportComponent implements OnInit {
   }
 
   triggerExport() {
-    this.AppService.getActivationCsv(this.filters).subscribe((data: any) => {
-      this.downloadFile(data.url);
-    });
+    window.open(`${this.BASE_URL}updatedeleted?export=true`);
+    // this.AppService.getActivationCsv(this.filters).subscribe((data: any) => {
+    //   this.downloadFile(data.url);
+    // });
   }
 
   openRemarksModal(remarks) {

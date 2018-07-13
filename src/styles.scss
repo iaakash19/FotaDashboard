@@ -1017,3 +1017,9 @@ app-deleted-report {
       overflow: scroll;
       flex-flow: row nowrap;
 }
+
+.IMEI {
+&.ui-dialog .ui-dialog-content {
+  overflow: scroll !important;
+}
+}
