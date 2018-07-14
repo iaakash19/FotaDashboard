@@ -75,7 +75,7 @@
       </div>
       <div class="model">
         <label for="">Select Model</label>
-        <p-multiSelect [options]="activatedDevices" [(ngModel)]="selected_devices_forAPK" (onChange)="handleLegendChange4($event)"></p-multiSelect>
+<p-multiSelect [options]="devices_forAPK" [(ngModel)]="selected_devices_forAPK" (onChange)="handleLegendChange4($event)"></p-multiSelect>
       </div>
     </div>
     <chart [options]="APKConf" (load)="saveInstance4($event.context)"></chart>

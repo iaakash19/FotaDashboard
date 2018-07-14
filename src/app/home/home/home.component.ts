@@ -356,6 +356,7 @@ export class HomeComponent implements OnInit {
   }
 
   generateGraph4WithDrop(data, selectedPartner) {
+    debugger;
     let apk_versions = [];
     let apk_version = [];
     let uniqueApks;
@@ -369,6 +370,8 @@ export class HomeComponent implements OnInit {
     uniqueApks = apk_versions.filter(function (item, pos) {
       return apk_versions.indexOf(item) == pos;
     });
+
+    debugger;
 
     let dataToMap = data
       .filter(item => item.partner == selectedPartner)
