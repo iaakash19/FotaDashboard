@@ -115,7 +115,7 @@
 </p-dialog>
 
 
-<p-dialog styleClass="fota-dialog IMEI" header=" IMEI " [(visible)]="openIMEIBox" [contentStyle]="{'max-height':'500px'}">
+<p-dialog styleClass="fota-dialog IMEI" header=" IMEI " [(visible)]="openIMEIBox" [contentStyle]="{'max-height':'500px'}" (onHide)="closeIMEI()">
 
   <div class="form-group sidewise">
     <label for="">IMEI</label>

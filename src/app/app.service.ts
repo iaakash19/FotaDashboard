@@ -416,7 +416,7 @@ export class AppService {
     Object.keys(config).map(key => {
       input.append(key, config[key]);
     });
-    return this.Http.post(`${this.BASE_URL}updatedeleted/`, config);
+    return this.Http.post(`${this.BASE_URL}updateGen/`, config);
   }
 
   testAgain(rowId) {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AppService } from '../../../app.service';
-import {Message} from 'primeng/primeng';
-import {MessageService} from 'primeng/components/common/messageservice';
+import { AppService } from "../../../app.service";
+import { Message } from "primeng/primeng";
+import { MessageService } from "primeng/components/common/messageservice";
 
 @Component({
   selector: "register-oem",
@@ -11,102 +11,102 @@ import {MessageService} from 'primeng/components/common/messageservice';
   providers: [MessageService]
 })
 export class RegisterOemComponent implements OnInit {
-
-
   oemRegister: FormGroup;
   editConfigForm: FormGroup;
-  partners:any;
-  idOfEditedConfig:number;
-  isLoading:boolean = false;
+  partners: any;
+  idOfEditedConfig: number;
+  isLoading: boolean = false;
   iseditConfig: boolean = false;
   msgs: Message[] = [];
   showPartnerFilter: boolean = false;
   isPreview: boolean = false;
 
-  previewConf:Object = {
-    'Partner Name': null,
-    'Admin Email': null,
-    'OEM Email': null,
-    'conf': {
-      'Url': null,
-      'Button Name': null,
-      'Notification Frequency': null,
-      'Check For Update': null,
-      'Download on WIFI': null
+  previewConf: Object = {
+    "Partner Name": null,
+    "Admin Email": null,
+    "OEM Email": null,
+    conf: {
+      Url: null,
+      "Button Name": null,
+      "Notification Frequency": null,
+      "Check For Update": null,
+      "Download on WIFI": null
     }
-  }
+  };
   optionsPanel = [
     {
-      control: 'Notif_Frequency',
-      label : "Notification Frequency",
+      control: "Notif_Frequency",
+      label: "Notification Frequency",
       map: [
         {
-          field: '1 Day',
+          field: "1 Day",
           value: 1
         },
         {
-          field: '7 Days',
+          field: "7 Days",
           value: 7
         },
         {
-          field: '14 Days',
+          field: "14 Days",
           value: 14
         },
         {
-          field: '30 Days',
+          field: "30 Days",
           value: 30
         }
       ]
     },
     {
-      control: 'checkForUpdate',
-      label : "Check For Update",
+      control: "checkForUpdate",
+      label: "Check For Update",
       map: [
         {
-          field: '1 Day',
+          field: "1 Day",
           value: 1
         },
         {
-          field: '7 Days',
+          field: "7 Days",
           value: 7
         },
         {
-          field: '14 Days',
+          field: "14 Days",
           value: 14
         },
         {
-          field: '30 Days',
+          field: "30 Days",
           value: 30
         }
       ]
     },
     {
-      control: 'downloadAutoOnWiFi',
-      label : "Download on WIFI",
+      control: "downloadAutoOnWiFi",
+      label: "Download on WIFI",
       map: [
         {
-          field: 'Yes',
-          value: 'y'
+          field: "Yes",
+          value: "y"
         },
         {
-          field: 'No',
-          value: 'n'
+          field: "No",
+          value: "n"
         }
       ]
-    },
+    }
+  ];
 
-  ]
-
-  constructor(private fb: FormBuilder, private AppService: AppService, private messageService: MessageService) {}
+  constructor(
+    private fb: FormBuilder,
+    private AppService: AppService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
-
     this.fetchPartners();
 
     this.oemRegister = this.fb.group({
       partnerName: ["", Validators.required],
-      AdminEmail: [''],
-      OemEmail: [''],
+      AdminEmail: [""],
+      OemEmail: [""],
       config: this.fb.group({
         Url: ["", Validators.required],
         Notif_Frequency: ["", Validators.required],
@@ -117,8 +117,8 @@ export class RegisterOemComponent implements OnInit {
     });
 
     this.editConfigForm = this.fb.group({
-      AdminEmail: [''],
-      OemEmail: [''],
+      AdminEmail: [""],
+      OemEmail: [""],
       config: this.fb.group({
         Url: ["", Validators.required],
         Notif_Frequency: ["", Validators.required],
@@ -128,18 +128,19 @@ export class RegisterOemComponent implements OnInit {
       })
     });
   }
-fetchPartners() {
-  this.AppService.getPartners().subscribe((data:any) => {
-    this.partners = data;
-    debugger;
-    let res = Array.from(new Set(this.partners.map(JSON.stringify)));
+  fetchPartners() {
+    this.AppService.getPartners().subscribe((data: any) => {
+      this.partners = data;
+      debugger;
+      let res = Array.from(new Set(this.partners.map(JSON.stringify)));
 
-    res.length > 1 ? this.showPartnerFilter = true: this.showPartnerFilter = false;
+      res.length > 1
+        ? (this.showPartnerFilter = true)
+        : (this.showPartnerFilter = false);
 
-    // partnerName
-  })
-}
-
+      // partnerName
+    });
+  }
 
   registerOem() {
     this.curatePreviewConf();
@@ -147,17 +148,32 @@ fetchPartners() {
 
   curatePreviewConf() {
     this.previewConf = {
-      'Partner Name': this.oemRegister.get('partnerName').value,
-      'Admin Email': this.oemRegister.get('AdminEmail').value,
-      'OEM Email': this.oemRegister.get('OemEmail').value,
-      'conf': {
-        'Url': this.oemRegister.get('config').value.Url,
-        'Button Name': this.oemRegister.get('config').value.btnName,
-        'Notification Frequency': `${this.oemRegister.get('config').value.Notif_Frequency} ${this.oemRegister.get('config').value.Notif_Frequency == 1 ? 'Day' : 'Days'} `,
-        'Check For Update': `${this.oemRegister.get('config').value.checkForUpdate} ${this.oemRegister.get('config').value.checkForUpdate == 1 ? 'Day' : 'Days'}`,
-        'Download on WIFI': this.oemRegister.get('config').value.downloadAutoOnWiFi == 'n' ? 'No' : 'Yes'
+      "Partner Name": this.oemRegister.get("partnerName").value,
+      "Admin Email": this.oemRegister.get("AdminEmail").value,
+      "OEM Email": this.oemRegister.get("OemEmail").value,
+      conf: {
+        Url: this.oemRegister.get("config").value.Url,
+        "Button Name": this.oemRegister.get("config").value.btnName,
+        "Notification Frequency": `${
+          this.oemRegister.get("config").value.Notif_Frequency
+        } ${
+          this.oemRegister.get("config").value.Notif_Frequency == 1
+            ? "Day"
+            : "Days"
+        } `,
+        "Check For Update": `${
+          this.oemRegister.get("config").value.checkForUpdate
+        } ${
+          this.oemRegister.get("config").value.checkForUpdate == 1
+            ? "Day"
+            : "Days"
+        }`,
+        "Download on WIFI":
+          this.oemRegister.get("config").value.downloadAutoOnWiFi == "n"
+            ? "No"
+            : "Yes"
       }
-    }
+    };
     this.isPreview = true;
     this.AppService.setBodyMask(true);
   }
@@ -167,28 +183,35 @@ fetchPartners() {
   // btnName: ["", Validators.required],
   // downloadAutoOnWiFi: ["", Validators.required]
 
-
   handleSave() {
     this.isLoading = true;
     this.isPreview = false;
     this.oemRegister.value;
     let oemValue = Object.assign({}, this.oemRegister.value, {
-      AdminEmail: this.oemRegister.value.AdminEmail.join(','),
-      OemEmail: this.oemRegister.value.OemEmail.join(',')
-    })
+      AdminEmail: this.oemRegister.value.AdminEmail.join(","),
+      OemEmail: this.oemRegister.value.OemEmail.join(",")
+    });
     this.AppService.registerOem(oemValue).subscribe(
       data => {
         this.fetchPartners();
         this.oemRegister.reset();
         this.isLoading = false;
-        this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully registered'});
+        this.messageService.add({
+          severity: "success",
+          summary: "Message",
+          detail: "OEM Succesfully registered"
+        });
       },
       err => {
         this.isLoading = false;
         const errMsg = JSON.parse(err.error).err_msg;
-        this.messageService.add({severity:'error', summary:'Message', detail:errMsg});
+        this.messageService.add({
+          severity: "error",
+          summary: "Message",
+          detail: errMsg
+        });
       }
-    )
+    );
   }
 
   handleClose() {
@@ -196,8 +219,6 @@ fetchPartners() {
   }
 
   editConfig(data) {
-    debugger;
-
     this.idOfEditedConfig = data.id;
 
     this.iseditConfig = true;
@@ -206,13 +227,13 @@ fetchPartners() {
   }
 
   populateForm(data) {
-    let AdminEmail = data.AdminEmail;
-    debugger;
+    let AdminEmail = data.AdminEmail.split(",").filter(email => email !== "");
+    let OemEmail = data.OemEmail.split(",").filter(email => email !== "");
 
     this.editConfigForm.patchValue({
       partnerName: data.partnerName,
-      AdminEmail: data.AdminEmail.split(','),
-      OemEmail: data.OemEmail.split(','),
+      AdminEmail: AdminEmail.length > 0 ? AdminEmail : null,
+      OemEmail: OemEmail.length > 0 ? OemEmail : null,
       config: {
         Url: data.config.Url,
         Notif_Frequency: data.config.Notif_Frequency,
@@ -221,23 +242,37 @@ fetchPartners() {
         downloadAutoOnWiFi: data.config.downloadAutoOnWiFi
       }
     });
+    this.editConfigForm.value;
+    debugger;
   }
 
   saveConfig() {
     this.editConfigForm.value;
-    this.AppService.editOem(this.idOfEditedConfig, this.editConfigForm.value).subscribe(data => {
-      this.dismissModal();
-      this.fetchPartners();
-      this.messageService.add({severity:'success', summary:'Message', detail:'OEM Succesfully Edited'});
-    },
-    err => {
-      this.messageService.add({severity:'error', summary:'Message', detail:'OEM Edit Failed!!'});
-    })
+    this.AppService.editOem(
+      this.idOfEditedConfig,
+      this.editConfigForm.value
+    ).subscribe(
+      data => {
+        this.dismissModal();
+        this.fetchPartners();
+        this.messageService.add({
+          severity: "success",
+          summary: "Message",
+          detail: "OEM Succesfully Edited"
+        });
+      },
+      err => {
+        this.messageService.add({
+          severity: "error",
+          summary: "Message",
+          detail: "OEM Edit Failed!!"
+        });
+      }
+    );
   }
 
   dismissModal() {
     this.iseditConfig = false;
     this.AppService.setBodyMask(false);
-
   }
 }
